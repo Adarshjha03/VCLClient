@@ -13,7 +13,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {const token = localStorage.getItem("Token");
-                const userResponse = await fetch('http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/user', {
+                const userResponse = await fetch('https://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/user', {
                     headers: {
                       Authorization: `Token ${token}`,
                     },
@@ -34,7 +34,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
   useEffect(() => {
     const fetchTopics = async () => {
       try {const token = localStorage.getItem("Token");
-        const response = await fetch('http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/topic', {
+        const response = await fetch('https://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/topic', {
           headers: {
             Authorization: `Token ${token}`,
           },

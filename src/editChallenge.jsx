@@ -20,7 +20,7 @@ const EditChallenge = () => {
   useEffect(() => {
     const fetchChallengeData = async () => {
       try {const token = localStorage.getItem("Token");
-        const response = await fetch(`http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/challenge/${id}`, {
+        const response = await fetch(`https://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/challenge/${id}`, {
           headers: {
             Authorization: `Token ${token}`,
           },
@@ -39,7 +39,7 @@ const EditChallenge = () => {
 
     const fetchTopics = async () => {
       try {const token = localStorage.getItem("Token");
-        const response = await fetch('http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/topic', {
+        const response = await fetch('https://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/topic', {
           headers: {
             Authorization: `Token ${token}`,
           },
@@ -69,7 +69,7 @@ const EditChallenge = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {const token = localStorage.getItem("Token");
-      const response = await fetch(`http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/challenge/${id}`, {
+      const response = await fetch(`https://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/challenge/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

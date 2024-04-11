@@ -15,7 +15,7 @@ const ProblemPage = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {const token = localStorage.getItem("Token");
-                const userResponse = await fetch('http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/user', {
+                const userResponse = await fetch('https://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/user', {
                     headers: {
                       Authorization: `Token ${token}`,
                     },
@@ -40,7 +40,7 @@ const ProblemPage = () => {
         const fetchData = async () => {
             try {
               const token = localStorage.getItem("Token");
-                const response = await fetch(`http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/challenge/${id}`, {
+                const response = await fetch(`https://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/challenge/${id}`, {
                     headers: {
                       Authorization: `Token ${token}`,
                     },
@@ -68,7 +68,7 @@ const ProblemPage = () => {
     const requestVirtualMachine = async () => {
         setIsLoading(true);
         try {
-            const response = await fetch("/.netlify/functions/proxy", {
+            const response = await fetch('http://3.111.169.113/req_vm', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -79,7 +79,7 @@ const ProblemPage = () => {
             }
             const data = await response.json();
             setResponseMessage(data);
-        } catch (error) {
+        }  catch (error) {
             console.error("Error requesting virtual machine:", error);
             setResponseMessage({
                 message: "An error occurred while requesting the virtual machine.",

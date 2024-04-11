@@ -10,7 +10,7 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/login', { "username": username, "password": password });
+            const response = await axios.post('https://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/login', { "username": username, "password": password });
             if (response.data.token) {
                 localStorage.setItem("Token", response.data.token);
                 navigate('/Home');

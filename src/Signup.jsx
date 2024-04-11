@@ -10,7 +10,7 @@ function Signup() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/signup', {
+        axios.post('https://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/signup', {
             "email": email,
             "username": name,
             "password": password
