@@ -142,7 +142,7 @@ const HomePage = () => {
                 >
                    <div className="flex-grow">
                       <div className="flex justify-between items-center">
-                         <h3 className="text-white font-bold mb-2">{problem.name}</h3>
+                         <h3 className="text-white text-lg font-semibold ">{problem.name}</h3>
                          <span className="text-sm font-bold text-black bg-white px-2 py-1 rounded-md" style={{ marginLeft: "8px", alignSelf: "flex-start" }}>
                             {problem.difficulty}
                          </span>
@@ -181,8 +181,8 @@ const HomePage = () => {
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
       width: '70%', // Adjust width as needed
-      maxHeight: '80vh', // Limit maximum height to 80vh
-      overflowY: 'auto', // Add scrollability
+      maxHeight: '80vh', 
+      overflowY: 'auto', 
       borderRadius: '10px',
       padding: '20px',
     },

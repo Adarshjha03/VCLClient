@@ -19,6 +19,7 @@ const ProblemPage = () => {
     const storedTopic = localStorage.getItem("selectedTopic");
     return storedTopic ? parseInt(storedTopic) : 0;
   });
+  const [vmData, setVmData] = useState(null);
   const [isEditChallengeModalOpen, setEditChallengeModalOpen] = useState(false);
   useEffect(() => {
     const fetchUserData = async () => {
@@ -97,6 +98,7 @@ const ProblemPage = () => {
       const data = await response.json();
       if (data && data.message) {
         setResponseMessage(data.message);
+        setVmData(data); // Set vmData state with the received data
       } else {
         throw new Error("Invalid response format");
       }
@@ -226,19 +228,31 @@ const ProblemPage = () => {
               </div>
             </div>
             <div className="flex mb-8">
-              <div className="w-1/2 pr-4">
-                <div className="bg-gradient-to-r from-green-500 to-green-400 p-6 rounded-lg shadow-lg">
-                  <h2 className="text-lg font-semibold mb-4 text-center text-white">Open the Virtual Lab</h2>
-                  <div className="flex justify-center">
-                    <button className="bg-white font-semibold text-003366 px-4 py-2 rounded hover:bg-blue-200" onClick={requestVirtualMachine} disabled={isLoading}>
-                      {isLoading ? "Loading..." : "Start Virtual Lab"}
-                    </button>
-                  </div>
-                  {responseMessage && (
-                    <div className="text-green-500 text-center">{responseMessage}</div>
-                  )}
-                </div>
-              </div>
+            <div className="w-1/2 pr-4">
+  <div className="bg-gradient-to-r from-green-500 to-green-400 p-6 rounded-lg shadow-lg">
+    <h2 className="text-lg font-semibold mb-4 text-center text-white">Open the Virtual Lab</h2>
+    <div className="flex flex-col items-center">
+      <button className="bg-white font-semibold text-003366 px-4 py-2 rounded hover:bg-blue-200" onClick={requestVirtualMachine} disabled={isLoading}>
+        {isLoading ? "Loading..." : "Start Virtual Lab"}
+      </button>
+      {responseMessage && (
+        <div className="text-blue-900 text-center ">{responseMessage}</div>
+      )}
+      {vmData && (
+  <div className="mt-4 text-center text-blue-900">
+    <p className="text-blue-900">
+      URL:{" "}
+      <a href={vmData.vm_url} target="_blank" rel="noopener noreferrer" className="text-blue-500 text-sm">
+        {vmData.vm_url}
+      </a>
+    </p>
+    <p>Password: {vmData.password}</p>
+  </div>
+)}
+    </div>
+  </div>
+</div>
+
               <div className="w-1/2 pl-4">
                 <div style={{ backgroundColor: "#11255a" }} className="p-6 rounded-lg shadow-lg relative">
                   <h2 className="text-lg font-semibold mb-4 text-white text-center">Submit Answer</h2>
