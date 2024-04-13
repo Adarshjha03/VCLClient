@@ -7,39 +7,44 @@ import addImage from "./assets/add2.png"; // Importing the PNG image
 
 const HomePage = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const [selectedTopic, setSelectedTopic] = useState(0); // Default selected topic is 0 (All Problems)
+  // Updated: Initialize selectedTopic state with the value from local storage or default to 0
+  const [selectedTopic, setSelectedTopic] = useState(() => {
+    const storedTopic = localStorage.getItem("selectedTopic");
+    return storedTopic ? parseInt(storedTopic) : 0;
+  });
   const [topics, setTopics] = useState([]);
   const [problems, setProblems] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [admin, setAdmin] = useState(false); // Initially assuming the user is not an admin
 
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-              const token = localStorage.getItem("Token");
-                const userResponse = await fetch('http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/user', {
-                    headers: {
-                        Authorization: `Token ${token}`,
-                    },
-                });
-                if (!userResponse.ok) {
-                    throw new Error('Failed to fetch user data');
-                }
-                const userData = await userResponse.json();
-                setAdmin(userData.admin); // Update the admin state based on the response
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-            }
-        };
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem("Token");
+        const userResponse = await fetch('http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/user', {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        });
+        if (!userResponse.ok) {
+          throw new Error('Failed to fetch user data');
+        }
+        const userData = await userResponse.json();
+        setAdmin(userData.admin); // Update the admin state based on the response
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
 
-        // Call the fetchUserData function
-        fetchUserData(); // Assuming 'admin' state is required as before for conditional rendering
-    }, []);
+    // Call the fetchUserData function
+    fetchUserData(); // Assuming 'admin' state is required as before for conditional rendering
+  }, []);
 
   useEffect(() => {
     const fetchTopics = async () => {
-      try {const token = localStorage.getItem("Token");
+      try {
+        const token = localStorage.getItem("Token");
         const response = await fetch('http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/topic', {
           headers: {
             Authorization: `Token ${token}`,
@@ -62,7 +67,8 @@ const HomePage = () => {
 
   useEffect(() => {
     const fetchProblems = async () => {
-      try {const token = localStorage.getItem("Token");
+      try {
+        const token = localStorage.getItem("Token");
         const response = await fetch(`http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/challenges/${selectedTopic}`, {
           headers: {
             Authorization: `Token ${token}`,
@@ -81,6 +87,11 @@ const HomePage = () => {
     };
 
     fetchProblems();
+  }, [selectedTopic]);
+
+  useEffect(() => {
+    // Save selected topic in local storage whenever it changes
+    localStorage.setItem("selectedTopic", selectedTopic.toString());
   }, [selectedTopic]);
 
   if (isLoading) {
@@ -138,8 +149,6 @@ const HomePage = () => {
                       View
                    </Link>
                 </div>
-                
-
                 ))}
             </div>
             {(admin && (selectedTopic === 0 || activeTopicName === "All Problems")) && ( // admin condition 
