@@ -11,12 +11,12 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [admin, setAdmin] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false); // State for modal
-
+  const backendUrl = "https://api.virtualcyberlabs.com";
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const token = localStorage.getItem("Token");
-        const userResponse = await fetch('http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/user', {
+        const userResponse = await fetch(`${backendUrl}/user`, {
           headers: {
             Authorization: `Token ${token}`,
           },
@@ -38,7 +38,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
     const fetchTopics = async () => {
       try {
         const token = localStorage.getItem("Token");
-        const response = await fetch('http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/topic', {
+        const response = await fetch(`${backendUrl}/topic`, {
           headers: {
             Authorization: `Token ${token}`,
           },

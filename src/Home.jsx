@@ -13,9 +13,10 @@ const HomePage = () => {
     const storedTopic = localStorage.getItem("selectedTopic");
     return storedTopic ? parseInt(storedTopic) : 0;
   });
-  const [topics, setTopics] = useState([]);
+  const [topics, setTopics] = useState([0]);
   const [problems, setProblems] = useState([]);
   const [error, setError] = useState(null);
+  const backendUrl = "https://api.virtualcyberlabs.com";
   const [isLoading, setIsLoading] = useState(true);
   const [admin, setAdmin] = useState(false);
   const [isAddChallengeModalOpen, setAddChallengeModalOpen] = useState(false);
@@ -23,7 +24,7 @@ const HomePage = () => {
     const fetchUserData = async () => {
       try {
         const token = localStorage.getItem("Token");
-        const userResponse = await fetch('http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/user', {
+        const userResponse = await fetch(`${backendUrl}/user`, {
           headers: {
             Authorization: `Token ${token}`,
           },
@@ -46,7 +47,7 @@ const HomePage = () => {
     const fetchTopics = async () => {
       try {
         const token = localStorage.getItem("Token");
-        const response = await fetch('http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/topic', {
+        const response = await fetch(`${backendUrl}/topic`, {
           headers: {
             Authorization: `Token ${token}`,
           },
@@ -70,7 +71,7 @@ const HomePage = () => {
     const fetchProblems = async () => {
       try {
         const token = localStorage.getItem("Token");
-        const response = await fetch(`http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/challenges/${selectedTopic}`, {
+        const response = await fetch(`${backendUrl}/challenges/${selectedTopic}`, {
           headers: {
             Authorization: `Token ${token}`,
           },

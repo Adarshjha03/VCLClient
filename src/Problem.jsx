@@ -14,6 +14,7 @@ const ProblemPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [challenge, setChallenge] = useState(null);
   const [admin, setAdmin] = useState(false);
+  const backendUrl = "https://api.virtualcyberlabs.com";
   const [userAnswer, setUserAnswer] = useState("");
   const [selectedTopic, setSelectedTopic] = useState(() => {
     const storedTopic = localStorage.getItem("selectedTopic");
@@ -26,7 +27,7 @@ const ProblemPage = () => {
       try {
         const token = localStorage.getItem("Token");
         const userResponse = await fetch(
-          "http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/user",
+          `${backendUrl}/user`,
           {
             headers: {
               Authorization: `Token ${token}`,
@@ -60,7 +61,7 @@ const ProblemPage = () => {
       try {
         const token = localStorage.getItem("Token");
         const response = await fetch(
-          `http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/challenge/${id}`,
+          `${backendUrl}/challenge/${id}`,
           {
             headers: {
               Authorization: `Token ${token}`,
@@ -122,7 +123,7 @@ const ProblemPage = () => {
     try {
       const token = localStorage.getItem("Token");
       const response = await fetch(
-        `http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/verify/${id}`,
+        `${backendUrl}/verify/${id}`,
         {
           method: "POST",
           headers: {
