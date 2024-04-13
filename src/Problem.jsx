@@ -7,6 +7,7 @@ import editImage from "./assets/edit.png";
 import Modal from 'react-modal';
 import { useNavigate } from "react-router-dom";
 import EditChallenge from './editChallenge';
+import linkImage from "./assets/link.png";
 const ProblemPage = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
@@ -75,7 +76,7 @@ const ProblemPage = () => {
         setChallenge(data);
       } catch (error) {
         console.error("Error loading the challenge:", error);
-        setResponseMessage("Failed to load challenge data.");
+        
       } finally {
         setIsLoading(false);
       }
@@ -202,11 +203,18 @@ const ProblemPage = () => {
   </div>
 )}
             </div>
-            <div className="flex mb-8">
+            <div className="flex mb-8 ">
               <div className="w-1/2 pr-4">
                 <div className="bg-white p-6 rounded-lg shadow-lg">
                   <h2 className="border-b-2 border-blue-900 text-lg font-bold mb-4">Problem Statement</h2>
-                  <p>{challenge.problem_statement}</p>
+                  <p className="mb-4">{challenge.problem_statement}</p>
+                  <div className="flex align-items-center">
+    <a href={challenge.solution.startsWith("https") ? challenge.solution : `http://${challenge.supporting_material}`} className="text-base font-semibold mb-2" target="_blank">
+        Supporting Material
+    </a>
+    <img src={linkImage} alt="Link" className="w-4 h-4 ml-1" />
+</div>
+
                 </div>
               </div>
               <div className="w-1/2 pl-4">
@@ -274,7 +282,7 @@ const ProblemPage = () => {
             <div className="flex justify-start">
               <div className="bg-white p-4 rounded-lg">
                 <h2 className="text-lg font-semibold mb-2">Download Solution</h2>
-                <a href={challenge.solution.startsWith("http") ? challenge.solution : `http://${challenge.solution}`} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" target="_blank">
+                <a href={challenge.solution.startsWith("https") ? challenge.solution : `http://${challenge.solution}`} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" target="_blank">
                   Download
                 </a>
               </div>

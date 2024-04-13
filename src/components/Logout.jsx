@@ -8,6 +8,7 @@ function LogoutButton() {
     const handleLogout = () => {
         // Remove token from local storage
         localStorage.removeItem("Token");
+        localStorage.removeItem("selectedToken");
         // Redirect to login page
         navigate('/');
         // Alternatively, you can refresh the page

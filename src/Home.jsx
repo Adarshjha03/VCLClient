@@ -13,7 +13,7 @@ const HomePage = () => {
     const storedTopic = localStorage.getItem("selectedTopic");
     return storedTopic ? parseInt(storedTopic) : 0;
   });
-  const [topics, setTopics] = useState([0]);
+  const [topics, setTopics] = useState([]);
   const [problems, setProblems] = useState([]);
   const [error, setError] = useState(null);
   const backendUrl = "https://api.virtualcyberlabs.com";
@@ -148,7 +148,7 @@ const HomePage = () => {
                             {problem.difficulty}
                          </span>
                       </div>
-                      <p className="text-sm text-white mb-2">{problem.description}</p>
+                      <p className="text-justify text-sm text-white mb-3 mt-2">{problem.description}</p>
                    </div>
                    <Link
                       to={`/Problem/${problem.id}`}

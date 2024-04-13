@@ -86,7 +86,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
       }}
     >
       <div className="p-3">
-        <img src={headlogo} alt="HeadLogo" className="w-full mb-4 " />
+        <img src={headlogo} alt="HeadLogo" className="w-3/4 content-evenly mb-4 ml-4 " />
         <div className="space-y-4">
           {admin && (
             <div className="p-2 rounded-md font-medium text-xl flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300 flex items-center">
