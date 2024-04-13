@@ -10,7 +10,7 @@ function Signup() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('https://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/signup', {
+        axios.post('http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/signup', {
             "email": email,
             "username": name,
             "password": password
@@ -30,9 +30,9 @@ function Signup() {
     };
 
     return (
-        <div className="d-flex justify-content-center align-items-center vh-100 bg-dark">
+        <div className="d-flex justify-content-center align-items-center vh-100" style={{ background: "linear-gradient(315deg, #2234ae 0%, #191714 74%)" }}>
             <div className="bg-white p-4 rounded shadow" style={{ maxWidth: "400px" }}>
-                <h2 className="mb-4 text-center">Register</h2>
+                <h2 className="mb-4 text-center font-weight-bold">Register</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="name" className="form-label">Name</label>
@@ -68,9 +68,29 @@ function Signup() {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
-                    <button type="submit" className="btn btn-success w-100" style={{ backgroundColor: "#198754", borderColor: "#198754" }}>Register</button>
+                    <button 
+                        type="submit" 
+                        className="btn btn-success w-100" 
+                        style={{ 
+                            background: "linear-gradient(315deg, #2234ae 0%, #191714 74%)", 
+                            color: "#fff", 
+                            border: "none",
+                            transition: "color 0.3s, background-color 0.3s", // Add transition effect for color and background-color
+                            animation: "none" // Initially set animation to none
+                        }}
+                        onMouseEnter={(e) => { 
+                            e.target.style.color = "#F0DB4F"; // Change text color on hover
+                            e.target.style.backgroundColor = "#0D6EFD"; // Add animation effect on hover
+                        }}
+                        onMouseLeave={(e) => { 
+                            e.target.style.color = "#fff"; // Restore text color when not hovered
+                            e.target.style.backgroundColor = "linear-gradient(315deg, #2234ae 0%, #191714 74%)"; // Restore background color when not hovered
+                        }}
+                    >
+                        Register
+                    </button>
                 </form>
-                <p className="text-center mt-3">Already have an account? <Link to="/login" className="btn btn-success w-100" style={{ backgroundColor: "#198754", borderColor: "#198754" }}>Login</Link></p>
+                <p className="text-center mt-3">Already have an account? <Link to="/login" className="btn btn-success w-100" style={{ background: "linear-gradient(315deg, #2234ae 0%, #191714 74%)", color: "#fff", border: "none" }}>Login</Link></p>
             </div>
         </div>
     );

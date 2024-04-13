@@ -13,7 +13,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {const token = localStorage.getItem("Token");
-                const userResponse = await fetch('https://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/user', {
+                const userResponse = await fetch('http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/user', {
                     headers: {
                       Authorization: `Token ${token}`,
                     },
@@ -34,7 +34,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
   useEffect(() => {
     const fetchTopics = async () => {
       try {const token = localStorage.getItem("Token");
-        const response = await fetch('https://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/topic', {
+        const response = await fetch('http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/topic', {
           headers: {
             Authorization: `Token ${token}`,
           },
@@ -73,9 +73,17 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
         scrollbarColor: '#a5a5a5 #f3f4f6',
       }}
     >
-      <div className="p-4">
+      <div className="p-3">
         <img src={headlogo} alt="HeadLogo" className="w-full mb-4 " />
         <div className="space-y-4">
+        {admin && (
+            <div className="p-2 rounded-md font-medium text-xl flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300 flex items-center">
+              <Link to="/addTopic" className="flex items-center">
+                <img src={plusLogo} alt="Logo" className="w-4 h-4 mr-2 font-bold justify-evenly" />
+                Add Topic
+              </Link>
+            </div>
+          )}
           {topicsWithLogos.map((topic) => (
             <div
             key={topic.id}
@@ -90,14 +98,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
               </div>
             </div>
           ))}
-          {admin && (
-            <div className="p-2 rounded-md font-medium text-sm flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300">
-              <Link to="/addTopic" className="flex items-center">
-                <img src={plusLogo} alt="Logo" className="w-4 h-4 mr-2" />
-                Add Topic
-              </Link>
-            </div>
-          )}
+          
         </div>
       </div>
     </div>

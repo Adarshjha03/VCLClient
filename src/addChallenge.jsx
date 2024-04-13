@@ -20,7 +20,7 @@ const AddChallenge = () => {
 
   const fetchTopics = async () => {
     try {const token = localStorage.getItem("Token");
-      const response = await fetch("https://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/topic", {
+      const response = await fetch("http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/topic", {
         headers: {
           Authorization: `Token ${token}`,
         },
@@ -39,7 +39,7 @@ const AddChallenge = () => {
     event.preventDefault();
 
     try {const token = localStorage.getItem("Token");
-      const response = await fetch(`https://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/challenges/${challengeData.topic}`, {
+      const response = await fetch(`http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/challenges/${challengeData.topic}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

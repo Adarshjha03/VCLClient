@@ -3,7 +3,7 @@ import { FaBars } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Sidebar from './components/Sidebar';
 import Navbar from './components/navbar1';
-import addImage from "./assets/add.png"; // Importing the PNG image
+import addImage from "./assets/add2.png"; // Importing the PNG image
 
 const HomePage = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -18,7 +18,7 @@ const HomePage = () => {
         const fetchUserData = async () => {
             try {
               const token = localStorage.getItem("Token");
-                const userResponse = await fetch('https://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/user', {
+                const userResponse = await fetch('http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/user', {
                     headers: {
                         Authorization: `Token ${token}`,
                     },
@@ -40,7 +40,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchTopics = async () => {
       try {const token = localStorage.getItem("Token");
-        const response = await fetch('https://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/topic', {
+        const response = await fetch('http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/topic', {
           headers: {
             Authorization: `Token ${token}`,
           },
@@ -63,7 +63,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchProblems = async () => {
       try {const token = localStorage.getItem("Token");
-        const response = await fetch(`https://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/challenges/${selectedTopic}`, {
+        const response = await fetch(`http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/challenges/${selectedTopic}`, {
           headers: {
             Authorization: `Token ${token}`,
           },
@@ -112,22 +112,39 @@ const HomePage = () => {
             <h2 className="text-xl font-bold mb-4">{activeTopicName}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {problems.map((problem) => (
-                    <div key={problem.id} className="border border-gray-300 p-6 rounded-md" style={{ background: colors[problem.difficulty], boxShadow: "0 4px 6px rgba(0,0,0,0.1)", transition: "all 0.3s ease" }}>
-                        <div className="flex justify-between items-center">
-                            <h3 className="text-lg font-semibold mb-2">{problem.name}</h3>
-                            <span className="text-sm font-bold text-black bg-white px-2 py-1 rounded-md" style={{ marginLeft: "8px", alignSelf: "flex-start" }}>
-                                {problem.difficulty}
-                            </span>
-                        </div>
-                        <p className="text-sm text-white mb-4">{problem.description}</p>
-                        <Link to={`/Problem/${problem.id}`} className="bg-cyan-50 hover:bg-gray-300 text-black px-4 py-2 rounded-md font-bold hover:text-cyan-500 transition duration-300">View</Link>
+                   <div 
+                   key={problem.id} 
+                   className="border border-gray-300 flex flex-col p-6 rounded-md"
+                   style={{ 
+                      background: colors[problem.difficulty], 
+                      boxShadow: "0 4px 6px rgba(0,0,0,0.1)", 
+                      transition: "all 0.3s ease",
+                      height: 'auto' // Set height to auto or specify a fixed height if needed
+                   }}
+                >
+                   <div className="flex-grow">
+                      <div className="flex justify-between items-center">
+                         <h3 className="text-white font-bold mb-2">{problem.name}</h3>
+                         <span className="text-sm font-bold text-black bg-white px-2 py-1 rounded-md" style={{ marginLeft: "8px", alignSelf: "flex-start" }}>
+                            {problem.difficulty}
+                         </span>
+                      </div>
+                      <p className="text-sm text-white mb-2">{problem.description}</p>
+                   </div>
+                   <Link
+                      to={`/Problem/${problem.id}`}
+                      className="bg-cyan-50 hover:bg-gray-300 text-black px-3 py-1 rounded-md font-bold hover:text-cyan-500 transition duration-300 self-start mt-auto" 
+                   >
+                      View
+                   </Link>
+                </div>
+                
 
-                    </div>
                 ))}
             </div>
             {(admin && (selectedTopic === 0 || activeTopicName === "All Problems")) && ( // admin condition 
                 <Link to="/addChallenge" className="absolute bottom-4 right-4">
-                     <img src={addImage} alt="Add" style={{ width: "40px", height: "40px" }} /> 
+                     <img src={addImage} alt="Add" style={{ width: "50px", height: "50px" }} /> 
                 </Link>
             )}
         </div>

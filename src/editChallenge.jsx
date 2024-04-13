@@ -12,15 +12,16 @@ const EditChallenge = () => {
     supporting_material: '',
     solution: '',
     flag: '',
-    topic: '',
+    topic_id: '',
   });
   const [topics, setTopics] = useState([]);
   const [responseMessage, setResponseMessage] = useState('');
 
   useEffect(() => {
     const fetchChallengeData = async () => {
-      try {const token = localStorage.getItem("Token");
-        const response = await fetch(`https://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/challenge/${id}`, {
+      try {
+        const token = localStorage.getItem("Token");
+        const response = await fetch(`http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/challenge/${id}`, {
           headers: {
             Authorization: `Token ${token}`,
           },
@@ -38,8 +39,9 @@ const EditChallenge = () => {
     };
 
     const fetchTopics = async () => {
-      try {const token = localStorage.getItem("Token");
-        const response = await fetch('https://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/topic', {
+      try {
+        const token = localStorage.getItem("Token");
+        const response = await fetch('http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/topic', {
           headers: {
             Authorization: `Token ${token}`,
           },
@@ -68,8 +70,9 @@ const EditChallenge = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {const token = localStorage.getItem("Token");
-      const response = await fetch(`https://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/challenge/${id}`, {
+    try {
+      const token = localStorage.getItem("Token");
+      const response = await fetch(`http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/challenge/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -113,6 +116,7 @@ const EditChallenge = () => {
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
             required
           >
+            <option value="">Select Difficulty</option>
             <option value="Easy">Easy</option>
             <option value="Medium">Medium</option>
             <option value="Hard">Hard</option>
@@ -171,8 +175,8 @@ const EditChallenge = () => {
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">Topic</label>
           <select
-            name="topic"
-            value={challengeData.topic}
+            name="topic_id"
+            value={challengeData.topic_id}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
             required
