@@ -4,7 +4,7 @@ import { FaBars } from "react-icons/fa";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/navbar1";
 import editImage from "./assets/edit.png";
-
+import { useNavigate } from "react-router-dom";
 const ProblemPage = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
@@ -12,7 +12,10 @@ const ProblemPage = () => {
   const [challenge, setChallenge] = useState(null);
   const [admin, setAdmin] = useState(false); // Initially assuming the user is not an admin
   const [userAnswer, setUserAnswer] = useState("");
-
+  const [selectedTopic, setSelectedTopic] = useState(() => {
+    const storedTopic = localStorage.getItem("selectedTopic");
+    return storedTopic ? parseInt(storedTopic) : 0;
+  });
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -40,7 +43,7 @@ const ProblemPage = () => {
   }, []); // Empty dependency array to ensure this effect runs only once
 
   const { id } = useParams(); // Fetching id from the URL
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -97,6 +100,11 @@ const ProblemPage = () => {
     }
   };
 
+  const handleTopicChange = (topicId) => {
+    setSelectedTopic(topicId);
+    localStorage.setItem("selectedTopic", topicId);
+    navigate("/home");
+  };
   // Function to handle user's answer submission
   const handleSubmitAnswer = async () => {
     try {
@@ -121,13 +129,15 @@ const ProblemPage = () => {
       console.error("Error verifying flag:", error);
       setResponseMessage("Failed to verify flag.");
     }
+
+    
   };
 
   if (!challenge) return <p>No challenge data found.</p>;
   return (
     <div className="flex h-screen font-sans overflow-hidden">
       {/* Left column */}
-      <Sidebar showMenu={showMenu} />
+      <Sidebar showMenu={showMenu} onTopicSelect={handleTopicChange} activeTopic={selectedTopic}  />
       {/* Right section */}
       <div
         className="flex-1 overflow-y-auto"
