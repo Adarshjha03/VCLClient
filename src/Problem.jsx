@@ -208,12 +208,14 @@ const ProblemPage = () => {
                 <div className="bg-white p-6 rounded-lg shadow-lg">
                   <h2 className="border-b-2 border-blue-900 text-lg font-bold mb-4">Problem Statement</h2>
                   <p className="mb-4">{challenge.problem_statement}</p>
-                  <div className="flex align-items-center">
+                  {challenge.supporting_material !== "NULL" && (
+  <div className="flex align-items-center">
     <a href={challenge.solution.startsWith("https") ? challenge.solution : `http://${challenge.supporting_material}`} className="text-base font-semibold mb-2" target="_blank">
-        Supporting Material
+      Supporting Material
     </a>
     <img src={linkImage} alt="Link" className="w-4 h-4 ml-1" />
-</div>
+  </div>
+)}
 
                 </div>
               </div>

@@ -11,7 +11,7 @@ const HomePage = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [selectedTopic, setSelectedTopic] = useState(() => {
     const storedTopic = localStorage.getItem("selectedTopic");
-    return storedTopic ? parseInt(storedTopic) : 0;
+    return storedTopic ? parseInt(storedTopic) :0;
   });
   const [topics, setTopics] = useState([]);
   const [problems, setProblems] = useState([]);
