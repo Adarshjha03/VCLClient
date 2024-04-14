@@ -91,7 +91,7 @@ const ProblemPage = () => {
   const requestVirtualMachine = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("https://api.virtualcyberlabs.com/req_vm", {
+      const response = await fetch(`${backendUrl}/req_vm`, {
         method: "POST",
       });
       if (!response.ok) {
