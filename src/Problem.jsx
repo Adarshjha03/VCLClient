@@ -163,40 +163,40 @@ const ProblemPage = () => {
               )}
             </div>
             <div className="flex mb-8">
-              <div className="w-1/2 pr-4">
-                <div className="bg-white p-6 rounded-lg shadow-lg">
-                  <h2 className="border-b-2 border-blue-900 text-lg font-bold mb-4 ">
-                    Problem Statement
-                  </h2>
-                  <p>{challenge.problem_statement}</p>
-                </div>
-              </div>
-              <div className="w-1/2 pl-4">
-                <div className="bg-white p-6 rounded-lg shadow-lg">
-                  <h2 className="border-b-2 border-blue-900 text-lg font-bold mb-4">
-                    Prohibited Activities
-                  </h2>
-                  <p>
-                    Please note that the following activities are strictly
-                    prohibited on any of the attack boxes, except if allowed in
-                    the description to do same:
-                  </p>
-                  <ul className="list-disc pl-5 mb-4">
-                    <li>No Automatic scanners Allowed</li>
-                    <li>DOS or DDOS Attack</li>
-                    <li>No Directory Bruteforce Allowed</li>
-                    <li>Attacking any Lab Instance</li>
-                    <li>Gaining access to other users' machines</li>
-                    <li>Attack on this site anyhow</li>
-                    <li>No Payload Injection Allowed</li>
-                  </ul>
-                  <p>
-                    If found any of these rules to be not followed, actions will
-                    be taken accordingly.
-                  </p>
-                </div>
-              </div>
-            </div>
+  <div className="w-1/2 pr-4">
+    <div className="bg-white p-6 rounded-lg shadow-lg">
+      <h2 className="border-b-2 border-blue-900 text-lg font-bold mb-4 ">
+        Problem Statement
+      </h2>
+      <div className="overflow-auto max-h-80"> {/* Adjust max-h-80 as needed */}
+        <p>{challenge.problem_statement}</p>
+      </div>
+    </div>
+  </div>
+  <div className="w-1/2 pl-4">
+    <div className="bg-white p-6 rounded-lg shadow-lg">
+      <h2 className="border-b-2 border-blue-900 text-lg font-bold mb-4">
+        Prohibited Activities
+      </h2>
+      <p>
+        Please note that the following activities are strictly prohibited on any of the attack boxes, except if allowed in the description to do same:
+      </p>
+      <ul className="list-disc pl-5 mb-4">
+        <li>No Automatic scanners Allowed</li>
+        <li>DOS or DDOS Attack</li>
+        <li>No Directory Bruteforce Allowed</li>
+        <li>Attacking any Lab Instance</li>
+        <li>Gaining access to other users' machines</li>
+        <li>Attack on this site anyhow</li>
+        <li>No Payload Injection Allowed</li>
+      </ul>
+      <p>
+        If found any of these rules to be not followed, actions will be taken accordingly.
+      </p>
+    </div>
+  </div>
+</div>
+
             <div className="flex mb-8">
               <div className="w-1/2 pr-4">
                 <div className="bg-gradient-to-r from-green-500 to-green-400 p-6 rounded-lg shadow-lg">
