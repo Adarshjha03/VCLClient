@@ -4,25 +4,27 @@ import { Link } from "react-router-dom";
 import Sidebar from './components/Sidebar';
 import Navbar from './components/navbar1';
 import addImage from "./assets/add2.png"; // Importing the PNG image
+import Modal from 'react-modal';
+import AddChallenge from './addChallenge';
 
 const HomePage = () => {
   const [showMenu, setShowMenu] = useState(false);
-  // Updated: Initialize selectedTopic state with the value from local storage or default to 0
   const [selectedTopic, setSelectedTopic] = useState(() => {
     const storedTopic = localStorage.getItem("selectedTopic");
-    return storedTopic ? parseInt(storedTopic) : 0;
+    return storedTopic ? parseInt(storedTopic) :0;
   });
   const [topics, setTopics] = useState([]);
   const [problems, setProblems] = useState([]);
   const [error, setError] = useState(null);
+  const backendUrl = "https://api.virtualcyberlabs.com";
   const [isLoading, setIsLoading] = useState(true);
-  const [admin, setAdmin] = useState(false); // Initially assuming the user is not an admin
-
+  const [admin, setAdmin] = useState(false);
+  const [isAddChallengeModalOpen, setAddChallengeModalOpen] = useState(false);
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const token = localStorage.getItem("Token");
-        const userResponse = await fetch('http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/user', {
+        const userResponse = await fetch(`${backendUrl}/user`, {
           headers: {
             Authorization: `Token ${token}`,
           },
@@ -45,7 +47,7 @@ const HomePage = () => {
     const fetchTopics = async () => {
       try {
         const token = localStorage.getItem("Token");
-        const response = await fetch('http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/topic', {
+        const response = await fetch(`${backendUrl}/topic`, {
           headers: {
             Authorization: `Token ${token}`,
           },
@@ -69,7 +71,7 @@ const HomePage = () => {
     const fetchProblems = async () => {
       try {
         const token = localStorage.getItem("Token");
-        const response = await fetch(`http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/challenges/${selectedTopic}`, {
+        const response = await fetch(`${backendUrl}/challenges/${selectedTopic}`, {
           headers: {
             Authorization: `Token ${token}`,
           },
@@ -93,7 +95,13 @@ const HomePage = () => {
     // Save selected topic in local storage whenever it changes
     localStorage.setItem("selectedTopic", selectedTopic.toString());
   }, [selectedTopic]);
+  const handleOpenAddChallengeModal = () => {
+    setAddChallengeModalOpen(true);
+  };
 
+  const handleCloseAddChallengeModal = () => {
+    setAddChallengeModalOpen(false);
+  };
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -135,12 +143,12 @@ const HomePage = () => {
                 >
                    <div className="flex-grow">
                       <div className="flex justify-between items-center">
-                         <h3 className="text-white font-bold mb-2">{problem.name}</h3>
+                         <h3 className="text-white text-lg font-semibold ">{problem.name}</h3>
                          <span className="text-sm font-bold text-black bg-white px-2 py-1 rounded-md" style={{ marginLeft: "8px", alignSelf: "flex-start" }}>
                             {problem.difficulty}
                          </span>
                       </div>
-                      <p className="text-sm text-white mb-2">{problem.description}</p>
+                      <p className="text-justify text-sm text-white mb-3 mt-2">{problem.description}</p>
                    </div>
                    <Link
                       to={`/Problem/${problem.id}`}
@@ -152,13 +160,53 @@ const HomePage = () => {
                 ))}
             </div>
             {(admin && (selectedTopic === 0 || activeTopicName === "All Problems")) && ( // admin condition 
-                <Link to="/addChallenge" className="absolute bottom-4 right-4">
+                <div onClick={handleOpenAddChallengeModal} className="absolute bottom-4 right-4 cursor-pointer">
                      <img src={addImage} alt="Add" style={{ width: "50px", height: "50px" }} /> 
-                </Link>
+                </div>
             )}
         </div>
       </div>
       <FaBars className="sm:hidden absolute top-4 left-4 text-2xl text-gray-600 cursor-pointer" onClick={() => setShowMenu(!showMenu)} />
+      <Modal
+  isOpen={isAddChallengeModalOpen}
+  onRequestClose={handleCloseAddChallengeModal}
+  style={{
+    overlay: {
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      width: '70%', // Adjust width as needed
+      maxHeight: '80vh', 
+      overflowY: 'auto', 
+      borderRadius: '10px',
+      padding: '20px',
+    },
+  }}
+  shouldCloseOnOverlayClick={true}
+>
+  <button
+    onClick={handleCloseAddChallengeModal}
+    style={{
+      position: 'absolute',
+      top: '10px',
+      right: '10px',
+      cursor: 'pointer',
+      backgroundColor: 'transparent',
+      border: 'none',
+      color: 'black',
+    }}
+  >
+    Close
+  </button>
+  <AddChallenge />
+</Modal>
+
     </div>
   );
 };

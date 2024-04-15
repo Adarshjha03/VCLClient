@@ -13,14 +13,14 @@ const AddChallenge = () => {
   });
   const [topics, setTopics] = useState([]);
   const [responseMessage, setResponseMessage] = useState(null);
-
+  const backendUrl = "https://api.virtualcyberlabs.com";
   useEffect(() => {
     fetchTopics();
   }, []); // Fetch topics when component mounts
 
   const fetchTopics = async () => {
     try {const token = localStorage.getItem("Token");
-      const response = await fetch("http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/topic", {
+      const response = await fetch(`${backendUrl}/topic`, {
         headers: {
           Authorization: `Token ${token}`,
         },
@@ -39,7 +39,7 @@ const AddChallenge = () => {
     event.preventDefault();
 
     try {const token = localStorage.getItem("Token");
-      const response = await fetch(`http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/challenges/${challengeData.topic}`, {
+      const response = await fetch(`${backendUrl}/challenges/${challengeData.topic}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

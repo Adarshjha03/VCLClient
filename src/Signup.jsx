@@ -7,10 +7,10 @@ function Signup() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
-
+    const backendUrl = "https://api.virtualcyberlabs.com";
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/signup', {
+        axios.post(`${backendUrl}/signup`, {
             "email": email,
             "username": name,
             "password": password

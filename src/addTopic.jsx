@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const AddTopic = () => {
   const [topic, setTopic] = useState("");
   const [responseMessage, setResponseMessage] = useState(null);
-
+  const backendUrl = "https://api.virtualcyberlabs.com";
   const handleTopicChange = (event) => {
     setTopic(event.target.value);
   };
@@ -12,7 +12,7 @@ const AddTopic = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {const token = localStorage.getItem("Token");
-      const response = await fetch("http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/topic", {
+      const response = await fetch(`${backendUrl}/topic`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

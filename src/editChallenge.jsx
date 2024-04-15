@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 const EditChallenge = () => {
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
+  const backendUrl = "https://api.virtualcyberlabs.com";
   const [challengeData, setChallengeData] = useState({
     name: '',
     difficulty: '',
@@ -21,7 +22,7 @@ const EditChallenge = () => {
     const fetchChallengeData = async () => {
       try {
         const token = localStorage.getItem("Token");
-        const response = await fetch(`http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/challenge/${id}`, {
+        const response = await fetch(`${backendUrl}/challenge/${id}`, {
           headers: {
             Authorization: `Token ${token}`,
           },
@@ -41,7 +42,7 @@ const EditChallenge = () => {
     const fetchTopics = async () => {
       try {
         const token = localStorage.getItem("Token");
-        const response = await fetch('http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/topic', {
+        const response = await fetch(`${backendUrl}/topic`, {
           headers: {
             Authorization: `Token ${token}`,
           },
@@ -72,7 +73,7 @@ const EditChallenge = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("Token");
-      const response = await fetch(`http://cyberrange-backend-dev.ap-south-1.elasticbeanstalk.com/challenge/${id}`, {
+      const response = await fetch(`${backendUrl}/challenge/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
