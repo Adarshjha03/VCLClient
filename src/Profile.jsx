@@ -1,5 +1,5 @@
 import React from "react";
-
+import Profile from "./Profile.png"
 const ProfilePage = () => {
   // Updated user data
   const user = {
@@ -26,7 +26,7 @@ const ProfilePage = () => {
       <div className="container mx-auto p-8 flex-grow">
         <div className="flex items-center mb-8">
           <img
-            src="https://cdn.pixabay.com/photo/2019/12/24/15/38/hacker-4717018_1280.png"
+            src={Profile}
             alt="User"
             className="w-24 h-24 rounded-full mr-4"
           />
