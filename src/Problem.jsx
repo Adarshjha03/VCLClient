@@ -217,6 +217,28 @@ const ProblemPage = () => {
     <img src={linkImage} alt="Link" className="w-4 h-4 ml-1" />
   </div>
 )}
+ <div className="bg-gradient-to-r from-green-500 to-green-400 p-6 rounded-lg shadow-lg">
+    <h2 className="text-lg font-semibold mb-4 text-center text-white">Open the Virtual Lab</h2>
+    <div className="flex flex-col items-center">
+      <button className="bg-white font-semibold text-003366 px-4 py-2 rounded hover:bg-blue-200" onClick={requestVirtualMachine} disabled={isLoading}>
+        {isLoading ? "Loading..." : "Start Virtual Lab"}
+      </button>
+      {responseMessage && (
+        <div className="text-blue-900 text-center ">{responseMessage}</div>
+      )}
+      {vmData && (
+  <div className="mt-4 text-center text-blue-900">
+    <p className="text-blue-900">
+      URL:{" "}
+      <a href={vmData.vm_url} target="_blank" rel="noopener noreferrer" className="text-blue-500 text-sm">
+        {vmData.vm_url}
+      </a>
+    </p>
+    <p>Password: {vmData.password}</p>
+  </div>
+)}
+    </div>
+  </div>
 
                 </div>
               </div>
@@ -239,34 +261,23 @@ const ProblemPage = () => {
                 </div>
               </div>
             </div>
+            
             <div className="flex mb-8">
-            <div className="w-1/2 pr-1">
-  <div className="bg-gradient-to-r from-green-500 to-green-400 p-6 rounded-lg shadow-lg">
-    <h2 className="text-lg font-semibold mb-4 text-center text-white">Open the Virtual Lab</h2>
-    <div className="flex flex-col items-center">
-      <button className="bg-white font-semibold text-003366 px-4 py-2 rounded hover:bg-blue-200" onClick={requestVirtualMachine} disabled={isLoading}>
-        {isLoading ? "Loading..." : "Start Virtual Lab"}
-      </button>
-      {responseMessage && (
-        <div className="text-blue-900 text-center ">{responseMessage}</div>
-      )}
-      {vmData && (
-  <div className="mt-4 text-center text-blue-900">
-    <p className="text-blue-900">
-      URL:{" "}
-      <a href={vmData.vm_url} target="_blank" rel="noopener noreferrer" className="text-blue-500 text-sm">
-        {vmData.vm_url}
-      </a>
-    </p>
-    <p>Password: {vmData.password}</p>
-  </div>
-)}
-    </div>
+            <div className="w-1/2 pr-1" style={{ paddingTop: '30px' }}>
+            <div className="flex justify-start">
+  <div>
+    <a href={challenge.solution.startsWith("https")? challenge.solution : `http://${challenge.solution}`} className="bg-blue-500 text-white px-6 py-4 rounded hover:bg-blue-600" target="_blank">
+      <img src={ideaicon} alt="Image" className="w-6 h-6 mr-1 inline -mt-1" /> Check Solution
+    </a>
   </div>
 </div>
+</div>
+
 
               <div className="w-1/2 pl-4">
+                
                 <div style={{ backgroundColor: "#11255a" }} className="p-6 rounded-lg shadow-lg relative">
+                  
                   <h2 className="text-lg font-semibold mb-4 text-white text-center">Submit Answer</h2>
                   <p className="text-sm text-white mb-4 text-center">Enumerate users and submit with comma separation</p>
                   <div className="flex items-center justify-center mb-4">
@@ -282,13 +293,7 @@ const ProblemPage = () => {
                 </div>
               </div>
             </div>
-            <div className="flex justify-start">
-  <div>
-    <a href={challenge.solution.startsWith("https")? challenge.solution : `http://${challenge.solution}`} className="bg-blue-500 text-white px-6 py-4 rounded hover:bg-blue-600" target="_blank">
-      <img src={ideaicon} alt="Image" className="w-6 h-6 mr-1 inline -mt-1" /> Check Solution
-    </a>
-  </div>
-</div>
+            
           </div>
         </div>
       </div>
