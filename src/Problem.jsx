@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/navbar1";
 import editImage from "./assets/edit.png";
 import Modal from 'react-modal';
-import { useNavigate } from "react-router-dom";
 import EditChallenge from './editChallenge';
 import linkImage from "./assets/link.png";
-import ideaicon from "./ideaicon.png"
+import ideaicon from "./ideaicon.png";
+
 const ProblemPage = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
-  const [verificationResponseMessage, setVerificationResponseMessage] = useState(""); // New state variable
+  const [verificationResponseMessage, setVerificationResponseMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [challenge, setChallenge] = useState(null);
   const [admin, setAdmin] = useState(false);
-  const backendUrl = "https://api.virtualcyberlabs.com";
   const [userAnswer, setUserAnswer] = useState("");
   const [selectedTopic, setSelectedTopic] = useState(() => {
     const storedTopic = localStorage.getItem("selectedTopic");
@@ -24,6 +23,11 @@ const ProblemPage = () => {
   });
   const [vmData, setVmData] = useState(null);
   const [isEditChallengeModalOpen, setEditChallengeModalOpen] = useState(false);
+
+  const backendUrl = "https://api.virtualcyberlabs.com";
+  const { id } = useParams();
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -49,8 +53,6 @@ const ProblemPage = () => {
     fetchUserData();
   }, []);
 
-  const { id } = useParams();
-  const navigate = useNavigate();
   const handleOpenEditChallengeModal = () => {
     setEditChallengeModalOpen(true);
   };
@@ -58,6 +60,7 @@ const ProblemPage = () => {
   const handleCloseEditChallengeModal = () => {
     setEditChallengeModalOpen(false);
   };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -77,7 +80,6 @@ const ProblemPage = () => {
         setChallenge(data);
       } catch (error) {
         console.error("Error loading the challenge:", error);
-        
       } finally {
         setIsLoading(false);
       }
@@ -101,7 +103,7 @@ const ProblemPage = () => {
       const data = await response.json();
       if (data && data.message) {
         setResponseMessage(data.message);
-        setVmData(data); // Set vmData state with the received data
+        setVmData(data);
       } else {
         throw new Error("Invalid response format");
       }
@@ -139,14 +141,15 @@ const ProblemPage = () => {
         throw new Error("Failed to verify flag.");
       }
       const responseData = await response.json();
-      setVerificationResponseMessage(responseData.message); // Set verification response message
+      setVerificationResponseMessage(responseData.message);
     } catch (error) {
       console.error("Error verifying flag:", error);
-      setVerificationResponseMessage("Failed to verify flag."); // Set verification response message
+      setVerificationResponseMessage("Failed to verify flag.");
     }
   };
 
   if (!challenge) return <p>No challenge data found.</p>;
+
   return (
     <div className="flex h-screen font-sans overflow-hidden">
       <Sidebar showMenu={showMenu} onTopicSelect={handleTopicChange} activeTopic={selectedTopic} />
@@ -157,70 +160,73 @@ const ProblemPage = () => {
             <div className="mb-8 flex justify-between items-center">
               <h1 className="text-2xl font-bold mb-4">{challenge.name}</h1>
               {admin && (
-  <div>
-    <Modal
-      isOpen={isEditChallengeModalOpen}
-      onRequestClose={handleCloseEditChallengeModal}
-      style={{
-        overlay: {
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        },
-        content: {
-          top: '50%',
-          left: '50%',
-          right: 'auto',
-          bottom: 'auto',
-          marginRight: '-50%',
-          transform: 'translate(-50%, -50%)',
-          width: '70%', // Adjust width as needed
-      maxHeight: '80vh', // Limit maximum height to 80vh
-      overflowY: 'auto', // Add scrollability
-          borderRadius: '10px',
-          padding: '20px',
-        },
-      }}
-      shouldCloseOnOverlayClick={true}
-    >
-      <button
-        onClick={handleCloseEditChallengeModal}
-        style={{
-          position: 'absolute',
-          top: '10px',
-          right: '10px',
-          cursor: 'pointer',
-          backgroundColor: 'transparent',
-          border: 'none',
-          color: 'black',
-        }}
-      >
-        Close
-      </button>
-      <EditChallenge />
-    </Modal>
-    <div onClick={handleOpenEditChallengeModal} className="flex items-center">
-      <img src={editImage} alt="Edit" className="w-4 h-4 mr-2" />
-      Edit
-    </div>
-  </div>
-)}
-            </div>
-            <div className="flex mb-8 ">
-              <div className="w-1/2 pr-4">
-                <div className="bg-white p-6 rounded-lg shadow-lg">
-                  <h2 className="border-b-2 border-blue-900 text-lg font-bold mb-4">Problem Statement</h2>
-                  <p className="mb-4">{challenge.problem_statement}</p>
-                  {challenge.supporting_material !== "NULL" && (
-  <div className="flex align-items-center">
-    <a href={challenge.solution.startsWith("https") ? challenge.solution : `http://${challenge.supporting_material}`} className="text-base font-semibold mb-2" target="_blank">
-      Supporting Material
-    </a>
-    <img src={linkImage} alt="Link" className="w-4 h-4 ml-1" />
-  </div>
-)}
-
+                <div>
+                  <Modal
+                    isOpen={isEditChallengeModalOpen}
+                    onRequestClose={handleCloseEditChallengeModal}
+                    style={{
+                      overlay: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                      },
+                      content: {
+                        top: '50%',
+                        left: '50%',
+                        right: 'auto',
+                        bottom: 'auto',
+                        marginRight: '-50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: '70%',
+                        maxHeight: '80vh',
+                        overflowY: 'auto',
+                        borderRadius: '10px',
+                        padding: '20px',
+                      },
+                    }}
+                    shouldCloseOnOverlayClick={true}
+                  >
+                    <button
+                      onClick={handleCloseEditChallengeModal}
+                      style={{
+                        position: 'absolute',
+                        top: '10px',
+                        right: '10px',
+                        cursor: 'pointer',
+                        backgroundColor: 'transparent',
+                        border: 'none',
+                        color: 'black',
+                      }}
+                    >
+                      Close
+                    </button>
+                    <EditChallenge />
+                  </Modal>
+                  <div onClick={handleOpenEditChallengeModal} className="flex items-center">
+                    <img src={editImage} alt="Edit" className="w-4 h-4 mr-2" />
+                    Edit
+                  </div>
                 </div>
-              </div>
-              <div className="w-1/2 pl-4">
+              )}
+            </div>
+            {/* Challenge Details */}
+            <div className="grid grid-cols-2 gap-8">
+              {/* Problem Statement */}
+              <div className="col-span-2 sm:col-span-1 pr-4 mb-8">
+  <div className="bg-white p-6 rounded-lg shadow-lg">
+    <h2 className="border-b-2 border-blue-900 text-lg font-bold mb-4">Problem Statement</h2>
+    <p className="mb-4" style={{ wordWrap: 'break-word' }}>{challenge.problem_statement}</p>
+    {challenge.supporting_material !== "NULL" && (
+      <div className="flex items-center">
+        <a href={challenge.solution.startsWith("https") ? challenge.solution : `http://${challenge.supporting_material}`} className="text-base font-semibold mb-2" target="_blank">
+          Supporting Material
+        </a>
+        <img src={linkImage} alt="Link" className="w-4 h-4 ml-1" />
+      </div>
+    )}
+  </div>
+</div>
+
+              {/* Prohibited Activities */}
+              <div className="col-span-2 sm:col-span-1 pl-4 mb-8">
                 <div className="bg-white p-6 rounded-lg shadow-lg">
                   <h2 className="border-b-2 border-blue-900 text-lg font-bold mb-4">Prohibited Activities</h2>
                   <p>
@@ -238,62 +244,64 @@ const ProblemPage = () => {
                   <p>If found any of these rules to be not followed, actions will be taken accordingly.</p>
                 </div>
               </div>
-            </div>
-            <div className="flex mb-8">
-            <div className="w-1/2 pr-1">
-  <div className="bg-gradient-to-r from-green-500 to-green-400 p-6 rounded-lg shadow-lg">
-    <h2 className="text-lg font-semibold mb-4 text-center text-white">Open the Virtual Lab</h2>
+              {/* Open the Virtual Lab */}
+              <div className="bg-gradient-to-r from-green-500 to-green-400 py-1 px-3 rounded-lg shadow-lg mb-8 flex justify-center items-center">
+  <div>
+    <h2 className="text-lg font-semibold mb-2 text-center text-white">Open the Virtual Lab</h2>
     <div className="flex flex-col items-center">
       <button className="bg-white font-semibold text-003366 px-4 py-2 rounded hover:bg-blue-200" onClick={requestVirtualMachine} disabled={isLoading}>
         {isLoading ? "Loading..." : "Start Virtual Lab"}
       </button>
       {responseMessage && (
-        <div className="text-blue-900 text-center ">{responseMessage}</div>
+        <div className="text-blue-900 text-center mt-2">{responseMessage}</div>
       )}
       {vmData && (
-  <div className="mt-4 text-center text-blue-900">
-    <p className="text-blue-900">
-      URL:{" "}
-      <a href={vmData.vm_url} target="_blank" rel="noopener noreferrer" className="text-blue-500 text-sm">
-        {vmData.vm_url}
-      </a>
-    </p>
-    <p>Password: {vmData.password}</p>
-  </div>
-)}
+        <div className="mt-2 text-center text-blue-900">
+          <p className="text-blue-900">
+            URL:{" "}
+            <a href={vmData.vm_url} target="_blank" rel="noopener noreferrer" className="text-blue-500 text-sm">
+              {vmData.vm_url}
+            </a>
+          </p>
+          <p>Password: {vmData.password}</p>
+        </div>
+      )}
     </div>
   </div>
 </div>
 
-              <div className="w-1/2 pl-4">
-                <div style={{ backgroundColor: "#11255a" }} className="p-6 rounded-lg shadow-lg relative">
-                  <h2 className="text-lg font-semibold mb-4 text-white text-center">Submit Answer</h2>
-                  <p className="text-sm text-white mb-4 text-center">Enumerate users and submit with comma separation</p>
-                  <div className="flex items-center justify-center mb-4">
-                    <input type="text" placeholder="Your answer..." className="w-85p px-4 py-2 rounded-l border border-003366 focus:outline-none focus:border-blue-400 text-003366" value={userAnswer} onChange={(e) => setUserAnswer(e.target.value)} />
-                    <button className="bg-white text-11255a px-4 py-2 rounded-r font-semibold hover:text-black " onClick={handleSubmitAnswer} disabled={isLoading}>
-                      Submit
-                    </button>
-                  </div>
-                  {/* Display verification response message */}
-                  {verificationResponseMessage && (
-                    <div className="text-green-500 text-center">{verificationResponseMessage}</div>
-                  )}
-                </div>
+              {/* Submit Answer */}
+              <div style={{ backgroundColor: "#11255a" }} className="p-6 rounded-lg shadow-lg relative">
+  <h2 className="text-lg font-semibold mb-4 text-white text-center">Submit Answer</h2>
+  <p className="text-sm text-white mb-4 text-center">Enumerate users and submit with comma separation</p>
+  <div className="flex items-center justify-center mb-4">
+    <input type="text" placeholder="Your answer..." className="w-100p px-4 py-2 rounded border border-003366 focus:outline-none focus:border-blue-400 text-003366" value={userAnswer} onChange={(e) => setUserAnswer(e.target.value)} />
+    <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded font-semibold ml-2" onClick={handleSubmitAnswer} disabled={isLoading}>
+      Submit
+    </button>
+  </div>
+  {/* Display verification response message */}
+  {verificationResponseMessage && (
+    <div className="text-green-500 text-center py-2">{verificationResponseMessage}</div>
+  )}
+</div>
+
+
+
+
+            </div>
+            {/* Check Solution Button */}
+            <div className="flex justify-start">
+              <div>
+                <a href={challenge.solution.startsWith("https")? challenge.solution : `http://${challenge.solution}`} className="bg-blue-500 text-white px-6 py-4 rounded hover:bg-blue-600" target="_blank">
+                  <img src={ideaicon} alt="Image" className="w-6 h-6 mr-1 inline -mt-1" /> Check Solution
+                </a>
               </div>
             </div>
-            <div className="flex justify-start">
-  <div>
-    <a href={challenge.solution.startsWith("https")? challenge.solution : `http://${challenge.solution}`} className="bg-blue-500 text-white px-6 py-4 rounded hover:bg-blue-600" target="_blank">
-      <img src={ideaicon} alt="Image" className="w-6 h-6 mr-1 inline -mt-1" /> Check Solution
-    </a>
-  </div>
-</div>
           </div>
         </div>
       </div>
       <FaBars className="sm:hidden absolute top-4 left-4 text-2xl text-gray-600 cursor-pointer" onClick={toggleMenu} />
-      
     </div>
   );
 };
