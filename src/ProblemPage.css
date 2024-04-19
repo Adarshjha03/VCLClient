@@ -1,0 +1,28 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .problem-statement {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+  }
+  
+  .prohibited-activities {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+  }
+  
+  .open-virtual-lab {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+  }
+  
+  .submit-answer {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+  }
+  
