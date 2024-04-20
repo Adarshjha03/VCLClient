@@ -217,7 +217,7 @@ const ProblemPage = () => {
     <p className="mb-4" style={{ wordWrap: 'break-word' }}>{challenge.problem_statement}</p>
     {challenge.supporting_material !== "NULL" && (
       <div className="flex items-center">
-        <a href={challenge.solution.startsWith("https") ? challenge.solution : `http://${challenge.supporting_material}`} className="text-base font-semibold mb-2" target="_blank">
+        <a href={challenge.supporting_material.startsWith("https") ? challenge.supporting_material : `http://${challenge.supporting_material}`} className="text-base font-semibold mb-2" target="_blank">
           Supporting Material
         </a>
         <img src={linkImage} alt="Link" className="w-4 h-4 ml-1" />
