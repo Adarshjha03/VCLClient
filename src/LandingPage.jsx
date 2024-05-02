@@ -4,7 +4,6 @@ const LandingPage = () => {
       <div>
         <Navbar />
         <Hero />
-        
         <Feedback />
         <CTA />
         <Footer />
