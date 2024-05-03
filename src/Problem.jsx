@@ -3,12 +3,9 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/navbar1";
-import editImage from "./assets/edit.png";
-import Modal from 'react-modal';
-import EditChallenge from './editChallenge';
 import linkImage from "./assets/link.png";
 import ideaicon from "./ideaicon.png";
-
+import EditButton from "./EditButton"; // Import EditButton component
 const ProblemPage = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
@@ -22,8 +19,6 @@ const ProblemPage = () => {
     return storedTopic ? parseInt(storedTopic) : 0;
   });
   const [vmData, setVmData] = useState(null);
-  const [isEditChallengeModalOpen, setEditChallengeModalOpen] = useState(false);
-
   const backendUrl = "https://api.virtualcyberlabs.com";
   const { id } = useParams();
   const navigate = useNavigate();
@@ -53,14 +48,6 @@ const ProblemPage = () => {
 
     fetchUserData();
   }, []);
-
-  const handleOpenEditChallengeModal = () => {
-    setEditChallengeModalOpen(true);
-  };
-
-  const handleCloseEditChallengeModal = () => {
-    setEditChallengeModalOpen(false);
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -160,53 +147,7 @@ const ProblemPage = () => {
           <div className="container mx-auto p-8">
             <div className="mb-8 flex justify-between items-center">
               <h1 className="text-2xl font-bold mb-4">{challenge.name}</h1>
-              {admin && (
-                <div>
-                  <Modal
-                    isOpen={isEditChallengeModalOpen}
-                    onRequestClose={handleCloseEditChallengeModal}
-                    style={{
-                      overlay: {
-                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                      },
-                      content: {
-                        top: '50%',
-                        left: '50%',
-                        right: 'auto',
-                        bottom: 'auto',
-                        marginRight: '-50%',
-                        transform: 'translate(-50%, -50%)',
-                        width: '70%',
-                        maxHeight: '80vh',
-                        overflowY: 'auto',
-                        borderRadius: '10px',
-                        padding: '20px',
-                      },
-                    }}
-                    shouldCloseOnOverlayClick={true}
-                  >
-                    <button
-                      onClick={handleCloseEditChallengeModal}
-                      style={{
-                        position: 'absolute',
-                        top: '10px',
-                        right: '10px',
-                        cursor: 'pointer',
-                        backgroundColor: 'transparent',
-                        border: 'none',
-                        color: 'black',
-                      }}
-                    >
-                      Close
-                    </button>
-                    <EditChallenge />
-                  </Modal>
-                  <div onClick={handleOpenEditChallengeModal} className="flex items-center">
-                    <img src={editImage} alt="Edit" className="w-4 h-4 mr-2" />
-                    Edit
-                  </div>
-                </div>
-              )}
+              <EditButton admin={admin} /> {/* Use EditButton component */}
             </div>
             {/* Challenge Details */}
             <div className="grid grid-cols-2 gap-8">

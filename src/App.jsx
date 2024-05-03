@@ -12,7 +12,7 @@ import AddChallenge from './addChallenge';
 import AddTopic from './addTopic';
 import EditChallenge from './editChallenge';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
+import Temp from './Temp'
 const App = () => {
   return (
     <Router> 
@@ -27,6 +27,7 @@ const App = () => {
         <Route path= '/addChallenge' element={<AddChallenge/>}></Route>
         <Route path= '/addTopic' element={<AddTopic/>}></Route>
         <Route path= '/editChallenge/:id' element={<EditChallenge/>}></Route>
+        <Route path= '/temp' element={<Temp/>}></Route>
       </Routes>
     </Router>
   )
