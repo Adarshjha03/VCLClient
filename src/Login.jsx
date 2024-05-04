@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import animation from "./assets/GIF.json";
 import Lottie from "lottie-react";
@@ -32,23 +32,17 @@ function Login() {
 
   return (
     <div
-    className="d-flex justify-content-center align-items-center vh-100"
-    style={{ background: "linear-gradient(315deg, #2234ae 0%, #191714 74%)" }}
-  >
+      className="d-flex justify-content-center align-items-center vh-100"
+      style={{ background: "linear-gradient(315deg, #2234ae 0%, #191714 74%)" }}
+    >
       {/* Lottie animation */}
       <div className="w-50 pr-4">
-      <Lottie
-          animationData={animation}
-          style={{ width: "80%", height: "80%" }}
-        />
+        <Lottie animationData={animation} style={{ width: "80%", height: "80%" }} />
       </div>
 
       {/* Login box */}
-      <div
-        className="bg-white p-4 rounded shadow w-50"
-        style={{ maxWidth: "400px" }}
-      >
-        <h2 className="mb-4 text-center">Login</h2>
+      <div className="bg-white p-4 rounded shadow w-49" style={{ maxWidth: "400px" }}>
+        <h2 className="mb-4 text-center text-xl">Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="username" className="form-label">
@@ -80,7 +74,7 @@ function Login() {
           </div>
           <button
             type="submit"
-            className="btn btn-success w-100"
+            className="btn btn-success w-100 mb-3"
             style={{
               background: "linear-gradient(315deg, #2234ae 0%, #191714 120%)",
               color: "#fff",
@@ -90,6 +84,20 @@ function Login() {
             Login
           </button>
         </form>
+        <p className="text-center">
+          Don't have an account?{" "}
+          <Link
+            to="/signup"
+            className="btn btn-success w-100 mt-1"
+            style={{
+              background: "linear-gradient(315deg, #2234ae 0%, #191714 74%)",
+              color: "#fff",
+              border: "none",
+            }}
+          >
+            Sign up
+          </Link>
+        </p>
       </div>
     </div>
   );
