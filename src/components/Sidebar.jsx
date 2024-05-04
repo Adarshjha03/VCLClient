@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import headlogo from '../assets/dlogo.png';
-import logo from '../assets/bullet.png'
 import plusLogo from '../assets/add.png';
-import Modal from 'react-modal'; // Import React Modal
-import AddTopic from '../addTopic'; // Import the AddTopic component
+import Modal from 'react-modal';
+import AddTopic from '../addTopic';
+import { Link } from 'react-router-dom';
+import { FaCog, FaMedal, FaSignOutAlt, FaCode, FaTrophy, FaSearch, FaUser,FaFlask } from 'react-icons/fa'; // Importing Font Awesome icons
 
 const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
-  const [topicsWithLogos, setTopicsWithLogos] = useState([]);
+  const [topicsWithIcons, setTopicsWithIcons] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [admin, setAdmin] = useState(false);
-  const [modalIsOpen, setModalIsOpen] = useState(false); // State for modal
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [showProfileOptions, setShowProfileOptions] = useState(false); // State to manage visibility of profile options
   const backendUrl = "https://api.virtualcyberlabs.com";
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -47,10 +50,8 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
           throw new Error('Failed to fetch topics');
         }
         const data = await response.json();
-        const allProblemsTopic = { "id": 0 , "name": 'All Problems' };
-        const updatedTopics = [allProblemsTopic, ...data];
-        console.log(updatedTopics);
-        setTopicsWithLogos(updatedTopics);
+        const updatedTopics = [...data];
+        setTopicsWithIcons(updatedTopics);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -78,77 +79,134 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
   }
 
   return (
-    <div
-      className={`w-1/5 h-full overflow-y-auto border-r bg-gray-100 sm:block ${showMenu ? 'block' : 'hidden'}`}
-      style={{
-        scrollbarWidth: 'thin',
-        scrollbarColor: '#a5a5a5 #f3f4f6',
-      }}
-    >
+    <div className={`w-1/5 h-full overflow-y-auto border-r bg-gray-100 sm:block ${showMenu ? 'block' : 'hidden'}`}>
       <div className="p-3">
         <img src={headlogo} alt="HeadLogo" className="w-3/4 content-evenly mb-4 ml-4 " />
         <div className="space-y-4">
-          {admin && (
-            <div className="p-2 rounded-md font-medium text-xl flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300 flex items-center">
-              <button onClick={openModal} className="flex items-center">
-                <img src={plusLogo} alt="Logo" className="w-4 h-4 mr-2 font-bold justify-evenly" />
-                Add Topic
+          {/* Dashboard as main heading */}
+          <div className="p-2 font-bold text-2xl flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300">
+            Dashboard
+          </div>
+          {/* Profile section */}
+          <div className="space-y-2">
+            <div className="p-2 font-medium text-lg flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300">
+              <button onClick={() => setShowProfileOptions(!showProfileOptions)} className="flex items-center">
+                <FaUser className="w-4 h-4 mr-2" /> {/* Larger icon */}
+                My Profile
               </button>
             </div>
-          )}
-          {topicsWithLogos.map((topic) => (
-            <div
-              key={topic.id}
-              className={`p-2 rounded-md font-medium text-sm flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300 ${
-                activeTopic === topic.id ? 'bg-[#2234ae] text-white' : ''
-              }`}
-              onClick={() => onTopicSelect(topic.id === 0 ? 0 : topic.id)}
-            >
-              <div className="flex items-center">
-                <img src={logo} alt="Logo" className="w-4 h-4 mr-2" />
-                {topic.name}
+            {showProfileOptions && (
+              <div className="pl-4 space-y-2">
+                {/* Profile links */}
+                <Link to="/settings" className="p-2 font-medium text-md flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300">
+                  <FaCog className="w-4 h-4 mr-2" />
+                  Settings
+                </Link>
+                <Link to="/earnbadges" className="p-2 font-medium text-md flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300">
+                  <FaMedal className="w-4 h-4 mr-2" />
+                  Earn Badges
+                </Link>
+                <Link to="/logout" className="p-2 font-medium text-md flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300">
+                  <FaSignOutAlt className="w-4 h-4 mr-2" />
+                  Log out
+                </Link>
+              </div>
+            )}
+          </div>
+          {/* Other sections */}
+          <div className="space-y-4">
+            <div className="p-2 font-medium text-lg flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300">
+              <Link to="/searchlabs" className="flex items-center">
+                <FaSearch className="w-4 h-4 mr-2" />
+                Search Labs
+              </Link>
+            </div>
+            {/* Other sections */}
+            <div className="space-y-4">
+              <div className="p-2 font-medium text-lg flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300">
+                <Link to="/allproblemlabs" className="flex items-center">
+                  <FaCode className="w-4 h-4 mr-2" />
+                  All Problem Labs
+                </Link>
+              </div>
+              <div className="p-2 font-medium text-lg flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300">
+                <Link to="/leaderboard" className="flex items-center">
+                  <FaTrophy className="w-4 h-4 mr-2" />
+                  Leaderboard
+                </Link>
               </div>
             </div>
-          ))}
+          </div>
+          {/* Problem Labs section */}
+          <div className="p-2 font-bold text-lg flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300">
+            <FaCode className="w-6 h-6 mr-2" /> {/* Larger icon */}
+            <span className="ml-1">Problem Labs</span> {/* Larger text */}
+            {/* Add Topic button for admins */}
+            {admin && (
+              <div className="p-2 font-medium text-lg flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300">
+                <button onClick={openModal} className="flex items-center">
+                  <img src={plusLogo} alt="Logo" className="w-4 h-4 mr-2 font-bold justify-evenly" />
+                </button>
+              </div>
+            )}
+          </div>
+          {/* List of topics */}
+          <div className="ml-4 space-y-2"> {/* Indent and space the list of topics */}
+            {topicsWithIcons.map((topic) => (
+              <div
+                key={topic.id}
+                className={`p-2 font-medium text-md flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300 ${
+                  activeTopic === topic.id ? 'bg-[#2234ae] text-white' : ''
+                }`}
+                onClick={() => onTopicSelect(topic.id === 0 ? 0 : topic.id)}
+              >
+                <div className="flex items-center">
+                <span className="mr-2"><FaFlask className="w-4 h-4" /></span>
+                  {topic.name}
+                </div>
+              </div>
+            ))}
+          </div>
+          
         </div>
       </div>
+      {/* Modal for adding topic */}
       <Modal
-  isOpen={modalIsOpen}
-  onRequestClose={closeModal}
-  style={{
-    overlay: {
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    },
-    content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
-      borderRadius: '10px',
-      padding: '20px',
-    },
-  }}
-  shouldCloseOnOverlayClick={true} // Close modal when clicking outside
->
-  <button
-    onClick={closeModal}
-    style={{
-      position: 'absolute',
-      top: '10px',
-      right: '10px',
-      cursor: 'pointer',
-      backgroundColor: 'transparent',
-      border: 'none',
-      color: 'black',
-    }}
-  >
-    Close
-  </button>
-  <AddTopic />
-</Modal>
-
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={{
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          },
+          content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+            borderRadius: '10px',
+            padding: '20px',
+          },
+        }}
+        shouldCloseOnOverlayClick={true}
+      >
+        <button
+          onClick={closeModal}
+          style={{
+            position: 'absolute',
+            top: '10px',
+            right: '10px',
+            cursor: 'pointer',
+            backgroundColor: 'transparent',
+            border: 'none',
+            color: 'black',
+          }}
+        >
+          Close
+        </button>
+        <AddTopic />
+      </Modal>
     </div>
   );
 };
