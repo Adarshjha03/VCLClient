@@ -3,7 +3,7 @@ import { FaBars } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Sidebar from './components/Sidebar';
 import Navbar from './components/navbar1';
-import addImage from "./assets/add2.png"; // Importing the PNG image
+import addImage from "./assets/add2.png"; 
 import Modal from 'react-modal';
 import AddChallenge from './addChallenge';
 

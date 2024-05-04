@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import animation from "./assets/GIF.json";
+import Lottie from "lottie-react";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const backendUrl = "https://api.virtualcyberlabs.com";
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -29,11 +32,20 @@ function Login() {
 
   return (
     <div
-      className="d-flex justify-content-center align-items-center vh-100"
-      style={{ background: "linear-gradient(315deg, #2234ae 0%, #191714 74%)" }}
-    >
+    className="d-flex justify-content-center align-items-center vh-100"
+    style={{ background: "linear-gradient(315deg, #2234ae 0%, #191714 74%)" }}
+  >
+      {/* Lottie animation */}
+      <div className="w-50 pr-4">
+      <Lottie
+          animationData={animation}
+          style={{ width: "80%", height: "80%" }}
+        />
+      </div>
+
+      {/* Login box */}
       <div
-        className="bg-white p-4 rounded shadow"
+        className="bg-white p-4 rounded shadow w-50"
         style={{ maxWidth: "400px" }}
       >
         <h2 className="mb-4 text-center">Login</h2>
@@ -47,7 +59,7 @@ function Login() {
               name="username"
               placeholder="Enter Username"
               className="form-control"
-              style={{ backgroundColor: "#fff", color: "#000" }} // Changed background to white and text color to black
+              style={{ backgroundColor: "#fff", color: "#000" }}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
@@ -61,7 +73,7 @@ function Login() {
               name="password"
               placeholder="Enter Password"
               className="form-control"
-              style={{ backgroundColor: "#fff", color: "#000" }} // Changed background to white and text color to black
+              style={{ backgroundColor: "#fff", color: "#000" }}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />

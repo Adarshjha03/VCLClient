@@ -146,26 +146,68 @@ const ProblemPage = () => {
         <div className="p-4">
           <div className="container mx-auto p-8">
             <div className="mb-8 flex justify-between items-center">
-              <h1 className="text-2xl font-bold mb-4">{challenge.name}</h1>
+
               <EditButton admin={admin} /> {/* Use EditButton component */}
             </div>
             {/* Challenge Details */}
             <div className="grid grid-cols-2 gap-8">
+              {/* Open the Virtual Lab */}
+              <div className="bg-gradient-to-r from-green-500 to-green-400 p-6 rounded-lg shadow-lg mb-8 flex justify-center items-center">
+                <div className="flex flex-col items-center">
+                  <h1 className="text-2xl font-bold mb-4 text-center">{challenge.name}</h1>
+                  <h2 className="text-lg font-semibold mb-2 text-center text-white">Open the Virtual Lab</h2>
+                  <div className="flex flex-col items-center">
+                    <button className="bg-white font-semibold text-003366 px-4 py-2 rounded hover:bg-blue-200" onClick={requestVirtualMachine} disabled={isLoading}>
+                      {isLoading ? "Loading..." : "Start Virtual Lab"}
+                    </button>
+                    {vmData && (
+                      <div className="mt-2 text-center text-blue-900">
+                        <p className="text-blue-900">
+                          URL:{" "}
+                          <a href={vmData.vm_url} target="_blank" rel="noopener noreferrer" className="text-blue-500 text-sm">
+                            {vmData.vm_url}
+                          </a>
+                        </p>
+                        <p>Password: {vmData.password}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Submit Answer */}
+              <div style={{ backgroundColor: "#11255a", height: "230px" }} className="p-6 rounded-lg shadow-lg">
+  <h2 className="text-lg font-semibold mb-4 text-white text-center">Submit Answer</h2>
+  <p className="text-sm text-white mb-4 text-center">Enumerate users and submit with comma separation</p>
+  <div className="flex items-center justify-center mb-4">
+    <input type="text" placeholder="Your answer..." className="w-100p px-4 py-2 rounded border border-003366 focus:outline-none focus:border-blue-400 text-003366" value={userAnswer} onChange={(e) => setUserAnswer(e.target.value)} />
+    <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded font-semibold ml-2" onClick={handleSubmitAnswer} disabled={isLoading}>
+      Submit
+    </button>
+  </div>
+  {/* Display verification response message */}
+  {verificationResponseMessage && (
+    <div className="text-green-500 text-center py-2">{verificationResponseMessage}</div>
+  )}
+</div>
+
+
               {/* Problem Statement */}
               <div className="col-span-2 sm:col-span-1 pr-4 mb-8">
-  <div className="bg-white p-6 rounded-lg shadow-lg">
-    <h2 className="border-b-2 border-blue-900 text-lg font-bold mb-4">Problem Statement</h2>
-    <p className="mb-4" style={{ wordWrap: 'break-word' }}>{challenge.problem_statement}</p>
-    {challenge.supporting_material !== "NULL" && (
-      <div className="flex items-center">
-        <a href={challenge.supporting_material.startsWith("https") ? challenge.supporting_material : `http://${challenge.supporting_material}`} className="text-base font-semibold mb-2" target="_blank">
-          Supporting Material
-        </a>
-        <img src={linkImage} alt="Link" className="w-4 h-4 ml-1" />
-      </div>
-    )}
-  </div>
-</div>
+                <div className="bg-white p-6 rounded-lg shadow-lg">
+                  <h2 className="border-b-2 border-blue-900 text-lg font-bold mb-4">Problem Statement</h2>
+                  <p className="mb-4" style={{ wordWrap: 'break-word' }}>{challenge.problem_statement}</p>
+                  {challenge.supporting_material !== "NULL" && (
+                    <div className="flex items-center">
+                      <a href={challenge.supporting_material.startsWith("https") ? challenge.supporting_material : `http://${challenge.supporting_material}`} className="text-base font-semibold mb-2" target="_blank">
+                        Supporting Material
+                      </a>
+                      <img src={linkImage} alt="Link" className="w-4 h-4 ml-1" />
+                    </div>
+                  )}
+                </div>
+              </div>
 
               {/* Prohibited Activities */}
               <div className="col-span-2 sm:col-span-1 pl-4 mb-8">
@@ -186,47 +228,6 @@ const ProblemPage = () => {
                   <p>If found any of these rules to be not followed, actions will be taken accordingly.</p>
                 </div>
               </div>
-              {/* Open the Virtual Lab */}
-              <div className="bg-gradient-to-r from-green-500 to-green-400 py-1 px-3 rounded-lg shadow-lg mb-8 flex justify-center items-center">
-  <div>
-    <h2 className="text-lg font-semibold mb-2 text-center text-white">Open the Virtual Lab</h2>
-    <div className="flex flex-col items-center">
-      <button className="bg-white font-semibold text-003366 px-4 py-2 rounded hover:bg-blue-200" onClick={requestVirtualMachine} disabled={isLoading}>
-        {isLoading ? "Loading..." : "Start Virtual Lab"}
-      </button>
-      {responseMessage && (
-        <div className="text-blue-900 text-center mt-2">{responseMessage}</div>
-      )}
-      {vmData && (
-        <div className="mt-2 text-center text-blue-900">
-          <p className="text-blue-900">
-            URL:{" "}
-            <a href={vmData.vm_url} target="_blank" rel="noopener noreferrer" className="text-blue-500 text-sm">
-              {vmData.vm_url}
-            </a>
-          </p>
-          <p>Password: {vmData.password}</p>
-        </div>
-      )}
-    </div>
-  </div>
-</div>
-
-              {/* Submit Answer */}
-              <div style={{ backgroundColor: "#11255a" }} className="p-6 rounded-lg shadow-lg relative">
-  <h2 className="text-lg font-semibold mb-4 text-white text-center">Submit Answer</h2>
-  <p className="text-sm text-white mb-4 text-center">Enumerate users and submit with comma separation</p>
-  <div className="flex items-center justify-center mb-4">
-    <input type="text" placeholder="Your answer..." className="w-100p px-4 py-2 rounded border border-003366 focus:outline-none focus:border-blue-400 text-003366" value={userAnswer} onChange={(e) => setUserAnswer(e.target.value)} />
-    <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded font-semibold ml-2" onClick={handleSubmitAnswer} disabled={isLoading}>
-      Submit
-    </button>
-  </div>
-  {/* Display verification response message */}
-  {verificationResponseMessage && (
-    <div className="text-green-500 text-center py-2">{verificationResponseMessage}</div>
-  )}
-</div>
 
 
 
@@ -235,7 +236,7 @@ const ProblemPage = () => {
             {/* Check Solution Button */}
             <div className="flex justify-start">
               <div>
-                <a href={challenge.solution.startsWith("https")? challenge.solution : `http://${challenge.solution}`} className="bg-blue-500 text-white px-6 py-4 rounded hover:bg-blue-600" target="_blank">
+                <a href={challenge.solution.startsWith("https") ? challenge.solution : `http://${challenge.solution}`} style={{ backgroundColor: "#11255a" }} className=" text-white px-6 py-4 rounded hover:bg-blue-600" target="_blank">
                   <img src={ideaicon} alt="Image" className="w-6 h-6 mr-1 inline -mt-1" /> Check Solution
                 </a>
               </div>

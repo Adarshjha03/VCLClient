@@ -1,3 +1,5 @@
+import animation from "./assets/GIF.json";
+import Lottie from "lottie-react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
@@ -92,6 +94,7 @@ function Signup() {
                 </form>
                 <p className="text-center mt-3">Already have an account? <Link to="/login" className="btn btn-success w-100" style={{ background: "linear-gradient(315deg, #2234ae 0%, #191714 74%)", color: "#fff", border: "none" }}>Login</Link></p>
             </div>
+            
         </div>
     );
 }
