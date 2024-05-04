@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import animation from "./assets/GIF.json";
+import Lottie from "lottie-react";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const backendUrl = "https://api.virtualcyberlabs.com";
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -32,11 +35,14 @@ function Login() {
       className="d-flex justify-content-center align-items-center vh-100"
       style={{ background: "linear-gradient(315deg, #2234ae 0%, #191714 74%)" }}
     >
-      <div
-        className="bg-white p-4 rounded shadow"
-        style={{ maxWidth: "400px" }}
-      >
-        <h2 className="mb-4 text-center">Login</h2>
+      {/* Lottie animation */}
+      <div className="w-50 pr-4">
+        <Lottie animationData={animation} style={{ width: "80%", height: "80%" }} />
+      </div>
+
+      {/* Login box */}
+      <div className="bg-white p-4 rounded shadow w-49" style={{ maxWidth: "400px" }}>
+        <h2 className="mb-4 text-center text-xl">Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="username" className="form-label">
@@ -47,7 +53,7 @@ function Login() {
               name="username"
               placeholder="Enter Username"
               className="form-control"
-              style={{ backgroundColor: "#fff", color: "#000" }} // Changed background to white and text color to black
+              style={{ backgroundColor: "#fff", color: "#000" }}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
@@ -61,14 +67,14 @@ function Login() {
               name="password"
               placeholder="Enter Password"
               className="form-control"
-              style={{ backgroundColor: "#fff", color: "#000" }} // Changed background to white and text color to black
+              style={{ backgroundColor: "#fff", color: "#000" }}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <button
             type="submit"
-            className="btn btn-success w-100"
+            className="btn btn-success w-100 mb-3"
             style={{
               background: "linear-gradient(315deg, #2234ae 0%, #191714 120%)",
               color: "#fff",
@@ -78,6 +84,20 @@ function Login() {
             Login
           </button>
         </form>
+        <p className="text-center">
+          Don't have an account?{" "}
+          <Link
+            to="/signup"
+            className="btn btn-success w-100 mt-1"
+            style={{
+              background: "linear-gradient(315deg, #2234ae 0%, #191714 74%)",
+              color: "#fff",
+              border: "none",
+            }}
+          >
+            Sign up
+          </Link>
+        </p>
       </div>
     </div>
   );
