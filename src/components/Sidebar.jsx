@@ -85,26 +85,27 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
         <img src={headlogo} alt="HeadLogo" className="w-3/4 content-evenly mb-4 ml-4 " />
         <div className="space-y-">
           {/* Dashboard as main heading */}
-          <div className="p-2 font-bold text-lg flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300 border-b border-gray-300">
+          <div className="p-2 font-bold text-lg flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300 border-y border-gray-300">
             
             <span >Dashboard</span> {/* Larger text */}
           </div>
-          {/* Profile section */}
-          <div className="space-y-4 border-b border-gray-300">
+         
+        {/* Profile section */}
+        <div className="space-y-4 border-b border-gray-300">
             <div className="p-1 font-sans text-lg flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300  ">
-              <button onClick={() => setShowProfileOptions(!showProfileOptions)} className="flex items-center">
+              <button  className="flex items-center">
                 <FaUser className="w-4 h-4 mr-2" /> {/* Larger icon */}
                 My Profile
               </button>
             </div>
-            {showProfileOptions && (
+           
               <div className="pl-4 space-y-2">
                 {/* Profile links */}
-                <Link to="/settings" className="p-1 font-sans text-md flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300  ">
+                <Link to="/temp" className="p-1 font-sans text-md flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300  ">
                   <FaCog className="w-4 h-4 mr-2" />
                   Settings
                 </Link>
-                <Link to="/earnbadges" className="p-1 font-sans text-md flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300  ">
+                <Link to="/temp" className="p-1 font-sans text-md flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300  ">
                   <FaMedal className="w-4 h-4 mr-2" />
                   Earn Badges
                 </Link>
@@ -113,12 +114,12 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
                   Log out
                 </Link>
               </div>
-            )}
+           
           </div>
           {/* Other sections */}
           <div className="space-y-4">
             <div className="p-1 font-sans text-lg flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300  ">
-              <Link to="/searchlabs" className="flex items-center">
+              <Link to="/temp" className="flex items-center">
                 <FaSearch className="w-4 h-4 mr-2" />
                 Search Labs
               </Link>
@@ -129,7 +130,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
               {/* <div className="p-1 font-sans text-lg flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300  "> */}
               <div
             className={`p-1 font-sans text-lg flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300   ${
-              activeTopic === 0 ? 'bg-[#2234ae] text-white' : ''
+              activeTopic === 0 ? 'bg-gray-400 text-white' : ''
             }`}
             onClick={() => onTopicSelect(0)}
           >
@@ -141,7 +142,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
               </div>
               <div className="space-y-4 border-b border-gray-300">
               <div className="p-1 font-sans text-lg flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300  ">
-                <Link to="/leaderboard" className="flex items-center">
+                <Link to="/temp" className="flex items-center">
                   <FaTrophy className="w-4 h-4 mr-2" />
                   Leaderboard
                 </Link>
@@ -167,7 +168,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
               <div
                 key={topic.id}
                 className={`p-2 font-sans text-md flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300  ${
-                  activeTopic === topic.id ? 'bg-[#2234ae] text-white' : ''
+                  activeTopic === topic.id ? 'bg-gray-400 text-white' : ''
                 }`}
                 onClick={() => onTopicSelect(topic.id === 0 ? 0 : topic.id)}
               >
