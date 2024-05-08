@@ -4,7 +4,7 @@ import plusLogo from '../assets/add.png';
 import Modal from 'react-modal';
 import AddTopic from '../addTopic';
 import { Link } from 'react-router-dom';
-import { FaDesktop, FaKeyboard, FaLaptopCode, FaTasks ,FaCog, FaMedal, FaPuzzlePiece,FaBrain,FaSignOutAlt, FaCode, FaTrophy, FaQuestionCircle,FaSearch, FaUser,FaFlask } from 'react-icons/fa'; // Importing Font Awesome icons
+import { FaBell, FaLaptopCode, FaCog, FaMedal, FaCode, FaTrophy, FaQuestionCircle, FaSearch, FaUser } from 'react-icons/fa'; // Importing Font Awesome icons
 
 
 const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
@@ -35,8 +35,8 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
       }
     };
 
-    fetchUserData(); 
-  }, []); 
+    fetchUserData();
+  }, []);
 
   useEffect(() => {
     const fetchTopics = async () => {
@@ -82,80 +82,56 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
   return (
     <div className={`w-1/5 h-full overflow-y-auto border-r bg-gray-100 sm:block ${showMenu ? 'block' : 'hidden'}`}>
       <div className="p-3">
-        <img src={headlogo} alt="HeadLogo" className="w-3/4 content-evenly mb-4 ml-4 " />
+        <img src={headlogo} alt="HeadLogo" className="w-50 content-evenly mb-3  ml-7" />
         <div className="space-y-">
           {/* Dashboard as main heading */}
-          <div className="p-2 font-bold text-lg flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300 border-y border-gray-300">
-            
+          <div className="p-2 font-bold text-lg flex items-center justify-start hover:bg-gray-400 rounded-sm hover:rounded-sm  hover:text-white transition duration-300">
+
             <span >Dashboard</span> {/* Larger text */}
           </div>
-         
-        {/* Profile section */}
-        <div className="space-y-4 border-b border-gray-300">
-            <div className="p-1 font-sans text-lg flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300  ">
-              <button  className="flex items-center">
-                <FaUser className="w-4 h-4 mr-2" /> {/* Larger icon */}
+
+          {/* Profile section */}
+          <div className="space-y-2">
+              <Link to="/temp" className="p-1 font-sans text-md flex items-center justify-start bg-gray-100 transition duration-300 rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white">
+              <FaUser className="w-4 h-4 mr-2" /> {/* Larger icon */}
                 My Profile
-              </button>
+            </Link>
+            <Link to="/temp" className="p-1 font-sans text-md flex items-center justify-start bg-gray-100 transition duration-300 rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white">
+              <FaCog className="w-4 h-4 mr-2" />
+              Settings
+            </Link>
+            <Link to="/temp" className="p-1 font-sans text-md flex items-center justify-start bg-gray-100 transition duration-300 rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white">
+              <FaMedal className="w-4 h-4 mr-2" />
+              Earn Badges+
+            </Link>
+            <Link to="/temp" className="p-1 font-sans text-md flex items-center justify-start bg-gray-100 transition duration-300 rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white">
+              <FaBell className="w-4 h-4 mr-2" />
+              Notification
+            </Link>
+            <Link to="/temp" className="p-1 font-sans text-md flex items-center justify-start bg-gray-100 transition duration-300 rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white">
+              <FaSearch className="w-4 h-4 mr-2" />
+              Search Labs
+            </Link>
+
+            <div className={`p-1 font-sans text-md flex items-center justify-start bg-gray-100 transition duration-300 rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white `} onClick={() => onTopicSelect(0)}>
+              <FaCode className="w-4 h-4 mr-2" />
+              All Problem Labs
             </div>
-           
-              <div className="pl-4 space-y-2">
-                {/* Profile links */}
-                <Link to="/temp" className="p-1 font-sans text-md flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300  ">
-                  <FaCog className="w-4 h-4 mr-2" />
-                  Settings
-                </Link>
-                <Link to="/temp" className="p-1 font-sans text-md flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300  ">
-                  <FaMedal className="w-4 h-4 mr-2" />
-                  Earn Badges
-                </Link>
-                <Link to="/logout" className="p-1 font-sans text-md flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300  ">
-                  <FaSignOutAlt className="w-4 h-4 mr-2" />
-                  Log out
-                </Link>
-              </div>
-           
-          </div>
-          {/* Other sections */}
-          <div className="space-y-4">
-            <div className="p-1 font-sans text-lg flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300  ">
-              <Link to="/temp" className="flex items-center">
-                <FaSearch className="w-4 h-4 mr-2" />
-                Search Labs
+              <Link to="/temp"className="p-1 font-sans text-md flex items-center justify-start bg-gray-100 transition duration-300 rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white">
+                <FaTrophy className="w-4 h-4 mr-2" />
+                Leaderboard
               </Link>
-            </div>
-            </div>
-            {/* Other sections */}
-            <div className="space-y-4">
-              {/* <div className="p-1 font-sans text-lg flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300  "> */}
-              <div
-            className={`p-1 font-sans text-lg flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300   ${
-              activeTopic === 0 ? 'bg-gray-400 text-white' : ''
-            }`}
-            onClick={() => onTopicSelect(0)}
-          >
-              
-                  <FaCode className="w-4 h-4 mr-2" />
-                  All Problem Labs
-              
-              </div>
-              </div>
-              <div className="space-y-4 border-b border-gray-300">
-              <div className="p-1 font-sans text-lg flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300  ">
-                <Link to="/temp" className="flex items-center">
-                  <FaTrophy className="w-4 h-4 mr-2" />
-                  Leaderboard
-                </Link>
-              </div>
-              </div>
-         
+          </div>
+
+
+
           {/* Problem Labs section */}
-          <div className="p-2 font-bold text-lg flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300 ">
-            
+          <div className="p-2 font-bold text-lg flex items-center justify-start rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white transition duration-300 ">
+
             <span >Problem Labs</span> {/* Larger text */}
             {/* Add Topic button for admins */}
             {admin && (
-              <div className="p-2 font-medium text-lg flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300 ">
+              <div className="p-2 font-medium text-lg flex items-center justify-start rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white transition duration-300 ">
                 <button onClick={openModal} className="flex items-center">
                   <img src={plusLogo} alt="Logo" className="w-4 h-4 mr-2 font-bold justify-evenly" />
                 </button>
@@ -167,19 +143,18 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
             {topicsWithIcons.map((topic) => (
               <div
                 key={topic.id}
-                className={`p-2 font-sans text-md flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300  ${
-                  activeTopic === topic.id ? 'bg-gray-400 text-white' : ''
-                }`}
+                className={`p-2 font-sans text-md flex items-center justify-start rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white transition duration-300  
+                  `}
                 onClick={() => onTopicSelect(topic.id === 0 ? 0 : topic.id)}
               >
                 <div className="flex items-center">
-                <span className="mr-2">< FaLaptopCode className="w-4 h-4" /></span>
+                  <span className="mr-2">< FaLaptopCode className="w-4 h-4" /></span>
                   {topic.name}
                 </div>
               </div>
             ))}
           </div>
-          
+
         </div>
       </div>
       {/* Modal for adding topic */}
