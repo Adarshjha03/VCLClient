@@ -6,6 +6,7 @@ import Navbar from "./components/navbar1";
 import linkImage from "./assets/link.png";
 import ideaicon from "./ideaicon.png";
 import EditButton from "./EditButton"; // Import EditButton component
+import { FaTachometerAlt, FaExclamationTriangle,FaTools,FaCog, FaChartLine,FaBolt,  FaCheck,FaStar} from 'react-icons/fa';
 const ProblemPage = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
@@ -152,9 +153,33 @@ const ProblemPage = () => {
             {/* Challenge Details */}
             <div className="grid grid-cols-2 gap-8">
               {/* Open the Virtual Lab */}
-              <div className="bg-gradient-to-r from-green-500 to-green-400 p-6 rounded-lg shadow-lg mb-8 flex justify-center items-center">
+             
+              <div className="bg-gradient-to-r from-green-500 to-green-400 p-6 rounded-lg shadow-lg flex justify-center items-center">
                 <div className="flex flex-col items-center">
-                  <h1 className="text-2xl font-bold mb-4 text-center">{challenge.name}</h1>
+                  <h1 className="text-2xl font-bold mb-4 text-center text-white">{challenge.name}</h1>
+                  <div className="flex justify-around w-full mb-4 space-x-8">
+                    <div className="flex flex-col items-center">
+                      <div className="w-16 h-16 bg-white rounded-full flex justify-center items-center">
+                        <FaTachometerAlt className="text-orange-400 text-2xl" />
+                      </div>
+                      <p className="text-sm font-semibold text-white mt-1">Difficulty</p>
+                      {/* Display difficulty level */}
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-16 h-16 bg-white rounded-full flex justify-center items-center">
+                        <FaCheck className="text-yellow-500 text-xl" />
+                      </div>
+                      <p className="text-sm font-semibold text-white mt-1">Completed</p>
+                      {/* Display attempt */}
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-16 h-16 bg-white rounded-full flex justify-center items-center">
+                        <FaStar className="text-blue-500 text-xl" />
+                      </div>
+                      <p className="text-sm font-semibold text-white mt-1">Points</p>
+                      {/* Display speed */}
+                    </div>
+                  </div>
                   <h2 className="text-lg font-semibold mb-2 text-center text-white">Open the Virtual Lab</h2>
                   <div className="flex flex-col items-center">
                     <button className="bg-white font-semibold text-003366 px-4 py-2 rounded hover:bg-blue-200" onClick={requestVirtualMachine} disabled={isLoading}>
@@ -173,7 +198,6 @@ const ProblemPage = () => {
                     )}
                   </div>
                 </div>
-
               </div>
 
               {/* Submit Answer */}
