@@ -145,7 +145,7 @@ const ProblemPage = () => {
         <Navbar />
         <div className="p-4">
           <div className="container mx-auto p-8">
-            <div className="mb-8 flex justify-between items-center">
+            <div className="mb-8 flex justify-between items-center font-semibold">
 
               <EditButton admin={admin} /> {/* Use EditButton component */}
             </div>
@@ -154,7 +154,7 @@ const ProblemPage = () => {
               {/* Open the Virtual Lab */}
               <div className="bg-gradient-to-r from-green-500 to-green-400 p-6 rounded-lg shadow-lg mb-8 flex justify-center items-center">
                 <div className="flex flex-col items-center">
-                  <h1 className="text-2xl font-bold mb-4 text-center">{challenge.name}</h1>
+                  <h1 className="text-2xl font-bold mb-4 text-center text-white">{challenge.name}</h1>
                   <h2 className="text-lg font-semibold mb-2 text-center text-white">Open the Virtual Lab</h2>
                   <div className="flex flex-col items-center">
                     <button className="bg-white font-semibold text-003366 px-4 py-2 rounded hover:bg-blue-200" onClick={requestVirtualMachine} disabled={isLoading}>

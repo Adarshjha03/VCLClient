@@ -9,7 +9,7 @@ const Navbar = () => {
       className="flex justify-between items-center p-4"
       style={{
         background: 'linear-gradient(315deg, #2234ae 0%, #191714 80%)',
-        height: '75px', //navbar height
+        height: '65px', //navbar height
       }}
     >
       <div className="text-xl font-bold text-white flex items-center">

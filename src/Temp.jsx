@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
-import comingSoonGIF from './comingSoon.gif'; // Import the GIF file
+import comingSoonGIF from './assets/comingSoon.gif'; // Import the GIF file
 import dlogo from './assets/dlogo.png'; // Import the dlogo.png image
 
-function App() {
+function Temp() {
   return (
     <div style={{ position: 'relative', height: '100vh', padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
       <img src={dlogo} alt="D Logo" style={{ width: '120px', marginBottom: '20px' }} /> {/* Display the dlogo.png image */}
@@ -16,4 +16,4 @@ function App() {
   );
 }
 
-export default App;
+export default Temp;

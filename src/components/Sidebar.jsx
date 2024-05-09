@@ -98,7 +98,6 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
                 My Profile
               </button>
             </div>
-           
               <div className="pl-4 space-y-2">
                 {/* Profile links */}
                 <Link to="/temp" className="p-1 font-sans text-md flex items-center justify-start hover:bg-gray-400 hover:text-white transition duration-300  ">
