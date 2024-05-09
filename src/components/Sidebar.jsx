@@ -85,13 +85,13 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
         <img src={headlogo} alt="HeadLogo" className="w-50 content-evenly mb-3  ml-7" />
         <div className="space-y-">
           {/* Dashboard as main heading */}
-          <div className="p-2 font-bold text-lg flex items-center justify-start hover:bg-gray-400 rounded-sm hover:rounded-sm  hover:text-white transition duration-300">
+          <div className="p-2 font-bold text-lg flex items-center justify-start border-y border-gray-600/50 hover:bg-gray-400 rounded-sm hover:rounded-sm  hover:text-white transition duration-300">
 
             <span >Dashboard</span> {/* Larger text */}
           </div>
 
           {/* Profile section */}
-          <div className="space-y-2">
+          <div className="space-y-2 border-b  border-gray-600/60">
               <Link to="/temp" className="p-1 font-sans text-md flex items-center justify-start bg-gray-100 transition duration-300 rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white">
               <FaUser className="w-4 h-4 mr-2" /> {/* Larger icon */}
                 My Profile
@@ -104,15 +104,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
               <FaMedal className="w-4 h-4 mr-2" />
               Earn Badges+
             </Link>
-            <Link to="/temp" className="p-1 font-sans text-md flex items-center justify-start bg-gray-100 transition duration-300 rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white">
-              <FaBell className="w-4 h-4 mr-2" />
-              Notification
-            </Link>
-            <Link to="/temp" className="p-1 font-sans text-md flex items-center justify-start bg-gray-100 transition duration-300 rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white">
-              <FaSearch className="w-4 h-4 mr-2" />
-              Search Labs
-            </Link>
-
+           
             <div className={`p-1 font-sans text-md flex items-center justify-start bg-gray-100 transition duration-300 rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white `} onClick={() => onTopicSelect(0)}>
               <FaCode className="w-4 h-4 mr-2" />
               All Problem Labs
@@ -139,7 +131,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
             )}
           </div>
           {/* List of topics */}
-          <div className="ml-4 space-y-2 "> {/* Indent and space the list of topics */}
+          <div className=" space-y-2 "> {/* Indent and space the list of topics */}
             {topicsWithIcons.map((topic) => (
               <div
                 key={topic.id}

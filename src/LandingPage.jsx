@@ -12,16 +12,10 @@ const LandingPage = () => {
       minHeight: '100vh',
     }}>
 
-<div className='w-full h-[80px] bg-black border-b'>
-      <div className='md:max-w-[1480px] max-w-[600px] m-auto w-full h-full flex justify-between items-center md:px-0 px-4'>
-
-        {/* Logo */}
-        <div>
-          <img src='logo.png' alt="Logo" className="h-12" />
-        </div>
-
+<div className='w-full h-[80px] bg-black '>
+      <div className=' m-auto w-full h-full flex justify-between items-center px-0 px-4'>
         {/* Menu */}
-        <div className='md:flex items-center'>
+        <div className='flex items-center'>
           <ul className='flex gap-4'>
             <Link to="/Home" className="text-white hover:text-blue-500">Home</Link>
             <li className="text-white hover:text-blue-500">About</li>
@@ -32,12 +26,12 @@ const LandingPage = () => {
         </div>
 
         {/* Login and Sign Up buttons */}
-        <div className='hidden md:flex'>
-          <Link to="/login" className="flex justify-between items-center bg-transparent px-6 gap-2 text-white hover:text-blue-500">
+        <div className='flex space-x-3'>
+          <Link to="/login" className="px-6 py-2 rounded-md bg-blue-800 text-white font-bold hover:bg-blue-600">
             Login
           </Link>
-          <Link to="/signup" className="px-8 py-3 rounded-md bg-[#20B486] text-white font-bold hover:bg-[#178e6b]">
-            Sign Up For Free
+          <Link to="/signup" className="px-6 py-2 rounded-md bg-blue-800 text-white font-bold hover:bg-blue-600">
+            Sign Up 
           </Link>
         </div>
 
@@ -48,6 +42,7 @@ const LandingPage = () => {
         <Feedback />
         <CTA />
         <Footer /> */}
+         <Hero />
     </div>
   )
 }

@@ -6,7 +6,7 @@ import Navbar from "./components/navbar1";
 import linkImage from "./assets/link.png";
 import ideaicon from "./ideaicon.png";
 import EditButton from "./EditButton"; // Import EditButton component
-import {  FaCog, FaBolt,  FaClock } from 'react-icons/fa';
+import { FaTachometerAlt, FaExclamationTriangle,FaTools,FaCog, FaChartLine,FaBolt,  FaCheck,FaStar} from 'react-icons/fa';
 const ProblemPage = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
@@ -154,51 +154,51 @@ const ProblemPage = () => {
             <div className="grid grid-cols-2 gap-8">
               {/* Open the Virtual Lab */}
              
-              <div className="bg-gradient-to-r from-green-500 to-green-400 p-6 rounded-lg shadow-lg mb-8 flex justify-center items-center">
-  <div className="flex flex-col items-center">
-    <h1 className="text-2xl font-bold mb-4 text-center text-white">{challenge.name}</h1>
-    <div className="flex justify-around w-full mb-4 space-x-8">
-      <div className="flex flex-col items-center">
-        <div className="w-16 h-16 bg-white rounded-full flex justify-center items-center">
-          <FaCog className="text-gray-600 text-xl" />
-        </div>
-        <p className="text-sm font-semibold text-white mt-1">Difficulty</p>
-        {/* Display difficulty level */}
-      </div>
-      <div className="flex flex-col items-center">
-        <div className="w-16 h-16 bg-white rounded-full flex justify-center items-center">
-          <FaBolt className="text-yellow-500 text-xl" />
-        </div>
-        <p className="text-sm font-semibold text-white mt-1">Attempt</p>
-        {/* Display attempt */}
-      </div>
-      <div className="flex flex-col items-center">
-        <div className="w-16 h-16 bg-white rounded-full flex justify-center items-center">
-          <FaClock className="text-blue-500 text-xl" />
-        </div>
-        <p className="text-sm font-semibold text-white mt-1">Speed</p>
-        {/* Display speed */}
-      </div>
-    </div>
-    <h2 className="text-lg font-semibold mb-2 text-center text-white">Open the Virtual Lab</h2>
-    <div className="flex flex-col items-center">
-      <button className="bg-white font-semibold text-003366 px-4 py-2 rounded hover:bg-blue-200" onClick={requestVirtualMachine} disabled={isLoading}>
-        {isLoading ? "Loading..." : "Start Virtual Lab"}
-      </button>
-      {vmData && (
-        <div className="mt-2 text-center text-blue-900">
-          <p className="text-blue-900">
-            URL:{" "}
-            <a href={vmData.vm_url} target="_blank" rel="noopener noreferrer" className="text-blue-500 text-sm">
-              {vmData.vm_url}
-            </a>
-          </p>
-          <p>Password: {vmData.password}</p>
-        </div>
-      )}
-    </div>
-  </div>
-</div>
+              <div className="bg-gradient-to-r from-green-500 to-green-400 p-6 rounded-lg shadow-lg flex justify-center items-center">
+                <div className="flex flex-col items-center">
+                  <h1 className="text-2xl font-bold mb-4 text-center text-white">{challenge.name}</h1>
+                  <div className="flex justify-around w-full mb-4 space-x-8">
+                    <div className="flex flex-col items-center">
+                      <div className="w-16 h-16 bg-white rounded-full flex justify-center items-center">
+                        <FaTachometerAlt className="text-orange-400 text-2xl" />
+                      </div>
+                      <p className="text-sm font-semibold text-white mt-1">Difficulty</p>
+                      {/* Display difficulty level */}
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-16 h-16 bg-white rounded-full flex justify-center items-center">
+                        <FaCheck className="text-yellow-500 text-xl" />
+                      </div>
+                      <p className="text-sm font-semibold text-white mt-1">Completed</p>
+                      {/* Display attempt */}
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-16 h-16 bg-white rounded-full flex justify-center items-center">
+                        <FaStar className="text-blue-500 text-xl" />
+                      </div>
+                      <p className="text-sm font-semibold text-white mt-1">Points</p>
+                      {/* Display speed */}
+                    </div>
+                  </div>
+                  <h2 className="text-lg font-semibold mb-2 text-center text-white">Open the Virtual Lab</h2>
+                  <div className="flex flex-col items-center">
+                    <button className="bg-white font-semibold text-003366 px-4 py-2 rounded hover:bg-blue-200" onClick={requestVirtualMachine} disabled={isLoading}>
+                      {isLoading ? "Loading..." : "Start Virtual Lab"}
+                    </button>
+                    {vmData && (
+                      <div className="mt-2 text-center text-blue-900">
+                        <p className="text-blue-900">
+                          URL:{" "}
+                          <a href={vmData.vm_url} target="_blank" rel="noopener noreferrer" className="text-blue-500 text-sm">
+                            {vmData.vm_url}
+                          </a>
+                        </p>
+                        <p>Password: {vmData.password}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
 
               {/* Submit Answer */}
               <div style={{ backgroundColor: "#11255a", height: "230px" }} className="p-6 rounded-lg shadow-lg">
