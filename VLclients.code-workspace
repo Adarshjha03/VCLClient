@@ -4,7 +4,10 @@
             "path": "."
         },
         {
-            "path": "../BackEnd"
+            "path": "../Developer"
+        },
+        {
+            "path": "../webd/RazorPayClone"
         }
     ]
 }
