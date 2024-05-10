@@ -10,16 +10,19 @@ const AddChallenge = () => {
     solution: "",
     flag: "",
     topic: "",
+    score: 0, // Initialize score 0
   });
   const [topics, setTopics] = useState([]);
   const [responseMessage, setResponseMessage] = useState(null);
-  const backendUrl = "https://api.virtualcyberlabs.com";
+  const backendUrl = "http://cyberrangedev.ap-south-1.elasticbeanstalk.com";
+
   useEffect(() => {
     fetchTopics();
   }, []); // Fetch topics when component mounts
 
   const fetchTopics = async () => {
-    try {const token = localStorage.getItem("Token");
+    try {
+      const token = localStorage.getItem("Token");
       const response = await fetch(`${backendUrl}/topic`, {
         headers: {
           Authorization: `Token ${token}`,
@@ -38,7 +41,8 @@ const AddChallenge = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    try {const token = localStorage.getItem("Token");
+    try {
+      const token = localStorage.getItem("Token");
       const response = await fetch(`${backendUrl}/challenges/${challengeData.topic}`, {
         method: "POST",
         headers: {
@@ -59,16 +63,26 @@ const AddChallenge = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setChallengeData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    // Check if the field is "score" and if the value is a valid integer
+    if (name === "score" && !Number.isNaN(parseInt(value))) {
+      setChallengeData((prevData) => ({
+        ...prevData,
+        [name]: parseInt(value), // Convert the value to an integer
+      }));
+    } else {
+      // For other fields or invalid integer values, update state normally
+      setChallengeData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
 
   return (
     <div className="container mx-auto p-8">
       <h1 className="text-2xl font-bold mb-4">Add New Challenge</h1>
       <form onSubmit={handleSubmit}>
+        {/* Form fields */}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Name
@@ -177,6 +191,21 @@ const AddChallenge = () => {
             ))}
           </select>
         </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Score
+          </label>
+          <input
+            type="text"
+            name="score"
+            value={challengeData.score}
+            onChange={handleChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+            required
+          />
+        </div>
+
+        {/* Submit button */}
         <div className="flex justify-end">
           <button
             type="submit"
@@ -186,6 +215,7 @@ const AddChallenge = () => {
           </button>
         </div>
       </form>
+      {/* Display response message if any */}
       {responseMessage && (
         <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mt-4" role="alert">
           {responseMessage.message}

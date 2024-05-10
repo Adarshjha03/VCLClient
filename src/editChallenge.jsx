@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 const EditChallenge = () => {
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
-  const backendUrl = "https://api.virtualcyberlabs.com";
+  const backendUrl = "http://cyberrangedev.ap-south-1.elasticbeanstalk.com";
   const [challengeData, setChallengeData] = useState({
     name: '',
     difficulty: '',
@@ -14,6 +14,7 @@ const EditChallenge = () => {
     solution: '',
     flag: '',
     topic_id: '',
+    score: 0, // Initialize score as 0
   });
   const [topics, setTopics] = useState([]);
   const [responseMessage, setResponseMessage] = useState('');
@@ -190,6 +191,19 @@ const EditChallenge = () => {
             ))}
           </select>
         </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">Score</label>
+          <input
+            type="text"
+            name="score"
+            value={challengeData.score}
+            onChange={handleChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+            required
+          />
+        </div>
+
+        {/* Submit button */}
         <div className="flex justify-end">
           <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
             Submit

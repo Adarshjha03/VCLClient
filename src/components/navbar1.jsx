@@ -44,7 +44,7 @@ const Navbar = () => {
       style={{
         background:
           'linear-gradient(315deg, #2234ae 0%, #191714 80%)',
-        height: '75px',
+        height: '65px',
       }}
     >
       <div className="text-xl font-bold text-white flex items-center">

@@ -14,7 +14,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
   const [admin, setAdmin] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [showProfileOptions, setShowProfileOptions] = useState(false); // State to manage visibility of profile options
-  const backendUrl = "https://api.virtualcyberlabs.com";
+  const backendUrl = "http://cyberrangedev.ap-south-1.elasticbeanstalk.com";
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -92,7 +92,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
 
           {/* Profile section */}
           <div className="space-y-2 border-b  border-gray-600/60">
-              <Link to="/temp" className="p-1 font-sans text-md flex items-center justify-start bg-gray-100 transition duration-300 rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white">
+              <Link to="/Profile" className="p-1 font-sans text-md flex items-center justify-start bg-gray-100 transition duration-300 rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white">
               <FaUser className="w-4 h-4 mr-2" /> {/* Larger icon */}
                 My Profile
             </Link>

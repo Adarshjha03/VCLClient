@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const AddTopic = () => {
   const [topic, setTopic] = useState("");
   const [responseMessage, setResponseMessage] = useState(null);
-  const backendUrl = "https://api.virtualcyberlabs.com";
+  const backendUrl = "http://cyberrangedev.ap-south-1.elasticbeanstalk.com";
   const handleTopicChange = (event) => {
     setTopic(event.target.value);
   };

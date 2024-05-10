@@ -16,7 +16,7 @@ const HomePage = () => {
   const [topics, setTopics] = useState([]);
   const [problems, setProblems] = useState([]);
   const [error, setError] = useState(null);
-  const backendUrl = "https://api.virtualcyberlabs.com";
+  const backendUrl = "http://cyberrangedev.ap-south-1.elasticbeanstalk.com";
   const [isLoading, setIsLoading] = useState(true);
   const [admin, setAdmin] = useState(false);
   const [isAddChallengeModalOpen, setAddChallengeModalOpen] = useState(false);

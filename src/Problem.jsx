@@ -20,7 +20,7 @@ const ProblemPage = () => {
     return storedTopic ? parseInt(storedTopic) : 0;
   });
   const [vmData, setVmData] = useState(null);
-  const backendUrl = "https://api.virtualcyberlabs.com";
+  const backendUrl = "http://cyberrangedev.ap-south-1.elasticbeanstalk.com";
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -162,21 +162,21 @@ const ProblemPage = () => {
                       <div className="w-16 h-16 bg-white rounded-full flex justify-center items-center">
                         <FaTachometerAlt className="text-orange-400 text-2xl" />
                       </div>
-                      <p className="text-sm font-semibold text-white mt-1">Difficulty</p>
+                      <p className="text-sm font-semibold text-white mt-1">{challenge.difficulty}</p>
                       {/* Display difficulty level */}
                     </div>
                     <div className="flex flex-col items-center">
                       <div className="w-16 h-16 bg-white rounded-full flex justify-center items-center">
                         <FaCheck className="text-yellow-500 text-xl" />
                       </div>
-                      <p className="text-sm font-semibold text-white mt-1">Completed</p>
+                      <p className="text-sm font-semibold text-white mt-1">{challenge.solved ? "Solved" : "Unsolved"}</p>
                       {/* Display attempt */}
                     </div>
                     <div className="flex flex-col items-center">
                       <div className="w-16 h-16 bg-white rounded-full flex justify-center items-center">
                         <FaStar className="text-blue-500 text-xl" />
                       </div>
-                      <p className="text-sm font-semibold text-white mt-1">Points</p>
+                      <p className="text-sm font-semibold text-white mt-1">{challenge.score} Points</p>
                       {/* Display speed */}
                     </div>
                   </div>
