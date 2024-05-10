@@ -4,9 +4,10 @@ import { FaBars } from "react-icons/fa";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/navbar1";
 import linkImage from "./assets/link.png";
+import unsolved from "./assets/unsolved.png"
 import ideaicon from "./ideaicon.png";
 import EditButton from "./EditButton"; // Import EditButton component
-import { FaTachometerAlt, FaExclamationTriangle,FaTools,FaCog, FaChartLine,FaBolt,  FaCheck,FaStar} from 'react-icons/fa';
+import { FaTachometerAlt, FaExclamationTriangle, FaTools, FaCog, FaChartLine, FaBolt, FaCheck, FaStar } from 'react-icons/fa';
 const ProblemPage = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
@@ -153,7 +154,7 @@ const ProblemPage = () => {
             {/* Challenge Details */}
             <div className="grid grid-cols-2 gap-8">
               {/* Open the Virtual Lab */}
-             
+
               <div className="bg-gradient-to-r from-green-500 to-green-400 p-6 rounded-lg shadow-lg flex justify-center items-center">
                 <div className="flex flex-col items-center">
                   <h1 className="text-2xl font-bold mb-4 text-center text-white">{challenge.name}</h1>
@@ -167,11 +168,18 @@ const ProblemPage = () => {
                     </div>
                     <div className="flex flex-col items-center">
                       <div className="w-16 h-16 bg-white rounded-full flex justify-center items-center">
-                        <FaCheck className="text-yellow-500 text-xl" />
+                        {challenge.solved ? (
+                          <FaCheck className="text-yellow-500 text-xl" />
+                        ) : (
+                          <img src={unsolved} alt="Unsolved" className="w-10 h-10" />
+                        )}
                       </div>
-                      <p className="text-sm font-semibold text-white mt-1">{challenge.solved ? "Solved" : "Unsolved"}</p>
+                      <p className="text-sm font-semibold text-white mt-1">
+                        {challenge.solved ? "Solved" : "Unsolved"}
+                      </p>
                       {/* Display attempt */}
                     </div>
+
                     <div className="flex flex-col items-center">
                       <div className="w-16 h-16 bg-white rounded-full flex justify-center items-center">
                         <FaStar className="text-blue-500 text-xl" />
@@ -202,19 +210,19 @@ const ProblemPage = () => {
 
               {/* Submit Answer */}
               <div style={{ backgroundColor: "#11255a", height: "230px" }} className="p-6 rounded-lg shadow-lg">
-  <h2 className="text-lg font-semibold mb-4 text-white text-center">Submit Answer</h2>
-  <p className="text-sm text-white mb-4 text-center">Enumerate users and submit with comma separation</p>
-  <div className="flex items-center justify-center mb-4">
-    <input type="text" placeholder="Your answer..." className="w-100p px-4 py-2 rounded border border-003366 focus:outline-none focus:border-blue-400 text-003366" value={userAnswer} onChange={(e) => setUserAnswer(e.target.value)} />
-    <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded font-semibold ml-2" onClick={handleSubmitAnswer} disabled={isLoading}>
-      Submit
-    </button>
-  </div>
-  {/* Display verification response message */}
-  {verificationResponseMessage && (
-    <div className="text-green-500 text-center py-2">{verificationResponseMessage}</div>
-  )}
-</div>
+                <h2 className="text-lg font-semibold mb-4 text-white text-center">Submit Answer</h2>
+                <p className="text-sm text-white mb-4 text-center">Enumerate users and submit with comma separation</p>
+                <div className="flex items-center justify-center mb-4">
+                  <input type="text" placeholder="Your answer..." className="w-100p px-4 py-2 rounded border border-003366 focus:outline-none focus:border-blue-400 text-003366" value={userAnswer} onChange={(e) => setUserAnswer(e.target.value)} />
+                  <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded font-semibold ml-2" onClick={handleSubmitAnswer} disabled={isLoading}>
+                    Submit
+                  </button>
+                </div>
+                {/* Display verification response message */}
+                {verificationResponseMessage && (
+                  <div className="text-green-500 text-center py-2">{verificationResponseMessage}</div>
+                )}
+              </div>
 
 
               {/* Problem Statement */}

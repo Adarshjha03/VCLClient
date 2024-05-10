@@ -118,7 +118,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
 
 
           {/* Problem Labs section */}
-          <div className="p-2 font-bold text-lg flex items-center justify-start rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white transition duration-300 ">
+          <div className="p-2 font-bold text-lg flex items-center justify-start border-b border-gray-600/50 hover:bg-gray-400 rounded-sm hover:rounded-sm  hover:text-white transition duration-300">
 
             <span >Problem Labs</span> {/* Larger text */}
             {/* Add Topic button for admins */}
