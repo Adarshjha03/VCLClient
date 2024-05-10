@@ -14,7 +14,7 @@ const AddChallenge = () => {
   });
   const [topics, setTopics] = useState([]);
   const [responseMessage, setResponseMessage] = useState(null);
-  const backendUrl = "http://cyberrangedev.ap-south-1.elasticbeanstalk.com";
+  const backendUrl = "https://api.virtualcyberlabs.com";
 
   useEffect(() => {
     fetchTopics();

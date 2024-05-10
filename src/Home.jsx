@@ -16,7 +16,7 @@ const HomePage = () => {
   const [topics, setTopics] = useState([]);
   const [problems, setProblems] = useState([]);
   const [error, setError] = useState(null);
-  const backendUrl = "http://cyberrangedev.ap-south-1.elasticbeanstalk.com";
+  const backendUrl = "https://api.virtualcyberlabs.com";
   const [isLoading, setIsLoading] = useState(true);
   const [admin, setAdmin] = useState(false);
   const [subAdmin, setSubAdmin] = useState(false);
@@ -129,7 +129,7 @@ const HomePage = () => {
       <Sidebar showMenu={showMenu} onTopicSelect={handleTopicChange} activeTopic={selectedTopic} topics={topics} />
       <div className="flex-1" style={{ background: "#e0efee", overflowY: "hidden" }}>  
         <Navbar style={{ position: "fixed", width: "100%", zIndex: 1000 }} />  
-        <div className="p-4" style={{ marginTop: "1px", overflowY: "auto", height: "calc(100vh - 120px)" }}>
+        <div className="p-4" style={{ marginTop: "1px", overflowY: "auto", height: "calc(100vh - 80px)" }}>
  
             <h2 className="text-xl font-bold mb-4">{activeTopicName}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 const EditChallenge = () => {
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
-  const backendUrl = "http://cyberrangedev.ap-south-1.elasticbeanstalk.com";
+  const backendUrl = "https://api.virtualcyberlabs.com";
   const [challengeData, setChallengeData] = useState({
     name: '',
     difficulty: '',

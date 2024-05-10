@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import Sidebar from "./components/Sidebar";
-import Profile from "./Profile.png";
+import Profile from "./assets/avatar.png";
 import Navbar from "./components/navbar1";
 
 const ProfilePage = () => {
@@ -33,7 +33,7 @@ const ProfilePage = () => {
     const storedTopic = localStorage.getItem("selectedTopic");
     return storedTopic ? parseInt(storedTopic) : 0;
   });
-  const backendUrl = "http://cyberrangedev.ap-south-1.elasticbeanstalk.com";
+  const backendUrl = "https://api.virtualcyberlabs.com";
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };

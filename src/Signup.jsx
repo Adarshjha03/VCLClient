@@ -11,7 +11,7 @@ function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const backendUrl = "http://cyberrangedev.ap-south-1.elasticbeanstalk.com";
+  const backendUrl = "https://api.virtualcyberlabs.com";
 
   const handleSubmit = (e) => {
     e.preventDefault();

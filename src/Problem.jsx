@@ -22,7 +22,7 @@ const ProblemPage = () => {
     return storedTopic ? parseInt(storedTopic) : 0;
   });
   const [vmData, setVmData] = useState(null);
-  const backendUrl = "http://cyberrangedev.ap-south-1.elasticbeanstalk.com";
+  const backendUrl = "https://api.virtualcyberlabs.com";
   const { id } = useParams();
   const navigate = useNavigate();
 

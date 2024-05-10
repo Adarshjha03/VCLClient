@@ -14,7 +14,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
   const [subAdmin, setSubAdmin] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [showProfileOptions, setShowProfileOptions] = useState(false); // State to manage visibility of profile options
-  const backendUrl = "http://cyberrangedev.ap-south-1.elasticbeanstalk.com";
+  const backendUrl = "https://api.virtualcyberlabs.com";
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -81,18 +81,21 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
   }
 
   return (
-    <div className={`w-1/5 h-full overflow-y-auto border-r bg-gray-100 sm:block ${showMenu ? 'block' : 'hidden'}`}>
+    <div className="w-1/5 h-full overflow-y-auto border-r bg-gray-100 sm:block ${showMenu ? 'block' : 'hidden'}" style={{ scrollbarWidth: 'thin' }}>
+
       <div className="p-3">
-        <img src={headlogo} alt="HeadLogo" className="w-50 content-evenly mb-3  ml-7" />
+        <div className="flex justify-center pr-6">
+          <img src={headlogo} alt="HeadLogo" className="w-50 content-evenly mb-3 ml-7" />
+        </div>
         <div className="space-y-">
           <div className="p-2 font-bold text-lg flex items-center justify-start border-y border-gray-600/50 hover:bg-gray-400 rounded-sm hover:rounded-sm  hover:text-white transition duration-300">
             <span >Dashboard</span> {/* Larger text */}
           </div>
 
           <div className="space-y-2 border-b  border-gray-600/60">
-              <Link to="/Profile" className="p-1 font-sans text-md flex items-center justify-start bg-gray-100 transition duration-300 rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white">
+            <Link to="/Profile" className="p-1 font-sans text-md flex items-center justify-start bg-gray-100 transition duration-300 rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white">
               <FaUser className="w-4 h-4 mr-2" /> {/* Larger icon */}
-                My Profile
+              My Profile
             </Link>
             <Link to="/temp" className="p-1 font-sans text-md flex items-center justify-start bg-gray-100 transition duration-300 rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white">
               <FaCog className="w-4 h-4 mr-2" />
@@ -103,16 +106,16 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
               Earn Badges+
             </Link>
 
-             
+
 
             <div className={`p-1 font-sans text-md flex items-center justify-start bg-gray-100 transition duration-300 rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white `} onClick={() => onTopicSelect(0)}>
               <FaCode className="w-4 h-4 mr-2" />
               All Problem Labs
             </div>
-              <Link to="/temp"className="p-1 font-sans text-md flex items-center justify-start bg-gray-100 transition duration-300 rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white">
-                <FaTrophy className="w-4 h-4 mr-2" />
-                Leaderboard
-              </Link>
+            <Link to="/temp" className="p-1 font-sans text-md flex items-center justify-start bg-gray-100 transition duration-300 rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white">
+              <FaTrophy className="w-4 h-4 mr-2" />
+              Leaderboard
+            </Link>
           </div>
 
 
@@ -132,60 +135,60 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
           </div>
           {/* List of topics */}
           <div className=" space-y-2 "> {/* Indent and space the list of topics */}
-          {topicsWithIcons.map((topic) => (
-             <div
-               key={topic.id}
-               className={`p-2 font-sans text-md flex items-center justify-start rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white transition duration-300 ${activeTopic === topic.id ? 'text-gray-600' : ''}`}
-               onClick={() => onTopicSelect(topic.id === 0 ? 0 : topic.id)}
-             >
-               <div className="flex items-center">
-                 <span className="mr2">< FaLaptopCode className="w-4 h-4" /></span>
-                 {topic.name}
-               </div>
-             </div>
-           ))}
-         </div>
-       </div>
-     </div>
-     {/* Modal for adding topic */}
-     <Modal
-       isOpen={modalIsOpen}
-       onRequestClose={closeModal}
-       style={{
-         overlay: {
-           backgroundColor: 'rgba(0, 0, 0, 0.5)',
-         },
-         content: {
-          top: '50%',
-          left: '50%',
-          right: 'auto',
-          bottom: 'auto',
-          marginRight: '-50%',
-          transform: 'translate(-50%, -50%)',
-          borderRadius: '10px',
-          padding: '20px',
-        },
-       }}
-       shouldCloseOnOverlayClick={true}
-     >
-       <button
-         onClick={closeModal}
-         style={{
-           position: 'absolute',
-           top: '10px',
-           right: '10px',
-           cursor: 'pointer',
-           backgroundColor: 'transparent',
-           border: 'none',
-           color: 'black',
-         }}
-       >
-         Close
-       </button>
-       <AddTopic />
-     </Modal>
-   </div>
- );
+            {topicsWithIcons.map((topic) => (
+              <div
+                key={topic.id}
+                className={`p-2 font-sans text-md flex items-center justify-start rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white transition duration-300 ${activeTopic === topic.id ? 'text-gray-600' : ''}`}
+                onClick={() => onTopicSelect(topic.id === 0 ? 0 : topic.id)}
+              >
+                <div className="flex items-center">
+                  <span className="mr2">< FaLaptopCode className="w-4 h-4" /></span>
+                  {topic.name}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      {/* Modal for adding topic */}
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={{
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          },
+          content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+            borderRadius: '10px',
+            padding: '20px',
+          },
+        }}
+        shouldCloseOnOverlayClick={true}
+      >
+        <button
+          onClick={closeModal}
+          style={{
+            position: 'absolute',
+            top: '10px',
+            right: '10px',
+            cursor: 'pointer',
+            backgroundColor: 'transparent',
+            border: 'none',
+            color: 'black',
+          }}
+        >
+          Close
+        </button>
+        <AddTopic />
+      </Modal>
+    </div>
+  );
 };
 
 export default Sidebar;
