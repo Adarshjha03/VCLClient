@@ -1,12 +1,12 @@
 import { Hero, Navbar, Companies, Courses, Achievement, Categories, Feedback, CTA, Footer } from './components';
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from 'react';
-
+import bgimage from "./LandingPage.jpg";
 const LandingPage = () => {
 
   return (
     <div style={{
-      backgroundImage: `url('src/LandingPage.jpg')`,
+      backgroundImage: `url(${bgimage})`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       minHeight: '100vh',
