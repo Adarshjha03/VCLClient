@@ -12,6 +12,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [admin, setAdmin] = useState(false);
+  const [subAdmin, setSubAdmin] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [showProfileOptions, setShowProfileOptions] = useState(false); // State to manage visibility of profile options
   const backendUrl = "http://cyberrangedev.ap-south-1.elasticbeanstalk.com";
@@ -30,6 +31,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
         }
         const userData = await userResponse.json();
         setAdmin(userData.admin);
+        setSubAdmin(userData.subadmin);
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -122,7 +124,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
 
             <span >Problem Labs</span> {/* Larger text */}
             {/* Add Topic button for admins */}
-            {admin && (
+            {subAdmin && (
               <div className="p-2 font-medium text-lg flex items-center justify-start rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white transition duration-300 ">
                 <button onClick={openModal} className="flex items-center">
                   <img src={plusLogo} alt="Logo" className="w-4 h-4 mr-2 font-bold justify-evenly" />

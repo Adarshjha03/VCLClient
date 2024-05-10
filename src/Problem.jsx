@@ -15,6 +15,7 @@ const ProblemPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [challenge, setChallenge] = useState(null);
   const [admin, setAdmin] = useState(false);
+  const [subAdmin, setSubAdmin] = useState(false);
   const [userAnswer, setUserAnswer] = useState("");
   const [selectedTopic, setSelectedTopic] = useState(() => {
     const storedTopic = localStorage.getItem("selectedTopic");
@@ -36,13 +37,13 @@ const ProblemPage = () => {
               Authorization: `Token ${token}`,
             },
           }
-          // added a new comment
         );
         if (!userResponse.ok) {
           throw new Error("Failed to fetch user data");
         }
         const userData = await userResponse.json();
         setAdmin(userData.admin);
+        setSubAdmin(userData.subadmin); // Set subadmin value
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -149,7 +150,9 @@ const ProblemPage = () => {
           <div className="container mx-auto p-8">
             <div className="mb-8 flex justify-between items-center font-semibold">
 
-              <EditButton admin={admin} /> {/* Use EditButton component */}
+              {subAdmin && (
+                <EditButton admin={subAdmin} /> // Use the subAdmin value instead of admin
+              )} {/* Use EditButton component */}
             </div>
             {/* Challenge Details */}
             <div className="grid grid-cols-2 gap-8">

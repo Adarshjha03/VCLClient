@@ -19,6 +19,7 @@ const HomePage = () => {
   const backendUrl = "http://cyberrangedev.ap-south-1.elasticbeanstalk.com";
   const [isLoading, setIsLoading] = useState(true);
   const [admin, setAdmin] = useState(false);
+  const [subAdmin, setSubAdmin] = useState(false);
   const [isAddChallengeModalOpen, setAddChallengeModalOpen] = useState(false);
   useEffect(() => {
     const fetchUserData = async () => {
@@ -33,7 +34,8 @@ const HomePage = () => {
           throw new Error('Failed to fetch user data');
         }
         const userData = await userResponse.json();
-        setAdmin(userData.admin); // Update the admin state based on the response
+        setAdmin(userData.admin);
+        setSubAdmin(userData.subadmin);  // Update the admin state based on the response
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -160,7 +162,7 @@ const HomePage = () => {
                 </div>
                 ))}
             </div>
-            {(admin && (selectedTopic === 0 || activeTopicName === "All Problems")) && ( // admin condition 
+            {(subAdmin && (selectedTopic === 0 || activeTopicName === "All Problems")) && ( // admin condition 
                 <div onClick={handleOpenAddChallengeModal} className="absolute bottom-4 right-4 cursor-pointer">
                      <img src={addImage} alt="Add" style={{ width: "50px", height: "50px" }} /> 
                 </div>
