@@ -6,7 +6,6 @@ import AddTopic from '../addTopic';
 import { Link } from 'react-router-dom';
 import { FaBell, FaLaptopCode, FaCog, FaMedal, FaCode, FaTrophy, FaQuestionCircle, FaSearch, FaUser } from 'react-icons/fa'; // Importing Font Awesome icons
 
-
 const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
   const [topicsWithIcons, setTopicsWithIcons] = useState([]);
   const [error, setError] = useState(null);
@@ -86,13 +85,10 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
       <div className="p-3">
         <img src={headlogo} alt="HeadLogo" className="w-50 content-evenly mb-3  ml-7" />
         <div className="space-y-">
-          {/* Dashboard as main heading */}
           <div className="p-2 font-bold text-lg flex items-center justify-start border-y border-gray-600/50 hover:bg-gray-400 rounded-sm hover:rounded-sm  hover:text-white transition duration-300">
-
             <span >Dashboard</span> {/* Larger text */}
           </div>
 
-          {/* Profile section */}
           <div className="space-y-2 border-b  border-gray-600/60">
               <Link to="/Profile" className="p-1 font-sans text-md flex items-center justify-start bg-gray-100 transition duration-300 rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white">
               <FaUser className="w-4 h-4 mr-2" /> {/* Larger icon */}
@@ -106,7 +102,9 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
               <FaMedal className="w-4 h-4 mr-2" />
               Earn Badges+
             </Link>
-           
+
+             
+
             <div className={`p-1 font-sans text-md flex items-center justify-start bg-gray-100 transition duration-300 rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white `} onClick={() => onTopicSelect(0)}>
               <FaCode className="w-4 h-4 mr-2" />
               All Problem Labs
@@ -134,62 +132,60 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
           </div>
           {/* List of topics */}
           <div className=" space-y-2 "> {/* Indent and space the list of topics */}
-            {topicsWithIcons.map((topic) => (
-              <div
-                key={topic.id}
-                className={`p-2 font-sans text-md flex items-center justify-start rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white transition duration-300  
-                  `}
-                onClick={() => onTopicSelect(topic.id === 0 ? 0 : topic.id)}
-              >
-                <div className="flex items-center">
-                  <span className="mr-2">< FaLaptopCode className="w-4 h-4" /></span>
-                  {topic.name}
-                </div>
-              </div>
-            ))}
-          </div>
-
-        </div>
-      </div>
-      {/* Modal for adding topic */}
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        style={{
-          overlay: {
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          },
-          content: {
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            marginRight: '-50%',
-            transform: 'translate(-50%, -50%)',
-            borderRadius: '10px',
-            padding: '20px',
-          },
-        }}
-        shouldCloseOnOverlayClick={true}
-      >
-        <button
-          onClick={closeModal}
-          style={{
-            position: 'absolute',
-            top: '10px',
-            right: '10px',
-            cursor: 'pointer',
-            backgroundColor: 'transparent',
-            border: 'none',
-            color: 'black',
-          }}
-        >
-          Close
-        </button>
-        <AddTopic />
-      </Modal>
-    </div>
-  );
+          {topicsWithIcons.map((topic) => (
+             <div
+               key={topic.id}
+               className={`p-2 font-sans text-md flex items-center justify-start rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white transition duration-300 ${activeTopic === topic.id ? 'text-gray-600' : ''}`}
+               onClick={() => onTopicSelect(topic.id === 0 ? 0 : topic.id)}
+             >
+               <div className="flex items-center">
+                 <span className="mr2">< FaLaptopCode className="w-4 h-4" /></span>
+                 {topic.name}
+               </div>
+             </div>
+           ))}
+         </div>
+       </div>
+     </div>
+     {/* Modal for adding topic */}
+     <Modal
+       isOpen={modalIsOpen}
+       onRequestClose={closeModal}
+       style={{
+         overlay: {
+           backgroundColor: 'rgba(0, 0, 0, 0.5)',
+         },
+         content: {
+          top: '50%',
+          left: '50%',
+          right: 'auto',
+          bottom: 'auto',
+          marginRight: '-50%',
+          transform: 'translate(-50%, -50%)',
+          borderRadius: '10px',
+          padding: '20px',
+        },
+       }}
+       shouldCloseOnOverlayClick={true}
+     >
+       <button
+         onClick={closeModal}
+         style={{
+           position: 'absolute',
+           top: '10px',
+           right: '10px',
+           cursor: 'pointer',
+           backgroundColor: 'transparent',
+           border: 'none',
+           color: 'black',
+         }}
+       >
+         Close
+       </button>
+       <AddTopic />
+     </Modal>
+   </div>
+ );
 };
 
 export default Sidebar;

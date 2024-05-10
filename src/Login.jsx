@@ -76,9 +76,21 @@ function Login() {
             type="submit"
             className="btn btn-success w-100 mb-3"
             style={{
-              background: "linear-gradient(315deg, #2234ae 0%, #191714 120%)",
+              background:
+                "linear-gradient(315deg, #2234ae 0%, #191714 74%)",
               color: "#fff",
               border: "none",
+              transition: "color 0.3s, background-color 0.3s",
+              animation: "none",
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.color = "#F0DB4F";
+              e.target.style.backgroundColor = "#0D6EFD";
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.color = "#fff";
+              e.target.style.background =
+                "linear-gradient(315deg, #2234ae 0%, #191714 74%)";
             }}
           >
             Login
@@ -90,9 +102,21 @@ function Login() {
             to="/signup"
             className="btn btn-success w-100 mt-1"
             style={{
-              background: "linear-gradient(315deg, #2234ae 0%, #191714 74%)",
+              background:
+                "linear-gradient(315deg, #2234ae 0%, #191714 74%)",
               color: "#fff",
               border: "none",
+              transition: "color 0.3s, background-color 0.3s",
+              animation: "none",
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.color = "#F0DB4F";
+              e.target.style.backgroundColor = "#0D6EFD";
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.color = "#fff";
+              e.target.style.background =
+                "linear-gradient(315deg, #2234ae 0%, #191714 74%)";
             }}
           >
             Sign up
