@@ -14,6 +14,8 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
   const [subAdmin, setSubAdmin] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [showProfileOptions, setShowProfileOptions] = useState(false); // State to manage visibility of profile options
+  const [activeButton, setActiveButton] = useState(null); // State to track active button
+
   const backendUrl = "https://api.virtualcyberlabs.com";
 
   useEffect(() => {
@@ -72,6 +74,11 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
     setModalIsOpen(false);
   };
 
+  const handleButtonClick = (topicId) => {
+    setActiveButton(topicId);
+    onTopicSelect(topicId === 0 ? 0 : topicId);
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -81,69 +88,68 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
   }
 
   return (
-    <div className="w-1/5 h-full overflow-y-auto border-r bg-gray-100 sm:block ${showMenu ? 'block' : 'hidden'}" style={{ scrollbarWidth: 'thin' }}>
+    <div className={`w-1/6 h-full overflow-y-auto border-r sm:block ${showMenu ? 'block' : 'hidden'}`} style={{ backgroundColor: '#000930' }}>
+      <div className="p-3 text-white">
+      <div className="flex justify-center">
+  <img src={headlogo} alt="HeadLogo" className="w-50 content-evenly mb-3" />
+</div>
 
-      <div className="p-3">
-        <div className="flex justify-center pr-6">
-          <img src={headlogo} alt="HeadLogo" className="w-50 content-evenly mb-3 ml-7" />
-        </div>
+
         <div className="space-y-">
-          <div className="p-2 font-bold text-lg flex items-center justify-start border-y border-gray-600/50 hover:bg-gray-400 rounded-sm hover:rounded-sm  hover:text-white transition duration-300">
-            <span >Dashboard</span> {/* Larger text */}
+          {/* Dashboard as main heading */}
+          <div className="p-2 font-bold text-md flex items-center justify-start border-y border-gray-100/55   hover:bg-blue-600 rounded-sm hover:rounded-sm hover:text-white transition duration-300">
+            <span>DASHBOARD</span> {/* Larger text */}
           </div>
 
-          <div className="space-y-2 border-b  border-gray-600/60">
-            <Link to="/Profile" className="p-1 font-sans text-md flex items-center justify-start bg-gray-100 transition duration-300 rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white">
+          {/* Profile section */}
+          <div className="space-y-2 border-b border-gray-100/55 py-2">
+            <Link to="/profile" className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-600 hover:text-white ${activeButton === -1 && 'bg-blue-600 text-white'}`} style={{ textTransform: 'uppercase' }}>
               <FaUser className="w-4 h-4 mr-2" /> {/* Larger icon */}
               My Profile
             </Link>
-            <Link to="/temp" className="p-1 font-sans text-md flex items-center justify-start bg-gray-100 transition duration-300 rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white">
+            <Link to="/temp" className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-600 hover:text-white ${activeButton === -2 && 'bg-blue-600 text-white'}`} style={{ textTransform: 'uppercase' }}>
               <FaCog className="w-4 h-4 mr-2" />
               Settings
             </Link>
-            <Link to="/temp" className="p-1 font-sans text-md flex items-center justify-start bg-gray-100 transition duration-300 rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white">
+            <Link to="/temp" className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-600 hover:text-white ${activeButton === -3 && 'bg-blue-600 text-white'}`} style={{ textTransform: 'uppercase' }}>
               <FaMedal className="w-4 h-4 mr-2" />
               Earn Badges+
             </Link>
-
-
-
-            <div className={`p-1 font-sans text-md flex items-center justify-start bg-gray-100 transition duration-300 rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white `} onClick={() => onTopicSelect(0)}>
+            <div className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-600 hover:text-white ${activeButton === 0 && 'bg-blue-600 text-white'}`} style={{ textTransform: 'uppercase' }} onClick={() => handleButtonClick(0)}>
               <FaCode className="w-4 h-4 mr-2" />
               All Problem Labs
             </div>
-            <Link to="/temp" className="p-1 font-sans text-md flex items-center justify-start bg-gray-100 transition duration-300 rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white">
+            <Link to="/temp" className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-600 hover:text-white ${activeButton === -4 && 'bg-blue-600 text-white'}`} style={{ textTransform: 'uppercase' }}>
               <FaTrophy className="w-4 h-4 mr-2" />
               Leaderboard
             </Link>
           </div>
 
-
-
           {/* Problem Labs section */}
-          <div className="p-2 font-bold text-lg flex items-center justify-start border-b border-gray-600/50 hover:bg-gray-400 rounded-sm hover:rounded-sm  hover:text-white transition duration-300">
-
-            <span >Problem Labs</span> {/* Larger text */}
+          <div className="p-2 font-bold text-md flex items-center justify-start rounded-sm hover:rounded-sm   hover:bg-blue-600 hover:text-white transition duration-300 ">
+            <span>PROBLEM LABS</span> {/* Larger text */}
             {/* Add Topic button for admins */}
-            {subAdmin && (
-              <div className="p-2 font-medium text-lg flex items-center justify-start rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white transition duration-300 ">
-                <button onClick={openModal} className="flex items-center">
-                  <img src={plusLogo} alt="Logo" className="w-4 h-4 mr-2 font-bold justify-evenly" />
+            {admin && (
+              <div className="p-2 font-medium text-xs flex items-center justify-start rounded-sm hover:rounded-sm   hover:bg-blue-600 hover:text-white transition duration-300 ">
+                <button onClick={openModal} className={`flex items-center focus:outline-none  rounded-md py-1 px-2   hover:bg-blue-600 hover:text-white`} style={{ textTransform: 'uppercase' }}>
+                  <img src={plusLogo} alt="Logo" className="w-4 h-4 mr-2 justify-evenly" />
+                  
                 </button>
               </div>
             )}
           </div>
+
           {/* List of topics */}
-          <div className=" space-y-2 "> {/* Indent and space the list of topics */}
+          <div className="space-y-2"> {/* Indent and space the list of topics */}
             {topicsWithIcons.map((topic) => (
               <div
                 key={topic.id}
-                className={`p-2 font-sans text-md flex items-center justify-start rounded-sm hover:rounded-sm hover:bg-gray-400 hover:text-white transition duration-300 ${activeTopic === topic.id ? 'text-gray-600' : ''}`}
-                onClick={() => onTopicSelect(topic.id === 0 ? 0 : topic.id)}
+                className={`p-2 text-xs flex items-center justify-start rounded-sm hover:rounded-sm   hover:bg-blue-600 hover:text-white transition duration-300 ${activeButton === topic.id && 'bg-blue-600 text-white'}`}
+                onClick={() => handleButtonClick(topic.id)}
               >
                 <div className="flex items-center">
-                  <span className="mr2">< FaLaptopCode className="w-4 h-4" /></span>
-                  {topic.name}
+                  <span className="mr-2"><FaLaptopCode className="w-4 h-4" /></span>
+                  {topic.name.toUpperCase()}
                 </div>
               </div>
             ))}

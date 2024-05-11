@@ -191,7 +191,6 @@ const ProblemPage = () => {
                       {/* Display speed */}
                     </div>
                   </div>
-                  <h2 className="text-lg font-semibold mb-2 text-center text-white">Open the Virtual Lab</h2>
                   <div className="flex flex-col items-center">
                     <button className="bg-white font-semibold text-003366 px-4 py-2 rounded hover:bg-blue-200" onClick={requestVirtualMachine} disabled={isLoading}>
                       {isLoading ? "Loading..." : "Start Virtual Lab"}
@@ -200,11 +199,11 @@ const ProblemPage = () => {
                       <div className="mt-2 text-center text-blue-900">
                         <p className="text-blue-900">
                           URL:{" "}
-                          <a href={vmData.vm_url} target="_blank" rel="noopener noreferrer" className="text-blue-500 text-sm">
+                          <a href={vmData.vm_url} target="_blank" rel="noopener noreferrer" className="text-blue-500 text-sm font-semibold">
                             {vmData.vm_url}
                           </a>
                         </p>
-                        <p>Password: {vmData.password}</p>
+                        <p className="font-semibold">Password: {vmData.password}</p>
                       </div>
                     )}
                   </div>

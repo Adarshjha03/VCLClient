@@ -10,7 +10,7 @@ const LandingPage = () => {
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       minHeight: '100vh',
-    }}>
+    }}> 
 
 <div className='w-full h-[80px] bg-black '>
       <div className=' m-auto w-full h-full flex justify-between items-center px-0 px-4'>

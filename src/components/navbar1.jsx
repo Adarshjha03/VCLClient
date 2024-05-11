@@ -44,11 +44,11 @@ const Navbar = () => {
       style={{
         background:
           'linear-gradient(315deg, #2234ae 0%, #191714 80%)',
-        height: '65px',
+        height: '60px',
       }}
     >
       <div className="text-xl font-bold text-white flex items-center">
-        Navigation
+       
       </div>
       <div className="flex items-center">
         {/* Notification icon */}
