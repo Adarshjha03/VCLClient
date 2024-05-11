@@ -48,7 +48,7 @@ const Navbar = () => {
       }}
     >
       <div className="text-xl font-bold text-white flex items-center">
-       
+       {/*Navigation*/}
       </div>
       <div className="flex items-center">
         {/* Notification icon */}

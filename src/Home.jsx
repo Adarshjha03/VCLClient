@@ -131,7 +131,7 @@ const HomePage = () => {
         <Navbar style={{ position: "fixed", width: "100%", zIndex: 1000 }} />  
         <div className="p-4" style={{ marginTop: "1px", overflowY: "auto", height: "calc(100vh - 80px)" }}>
  
-            <h2 className="text-xl font-bold mb-4">{activeTopicName}</h2>
+            <h2 className="text-xl font-bold mb-4 uppercase">{activeTopicName}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {problems.map((problem) => (
                    <div 
