@@ -97,41 +97,41 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
 
         <div className="space-y-">
           {/* Dashboard as main heading */}
-          <div className="p-2 font-bold text-md flex items-center justify-start border-y border-gray-100/55   hover:bg-blue-600 rounded-sm hover:rounded-sm hover:text-white transition duration-300">
+          <div className="p-2 font-semibold text-md flex items-center justify-start border-b border-gray-100/55   hover:bg-blue-400 rounded-sm hover:rounded-sm hover:text-white transition duration-300">
             <span>DASHBOARD</span> {/* Larger text */}
           </div>
 
           {/* Profile section */}
           <div className="space-y-2 border-b border-gray-100/55 py-2">
-            <Link to="/profile" className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-600 hover:text-white ${activeButton === -1 && 'bg-blue-600 text-white'}`} style={{ textTransform: 'uppercase' }}>
+            <Link to="/profile" className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -1 && 'bg-blue-600 text-white'}`} style={{ textTransform: 'uppercase' }}>
               <FaUser className="w-4 h-4 mr-2" /> {/* Larger icon */}
               My Profile
             </Link>
-            <Link to="/temp" className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-600 hover:text-white ${activeButton === -2 && 'bg-blue-600 text-white'}`} style={{ textTransform: 'uppercase' }}>
+            <Link to="/temp" className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -2 && 'bg-blue-600 text-white'}`} style={{ textTransform: 'uppercase' }}>
               <FaCog className="w-4 h-4 mr-2" />
               Settings
             </Link>
-            <Link to="/temp" className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-600 hover:text-white ${activeButton === -3 && 'bg-blue-600 text-white'}`} style={{ textTransform: 'uppercase' }}>
+            <Link to="/temp" className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -3 && 'bg-blue-600 text-white'}`} style={{ textTransform: 'uppercase' }}>
               <FaMedal className="w-4 h-4 mr-2" />
-              Earn Badges+
+              Earn Badges
             </Link>
-            <div className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-600 hover:text-white ${activeButton === 0 && 'bg-blue-600 text-white'}`} style={{ textTransform: 'uppercase' }} onClick={() => handleButtonClick(0)}>
+            <div className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === 0 && 'bg-blue-600 text-white'}`} style={{ textTransform: 'uppercase' }} onClick={() => handleButtonClick(0)}>
               <FaCode className="w-4 h-4 mr-2" />
               All Problem Labs
             </div>
-            <Link to="/temp" className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-600 hover:text-white ${activeButton === -4 && 'bg-blue-600 text-white'}`} style={{ textTransform: 'uppercase' }}>
+            <Link to="/temp" className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -4 && 'bg-blue-600 text-white'}`} style={{ textTransform: 'uppercase' }}>
               <FaTrophy className="w-4 h-4 mr-2" />
               Leaderboard
             </Link>
           </div>
 
           {/* Problem Labs section */}
-          <div className="p-2 font-bold text-md flex items-center justify-start rounded-sm hover:rounded-sm   hover:bg-blue-600 hover:text-white transition duration-300 ">
+          <div className="p-1 font-semibold text-md flex items-center justify-start rounded-sm hover:rounded-sm   hover:bg-blue-400 hover:text-white transition duration-300 ">
             <span>PROBLEM LABS</span> {/* Larger text */}
             {/* Add Topic button for admins */}
             {admin && (
-              <div className="p-2 font-medium text-xs flex items-center justify-start rounded-sm hover:rounded-sm   hover:bg-blue-600 hover:text-white transition duration-300 ">
-                <button onClick={openModal} className={`flex items-center focus:outline-none  rounded-md py-1 px-2   hover:bg-blue-600 hover:text-white`} style={{ textTransform: 'uppercase' }}>
+              <div className="p-2 font-medium text-xs flex items-center justify-start rounded-sm hover:rounded-sm   hover:bg-blue-400 hover:text-white transition duration-300 ">
+                <button onClick={openModal} className={`flex items-center focus:outline-none  rounded-md py-1 px-2   hover:bg-blue-400 hover:text-white`} style={{ textTransform: 'uppercase' }}>
                   <img src={plusLogo} alt="Logo" className="w-4 h-4 mr-2 justify-evenly" />
                   
                 </button>
@@ -140,11 +140,11 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
           </div>
 
           {/* List of topics */}
-          <div className="space-y-2"> {/* Indent and space the list of topics */}
+          <div className="space-y-1"> {/* Indent and space the list of topics */}
             {topicsWithIcons.map((topic) => (
               <div
                 key={topic.id}
-                className={`p-2 text-xs flex items-center justify-start rounded-sm hover:rounded-sm   hover:bg-blue-600 hover:text-white transition duration-300 ${activeButton === topic.id && 'bg-blue-600 text-white'}`}
+                className={`p-2 text-xs flex items-center justify-start rounded-sm hover:rounded-sm   hover:bg-blue-400 hover:text-white transition duration-300 ${activeButton === topic.id && 'bg-blue-600 text-white'}`}
                 onClick={() => handleButtonClick(topic.id)}
               >
                 <div className="flex items-center">
