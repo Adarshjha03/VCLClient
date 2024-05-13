@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { FaBars, FaCalendar, FaCheck, FaEdit, FaRegCheckCircle } from "react-icons/fa";
+import { FaBars, FaCalendar, FaCheck, FaEdit, FaFlagCheckered, FaRegCheckCircle } from "react-icons/fa";
 import Sidebar from "./components/Sidebar";
 import Profile from "./assets/avatar.png";
 import Navbar from "./components/navbar1";
-import { FaGithub, FaLinkedin, FaBookOpen, FaEye, FaEnvelope, FaUser } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaBookOpen, FaEnvelope, FaUser } from 'react-icons/fa';
+import badge1 from './assets/badges/b1.jpg';
+import badge2 from './assets/badges/b2.jpg';
+import badge3 from './assets/badges/b3.jpg';
+
+const badges = [badge1, badge2, badge3];
 
 const ProfilePage = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -111,8 +116,8 @@ const ProfilePage = () => {
       <Sidebar showMenu={showMenu} onTopicSelect={handleTopicChange} activeTopic={selectedTopic} />
       <div className="flex-1 overflow-y-auto" style={{ background: "#ffffff" }}>
         <Navbar />
-        <div className="container mx-auto p-8 flex flex-col"> {/* Center align elements */}
-          <div className="w-1/4 bg-[#FFF1F1] rounded-lg p-6 ">
+        <div className="container mx-auto px-12 py-8 flex flex-row space-x-4"> {/* Center align elements */}
+          <div className="w-1/4 bg-[#FFF1F1] rounded-lg p-6 mb-0 h-full">
             <div className="relative mb-3 flex items-center justify-center"> {/* Changed justify-end to justify-center */}
               <div className="relative inline-block mr-4"> {/* Removed mr-4 */}
                 <img src={Profile} alt="User" className="w-24 h-24 rounded-full" />
@@ -177,7 +182,7 @@ const ProfilePage = () => {
             <hr className="border-2 border-blue-900"></hr>
             <div className="justify-center space-y-1 mb-3">
               <h2 className="text-xl font-bold text-gray-900 my-2">Community Stats</h2>
-              
+
               <div className="flex items-center space-x-2 mb-2">
                 <FaEnvelope className="text-green-500" size={24} />
                 <div className="text-sm text-gray-900">
@@ -206,6 +211,131 @@ const ProfilePage = () => {
                   <p className="text-gray-500">{user.bonusScore}</p>
                 </div>
               </div>
+              <div className="flex items-center space-x-2">
+                <FaFlagCheckered className="text-red-500" size={24} />
+                <div className="text-sm text-gray-900">
+                  Total Points
+                  <p className="text-gray-500">{user.score + user.bonusScore}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="w-3/4">
+            <div className="flex space-x-4">
+            <div className="bg-[#FFF1F1] rounded-lg p-6 mb-4 w-1/2 h-[33vh]">
+  
+    <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">Lab Progress</h3>
+    <div className="flex flex-col items-center">
+    <div className="relative w-16 h-16 items-center"> {/* Changed items-center to items-right */}
+      {/* Outer Circle */}
+      <svg viewBox="0 0 50 50" className="circular-chart items-center">
+        <circle
+          className="circle"
+          cx="25"
+          cy="25"
+          r="16"
+          strokeDasharray="70,100" // Fixed progress value to 70
+          stroke="#0074D9" // Color for progress
+          strokeWidth="3" // Width of the progress bar
+          fill="transparent"
+        />
+      </svg>
+    </div>
+    <div className="text-gray-500 text-sm mt-2">
+      <p className="text-center">Labs Attempted: <span className="font-bold">17</span></p> {/* Aligned text to the right */}
+      <p className="text-center">Total Labs: <span className="font-bold">25</span></p> {/* Aligned text to the right */}
+    </div>
+  </div>
+</div>
+
+<div className="bg-[#FFF1F1] rounded-lg p-6 mb-4 w-1/2 h-[33vh] flex flex-col  ">
+  <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">Badges</h3> {/* Horizontally centered */}
+  <div className="flex flex-wrap justify-center items-center mt-2"> {/* Centering badges */}
+    {badges.map((badge, index) => (
+      <div
+        key={index}
+        className="w-24 h-24 rounded-full border-2 border-gray-400 m-2 overflow-hidden flex justify-center items-center"
+      >
+        <img
+          src={badge}
+          alt={`Badge ${index + 1}`}
+          className="w-full h-full object-cover"
+        />
+      </div>
+    ))}
+  </div>
+</div>
+
+
+            </div>
+
+            <div className="bg-white rounded-lg p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">Recent Labs</h2>
+              <table className="w-full">
+                <thead>
+                  <tr>
+                    <th className="text-left">Name</th>
+                    <th className="text-left">Difficulty</th>
+                    <th className="text-left">Score</th>
+                  </tr>
+                </thead>
+               <tbody>
+  <tr>
+    <td>Lab 1</td>
+    <td>Easy</td>
+    <td>90</td>
+  </tr>
+  <tr>
+    <td>Lab 2</td>
+    <td>Medium</td>
+    <td>75</td>
+  </tr>
+  <tr>
+    <td>Lab 3</td>
+    <td>Hard</td>
+    <td>60</td>
+  </tr>
+  {/* Add more rows as needed */}
+  <tr>
+    <td>Lab 4</td>
+    <td>Easy</td>
+    <td>85</td>
+  </tr>
+  <tr>
+    <td>Lab 5</td>
+    <td>Medium</td>
+    <td>70</td>
+  </tr>
+  <tr>
+    <td>Lab 6</td>
+    <td>Hard</td>
+    <td>55</td>
+  </tr>
+  {/* Add more rows as needed */}
+  <tr>
+    <td>Lab 7</td>
+    <td>Easy</td>
+    <td>80</td>
+  </tr>
+  <tr>
+    <td>Lab 8</td>
+    <td>Medium</td>
+    <td>65</td>
+  </tr>
+  <tr>
+    <td>Lab 9</td>
+    <td>Hard</td>
+    <td>50</td>
+  </tr>
+  {/* Add more rows as needed */}
+  <tr>
+    <td>Lab 10</td>
+    <td>Easy</td>
+    <td>75</td>
+  </tr>
+</tbody>
+
+              </table>
             </div>
           </div>
 
