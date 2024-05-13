@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { FaBars } from "react-icons/fa";
+import { FaBars, FaCalendar, FaCheck, FaEdit, FaRegCheckCircle } from "react-icons/fa";
 import Sidebar from "./components/Sidebar";
 import Profile from "./assets/avatar.png";
 import Navbar from "./components/navbar1";
+import { FaGithub, FaLinkedin, FaBookOpen, FaEye, FaEnvelope, FaUser } from 'react-icons/fa';
 
 const ProfilePage = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
+    username: "",
     email: "",
     phoneNumber: "",
     githubUrl: "",
@@ -22,6 +24,7 @@ const ProfilePage = () => {
     solvedChallenges: [],
     completedTopics: [],
     dateJoined: "",
+    bonusScore: 0,
   });
   const [statistics, setStatistics] = useState([
     { label: "Total Labs Completed", value: 0 },
@@ -53,26 +56,35 @@ const ProfilePage = () => {
           throw new Error("Failed to fetch user data.");
         }
         const userData = await response.json();
+
+        // Check if userData is defined
+        if (!userData) {
+          console.error("User data is undefined");
+          return;
+        }
+
         setUser({
-          firstName: userData.first_name,
-          lastName: userData.last_name,
-          email: userData.email,
-          phoneNumber: userData.phone_number,
-          githubUrl: userData.github_url,
-          portfolioUrl: userData.portfolio_url,
-          linkedinUrl: userData.linkedin_url,
-          userType: userData.user_type,
+          firstName: userData.first_name || "",
+          lastName: userData.last_name || "",
+          email: userData.email || "",
+          username: userData.username || "",
+          phoneNumber: userData.phone_number || "",
+          githubUrl: userData.github_url || "",
+          portfolioUrl: userData.portfolio_url || "",
+          linkedinUrl: userData.linkedin_url || "",
+          userType: userData.user_type || "",
           admin: userData.admin === "true",
           subadmin: userData.subadmin === "true",
-          score: userData.score,
-          solvedChallenges: userData.solved_challenges,
-          completedTopics: userData.completed_topics,
-          dateJoined: userData.date_joined.split(" ")[0], // Only take the date part
+          score: userData.score || 0,
+          solvedChallenges: userData.solved_challenges || [],
+          completedTopics: userData.completed_topics || [],
+          dateJoined: userData.date_joined ? userData.date_joined.split(" ")[0] : "",
+          bonusScore: user.bonus_score || 0, // Only take the date part if date_joined is defined
         });
 
-        const totalLabsCompleted = userData.solved_challenges.length;
-        const topicsCompleted = userData.completed_topics.length;
-        const totalScore = userData.score;
+        const totalLabsCompleted = userData.solved_challenges ? userData.solved_challenges.length : 0;
+        const topicsCompleted = userData.completed_topics ? userData.completed_topics.length : 0;
+        const totalScore = userData.score || 0;
 
         setStatistics([
           { label: "Total Labs Completed", value: totalLabsCompleted },
@@ -85,7 +97,7 @@ const ProfilePage = () => {
     };
 
     fetchUserData();
-  }, []);
+  }, []); // Empty dependency array to ensure the effect runs only once
 
   // Function to handle topic selection
   const handleTopicChange = (topicId) => {
@@ -97,48 +109,109 @@ const ProfilePage = () => {
   return (
     <div className="flex h-screen font-sans overflow-hidden">
       <Sidebar showMenu={showMenu} onTopicSelect={handleTopicChange} activeTopic={selectedTopic} />
-      <div className="flex-1 overflow-y-auto" style={{ background: "#e0efee" }}>
+      <div className="flex-1 overflow-y-auto" style={{ background: "#ffffff" }}>
         <Navbar />
-        <div className="container mx-auto p-8">
-          <div className="flex items-center mb-8">
-            <img src={Profile} alt="User" className="w-24 h-24 rounded-full mr-4" />
-            <div>
-              <h1 className="text-2xl font-bold">{`${user.firstName} ${user.lastName}`}</h1>
-              <p className="text-gray-900">{user.email}</p>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-            <div className="border border-gray-800 p-4">
-              <p className="font-bold">Github:</p>
-              <p className="text-gray-900">{user.githubUrl}</p>
-            </div>
-            <div className="border border-gray-800 p-4">
-              <p className="font-bold">LinkedIn:</p>
-              <p className="text-gray-900">{user.linkedinUrl}</p>
-            </div>
-            <div className="border border-gray-800 p-4">
-              <p className="font-bold">Portfolio:</p>
-              <p className="text-gray-900 break-all">{user.portfolioUrl}</p>
-            </div>
-            <div className="border border-gray-800 p-4">
-              <p className="font-bold">Joined On:</p>
-              <p className="text-gray-900">{user.dateJoined}</p>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {statistics.map((statistic, index) => (
-              <div
-                key={index}
-                className="p-4 rounded-lg bg-gray-800 hover:bg-yellow-500 hover:text-gray-900 transition duration-300"
-              >
-                <h3 className="text-lg font-semibold text-white">{statistic.label}</h3>
-                <p className="text-gray-400">{statistic.value}</p>
+        <div className="container mx-auto p-8 flex flex-col"> {/* Center align elements */}
+          <div className="w-1/4 bg-[#FFF1F1] rounded-lg p-6 ">
+            <div className="relative mb-3 flex items-center justify-center"> {/* Changed justify-end to justify-center */}
+              <div className="relative inline-block mr-4"> {/* Removed mr-4 */}
+                <img src={Profile} alt="User" className="w-24 h-24 rounded-full" />
+                <a href="/temp" className="absolute top-16 right-0">
+                  <button className="bg-blue-500 text-white rounded-full p-1">
+                    <FaEdit />
+                  </button>
+                </a>
               </div>
-            ))}
+              <div className="text-left">
+                <h1 className="text-2xl font-bold">{`${user.firstName} ${user.lastName}`}</h1>
+                <p className="text-gray-900">@{user.username}</p>
+                <p className="text-gray-500">
+                  Rank <span className="text-blue-700">121</span>
+                </p>
+
+              </div>
+            </div>
+            <a href="/temp">
+              <div className="flex justify-center items-center mb-3 bg-blue-300 w-full h-9 rounded-md cursor-pointer">
+                <p className="text-blue-800 text-md font-bold">Edit Profile</p>
+              </div>
+            </a>
+            <div className="justify-center space-y-1 mb-3">
+              <div className="flex items-center space-x-2">
+                <FaGithub className="text-black " size={18} />
+                <div className="text-xs">
+                  {user.githubUrl ? (
+                    <Link to={user.githubUrl} target="_blank" rel="noopener noreferrer">
+                      Github
+                    </Link>
+                  ) : (
+                    <span>Not provided</span>
+                  )}
+                </div>
+              </div>
+              <div className="flex items-center space-x-2">
+                <FaBookOpen className="text-black " size={18} />
+                <div className="text-xs">
+                  {user.portfolioUrl ? (
+                    <Link to={user.portfolioUrl} target="_blank" rel="noopener noreferrer">
+                      Portfolio
+                    </Link>
+                  ) : (
+                    <span>Not provided</span>
+                  )}
+                </div>
+              </div>
+              <div className="flex items-center space-x-2">
+                <FaLinkedin className="text-black " size={18} />
+                <div className="text-xs">
+                  {user.linkedinUrl ? (
+                    <Link to={user.linkedinUrl} target="_blank" rel="noopener noreferrer">
+                      LinkedIn
+                    </Link>
+                  ) : (
+                    <span>Not provided</span>
+                  )}
+                </div>
+              </div>
+            </div>
+            <hr className="border-2 border-blue-900"></hr>
+            <div className="justify-center space-y-1 mb-3">
+              <h2 className="text-xl font-bold text-gray-900 my-2">Community Stats</h2>
+              
+              <div className="flex items-center space-x-2 mb-2">
+                <FaEnvelope className="text-green-500" size={24} />
+                <div className="text-sm text-gray-900">
+                  Email
+                  <p className="text-gray-500">{user.email}</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-2 mb-2">
+                <FaUser className="text-blue-900" size={24} />
+                <div className="text-sm text-gray-900">
+                  User Type
+                  <p className="text-gray-500">{user.userType}</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-2 mb-2">
+                <FaCalendar className="text-orange-500" size={24} />
+                <div className="text-sm text-gray-900">
+                  Date Joined
+                  <p className="text-gray-500">{user.dateJoined}</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-2">
+                <FaRegCheckCircle className="text-green-500" size={24} />
+                <div className="text-sm text-gray-900">
+                  Bonus Points
+                  <p className="text-gray-500">{user.bonusScore}</p>
+                </div>
+              </div>
+            </div>
           </div>
+
         </div>
+        <FaBars className="sm:hidden absolute top-4 left-4 text-2xl text-gray-600 cursor-pointer" onClick={toggleMenu} />
       </div>
-      <FaBars className="sm:hidden absolute top-4 left-4 text-2xl text-gray-600 cursor-pointer" onClick={toggleMenu} />
     </div>
   );
 };
