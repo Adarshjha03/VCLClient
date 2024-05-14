@@ -112,12 +112,12 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="flex h-screen font-sans overflow-hidden">
+    <div className="flex h-screen font-sans-relative">
       <Sidebar showMenu={showMenu} onTopicSelect={handleTopicChange} activeTopic={selectedTopic} />
-      <div className="flex-1 overflow-y-auto" style={{ background: "#ffffff" }}>
-        <Navbar />
-        <div className="container mx-auto px-12 py-8 flex flex-row space-x-4"> {/* Center align elements */}
-          <div className="w-1/4 bg-[#FFF1F1] rounded-lg p-6 mb-0 h-full">
+      <div className="flex-1 " style={{ background: "#ffffff" , overflowY: "hidden"}}>
+        <Navbar style={{ position: "fixed", width: "100%", zIndex: 1000 }} />
+        <div className="container mx-auto px-12 py-8 flex flex-row space-x-4" style={{marginTop: "1px", overflowY: "auto", height: "calc(100vh - 60px)"}}> {/* Center align elements */}
+          <div className="w-1/4 bg-white rounded-lg p-6 mb-0 h-full shadow-md">
             <div className="relative mb-3 flex items-center justify-center"> {/* Changed justify-end to justify-center */}
               <div className="relative inline-block mr-4"> {/* Removed mr-4 */}
                 <img src={Profile} alt="User" className="w-24 h-24 rounded-full" />
@@ -194,7 +194,7 @@ const ProfilePage = () => {
                 <FaUser className="text-blue-900" size={24} />
                 <div className="text-sm text-gray-900">
                   User Type
-                  <p className="text-gray-500">{user.userType}</p>
+                  <p className="text-gray-500">{user.userType === "user" ? "Learner" : user.userType}</p>
                 </div>
               </div>
               <div className="flex items-center space-x-2 mb-2">
@@ -222,7 +222,7 @@ const ProfilePage = () => {
           </div>
           <div className="w-3/4">
             <div className="flex space-x-4">
-            <div className="bg-[#FFF1F1] rounded-lg p-6 mb-4 w-1/2 h-[33vh]">
+            <div className="bg-white rounded-lg p-6 mb-4 w-1/2 h-[33vh] shadow-md">
   
     <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">Lab Progress</h3>
     <div className="flex flex-col items-center">
@@ -248,7 +248,7 @@ const ProfilePage = () => {
   </div>
 </div>
 
-<div className="bg-[#FFF1F1] rounded-lg p-6 mb-4 w-1/2 h-[33vh] flex flex-col  ">
+<div className="bg-white rounded-lg p-6 mb-4 w-1/2 h-[33vh] flex flex-col shadow-md ">
   <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">Badges</h3> {/* Horizontally centered */}
   <div className="flex flex-wrap justify-center items-center mt-2"> {/* Centering badges */}
     {badges.map((badge, index) => (
@@ -269,7 +269,7 @@ const ProfilePage = () => {
 
             </div>
 
-            <div className="bg-white rounded-lg p-6">
+            <div className="bg-white rounded-lg p-6 shadow-lg">
               <h2 className="text-xl font-bold text-gray-900 mb-4">Recent Labs</h2>
               <table className="w-full">
                 <thead>
