@@ -114,10 +114,10 @@ const ProfilePage = () => {
   return (
     <div className="flex h-screen font-sans-relative">
       <Sidebar showMenu={showMenu} onTopicSelect={handleTopicChange} activeTopic={selectedTopic} />
-      <div className="flex-1 " style={{ background: "#ffffff" , overflowY: "hidden"}}>
+      <div className="flex-1 " style={{ background: "#ffffff", overflowY: "hidden" }}>
         <Navbar style={{ position: "fixed", width: "100%", zIndex: 1000 }} />
-        <div className="container mx-auto px-12 py-8 flex flex-row space-x-4" style={{marginTop: "1px", overflowY: "auto", height: "calc(100vh - 60px)"}}> {/* Center align elements */}
-          <div className="w-1/4 bg-white rounded-lg p-6 mb-0 h-full shadow-md">
+        <div className="container mx-auto px-12 py-8 flex flex-row space-x-4" style={{ marginTop: "1px", overflowY: "auto", height: "calc(100vh - 60px)" }}> {/* Center align elements */}
+          <div className="w-1/4 bg-white rounded-lg p-6 mb-0 h-full shadow-lg">
             <div className="relative mb-3 flex items-center justify-center"> {/* Changed justify-end to justify-center */}
               <div className="relative inline-block mr-4"> {/* Removed mr-4 */}
                 <img src={Profile} alt="User" className="w-24 h-24 rounded-full" />
@@ -222,121 +222,91 @@ const ProfilePage = () => {
           </div>
           <div className="w-3/4">
             <div className="flex space-x-4">
-            <div className="bg-white rounded-lg p-6 mb-4 w-1/2 h-[33vh] shadow-md">
-  
-    <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">Lab Progress</h3>
-    <div className="flex flex-col items-center">
-    <div className="relative w-16 h-16 items-center"> {/* Changed items-center to items-right */}
-      {/* Outer Circle */}
-      <svg viewBox="0 0 50 50" className="circular-chart items-center">
-        <circle
-          className="circle"
-          cx="25"
-          cy="25"
-          r="16"
-          strokeDasharray="70,100" // Fixed progress value to 70
-          stroke="#0074D9" // Color for progress
-          strokeWidth="3" // Width of the progress bar
-          fill="transparent"
-        />
-      </svg>
-    </div>
-    <div className="text-gray-500 text-sm mt-2">
-      <p className="text-center">Labs Attempted: <span className="font-bold">17</span></p> {/* Aligned text to the right */}
-      <p className="text-center">Total Labs: <span className="font-bold">25</span></p> {/* Aligned text to the right */}
-    </div>
-  </div>
-</div>
+              <div className="bg-white rounded-lg p-6 mb-4 w-1/2 h-[33vh] shadow-md">
 
-<div className="bg-white rounded-lg p-6 mb-4 w-1/2 h-[33vh] flex flex-col shadow-md ">
-  <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">Badges</h3> {/* Horizontally centered */}
-  <div className="flex flex-wrap justify-center items-center mt-2"> {/* Centering badges */}
-    {badges.map((badge, index) => (
-      <div
-        key={index}
-        className="w-24 h-24 rounded-full border-2 border-gray-400 m-2 overflow-hidden flex justify-center items-center"
-      >
-        <img
-          src={badge}
-          alt={`Badge ${index + 1}`}
-          className="w-full h-full object-cover"
-        />
-      </div>
-    ))}
-  </div>
-</div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2 text-center">LAB PROGRESS</h3>
+                <div className="flex flex-col items-center">
+                  <div className="relative w-16 h-16 items-center"> {/* Changed items-center to items-right */}
+                    {/* Outer Circle */}
+                    <svg viewBox="0 0 50 50" className="circular-chart items-center">
+                      <circle
+                        className="circle"
+                        cx="25"
+                        cy="25"
+                        r="16"
+                        strokeDasharray="70,100" // Fixed progress value to 70
+                        stroke="#0074D9" // Color for progress
+                        strokeWidth="3" // Width of the progress bar
+                        fill="transparent"
+                      />
+                    </svg>
+                  </div>
+                  <div className="text-gray-500 text-sm mt-2">
+                    <p className="text-center">Labs Attempted: <span className="font-bold">17</span></p> {/* Aligned text to the right */}
+                    <p className="text-center">Total Labs: <span className="font-bold">25</span></p> {/* Aligned text to the right */}
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 mb-4 w-1/2 h-[33vh] flex flex-col shadow-md ">
+                <h3 className="text-xl font-semibold text-gray-900 mb-2 text-center">BADGES</h3> {/* Horizontally centered */}
+                <div className="flex flex-wrap justify-center items-center mt-2"> {/* Centering badges */}
+                  {badges.map((badge, index) => (
+                    <div
+                      key={index}
+                      className="w-24 h-24 rounded-full border-2 border-gray-400 m-2 overflow-hidden flex justify-center items-center"
+                    >
+                      <img
+                        src={badge}
+                        alt={`Badge ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
 
 
             </div>
 
             <div className="bg-white rounded-lg p-6 shadow-lg">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Recent Labs</h2>
-              <table className="w-full">
-                <thead>
-                  <tr>
-                    <th className="text-left">Name</th>
-                    <th className="text-left">Difficulty</th>
-                    <th className="text-left">Score</th>
-                  </tr>
-                </thead>
-               <tbody>
-  <tr>
-    <td>Lab 1</td>
-    <td>Easy</td>
-    <td>90</td>
-  </tr>
-  <tr>
-    <td>Lab 2</td>
-    <td>Medium</td>
-    <td>75</td>
-  </tr>
-  <tr>
-    <td>Lab 3</td>
-    <td>Hard</td>
-    <td>60</td>
-  </tr>
-  {/* Add more rows as needed */}
-  <tr>
-    <td>Lab 4</td>
-    <td>Easy</td>
-    <td>85</td>
-  </tr>
-  <tr>
-    <td>Lab 5</td>
-    <td>Medium</td>
-    <td>70</td>
-  </tr>
-  <tr>
-    <td>Lab 6</td>
-    <td>Hard</td>
-    <td>55</td>
-  </tr>
-  {/* Add more rows as needed */}
-  <tr>
-    <td>Lab 7</td>
-    <td>Easy</td>
-    <td>80</td>
-  </tr>
-  <tr>
-    <td>Lab 8</td>
-    <td>Medium</td>
-    <td>65</td>
-  </tr>
-  <tr>
-    <td>Lab 9</td>
-    <td>Hard</td>
-    <td>50</td>
-  </tr>
-  {/* Add more rows as needed */}
-  <tr>
-    <td>Lab 10</td>
-    <td>Easy</td>
-    <td>75</td>
-  </tr>
-</tbody>
+  <h2 className="text-xl font-semibold text-gray-900 mb-4 text-center">RECENT LABS</h2>
 
-              </table>
-            </div>
+  <div className="flex flex-col items-center">
+
+    <table className="w-full border-collapse border border-gray-700">
+      <thead>
+        <tr>
+          <th className="text-left border border-gray-700 px-4 py-2">Lab</th>
+          <th className="text-center border border-gray-700 px-4 py-2">Difficulty</th>
+          <th className="text-center border border-gray-700 px-4 py-2">Score</th>
+          <th className="text-right border border-gray-700 px-4 py-2">Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        {user.solvedChallenges.map((challenge, index) => (
+          <tr key={index} className="border-b border-gray-700">
+            <td className="text-left border border-gray-700 px-4 py-2">
+              <Link to={`/problem/${challenge.challenge_id}`} className="text-blue-600 font-semibold">
+                {challenge.challenge_name}
+              </Link>
+            </td>
+            <td className="text-center border border-gray-700 px-4 py-2">
+              <span className="inline-block bg-green-100 border border-green-600 text-green-600 rounded-xl px-2 py-1">
+                Easy
+              </span>
+            </td>
+            <td className="text-center border border-gray-700 px-4 py-2">{challenge.score}</td>
+            <td className="text-right border border-gray-700 px-4 py-2">{new Date(challenge.solved_at).toLocaleString()}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+
           </div>
 
         </div>
