@@ -14,6 +14,8 @@ const badges = [badge1, badge2, badge3];
 const ProfilePage = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [showAvatarModal, setShowAvatarModal] = useState(false);
+  const [admin, setAdmin] = useState(false);
+  const [username, setUsername] = useState('');
   const [user, setUser] = useState({
     avatar: 1,
     firstName: "",
@@ -44,11 +46,12 @@ const ProfilePage = () => {
     return storedTopic ? parseInt(storedTopic) : 0;
   });
   const backendUrl = "https://api.virtualcyberlabs.com";
+  const { id } = useParams();
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
   const toggleAvatarModal = () => {
-    console.log("toggleAvatarModal called");
+    // console.log("toggleAvatarModal called");
     // console.log(showAvatarModal);
     setShowAvatarModal(!showAvatarModal);
   };
@@ -59,12 +62,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const token = localStorage.getItem("Token");
-        const response = await fetch(`${backendUrl}/user`, {
-          headers: {
-            Authorization: `Token ${token}`,
-          },
-        });
+        const response = await fetch(`${backendUrl}/user/${id}`,);
         if (!response.ok) {
           throw new Error("Failed to fetch user data.");
         }
@@ -107,7 +105,31 @@ const ProfilePage = () => {
 
     fetchUserData();
   }, []);
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem("Token");
+        const userResponse = await fetch(`${backendUrl}/user`, {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        });
+        if (!userResponse.ok) {
+          throw new Error('Failed to fetch user data');
+        }
+        const userData = await userResponse.json();
+        setUsername(userData.username);
+        setAdmin(userData.admin);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
 
+    fetchUserData();
+  }, []);
+
+  let isValid = username === id || admin;
+  //console.log(isValid);
   // Function to handle topic selection
   const handleTopicChange = (topicId) => {
     setSelectedTopic(topicId); // Update selected topic
@@ -125,15 +147,18 @@ const ProfilePage = () => {
       <div className="flex-1 " style={{ background: "#ffffff", overflowY: "hidden" }}>
         <Navbar style={{ position: "fixed", width: "100%", zIndex: 1000 }} />
         <div className="container mx-auto px-12 py-8 flex flex-row space-x-4" style={{ marginTop: "1px", overflowY: "auto", height: "calc(100vh - 60px)" }}> {/* Center align elements */}
-          <div className="w-1/4 bg-white rounded-lg p-6 mb-0 h-full shadow-lg">
+          <div className="w-1/4 bg-white rounded-lg p-6 mb-0 h-auto shadow-lg">
             <div className="relative mb-3 flex items-center justify-center"> {/* Changed justify-end to justify-center */}
               <div className="relative inline-block mr-4">
                 <img src={`/src/components/avatars/${user.avatar}.png`} alt="User" className="w-24 h-24 rounded-full" />
-                <div className="absolute top-16 right-0">
-                  <button className="bg-blue-500 text-white rounded-full p-1" onClick={toggleAvatarModal}>
-                    <FaEdit />
-                  </button>
-                </div>
+                {isValid && (
+                  <div className="absolute top-16 right-0">
+                    <button className="bg-blue-500 text-white rounded-full p-1" onClick={toggleAvatarModal}>
+                      <FaEdit />
+                    </button>
+                  </div>
+                )}
+
               </div>
               <div className="text-left">
                 <h1 className="text-2xl font-bold">{`${user.firstName} ${user.lastName}`}</h1>
@@ -144,11 +169,11 @@ const ProfilePage = () => {
 
               </div>
             </div>
-            <a href="/temp">
+            {isValid && (<a href="/temp">
               <div className="flex justify-center items-center mb-3 bg-blue-300 w-full h-9 rounded-md cursor-pointer">
                 <p className="text-blue-800 text-md font-bold">Edit Profile</p>
               </div>
-            </a>
+            </a>)}
             <div className="justify-center space-y-1 mb-3">
               <div className="flex items-center space-x-2">
                 <FaGithub className="text-black " size={18} />
@@ -249,7 +274,6 @@ const ProfilePage = () => {
                   <ul className="ml-4 text-justify">
                     <li><strong>Completed Labs:</strong> {user.solvedChallenges.length}</li>
                     <li><strong>Total Labs:</strong> {user.totalChallenges}</li>
-                    <li><strong>Topics Completed:</strong> {user.totalTopics}</li>
                   </ul>
                 </div>
               </div>

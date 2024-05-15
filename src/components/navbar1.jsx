@@ -5,11 +5,35 @@ import { Link } from 'react-router-dom';
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
-
+  const [username, setUsername] = useState('');
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+
+  const backendUrl = "https://api.virtualcyberlabs.com";
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem("Token");
+        const userResponse = await fetch(`${backendUrl}/user`, {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        });
+        if (!userResponse.ok) {
+          throw new Error('Failed to fetch user data');
+        }
+        const userData = await userResponse.json();
+        setUsername(userData.username);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
   const closeDropdown = () => {
     setIsDropdownOpen(false);
   };
@@ -48,7 +72,7 @@ const Navbar = () => {
       }}
     >
       <div className="text-xl font-bold text-white flex items-center">
-       {/*Navigation*/}
+        {/*Navigation*/}
       </div>
       <div className="flex items-center">
         {/* Notification icon */}
@@ -63,7 +87,7 @@ const Navbar = () => {
             onClick={toggleDropdown}
           />
           {isDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+            <div className="absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
               <div
                 className="py-1"
                 role="menu"
@@ -71,7 +95,7 @@ const Navbar = () => {
                 aria-labelledby="options-menu"
               >
                 <Link
-                  to="/Profile"
+                  to={`/profile/${username}`}
                   onClick={closeDropdown}
                   role="menuitem"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
@@ -97,6 +121,7 @@ const Navbar = () => {
               </div>
             </div>
           )}
+
         </div>
       </div>
     </div>

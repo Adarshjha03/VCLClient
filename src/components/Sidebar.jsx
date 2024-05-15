@@ -15,7 +15,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [showProfileOptions, setShowProfileOptions] = useState(false); // State to manage visibility of profile options
   const [activeButton, setActiveButton] = useState(null); // State to track active button
-
+  const [username, setUsername] = useState('');
   const backendUrl = "https://api.virtualcyberlabs.com";
 
   useEffect(() => {
@@ -33,6 +33,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
         const userData = await userResponse.json();
         setAdmin(userData.admin);
         setSubAdmin(userData.subadmin);
+        setUsername(userData.username);
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -103,7 +104,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
 
           {/* Profile section */}
           <div className="space-y-2 border-b border-gray-100/55 py-2">
-            <Link to="/profile" className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -1 && 'bg-blue-600 text-white'}`} style={{ textTransform: 'uppercase' }}>
+            <Link to={`/profile/${username}`} className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -1 && 'bg-blue-600 text-white'}`} style={{ textTransform: 'uppercase' }}>
               <FaUser className="w-4 h-4 mr-2" /> {/* Larger icon */}
               My Profile
             </Link>
@@ -129,7 +130,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
           <div className="p-1 font-semibold text-md flex items-center justify-start rounded-sm hover:rounded-sm   hover:bg-blue-400 hover:text-white transition duration-300 ">
             <span>PROBLEM LABS</span> {/* Larger text */}
             {/* Add Topic button for admins */}
-            {admin && (
+            {subAdmin && (
               <div className="p-2 font-medium text-xs flex items-center justify-start rounded-sm hover:rounded-sm   hover:bg-blue-400 hover:text-white transition duration-300 ">
                 <button onClick={openModal} className={`flex items-center focus:outline-none  rounded-md py-1 px-2   hover:bg-blue-400 hover:text-white`} style={{ textTransform: 'uppercase' }}>
                   <img src={plusLogo} alt="Logo" className="w-4 h-4 mr-2 justify-evenly" />
