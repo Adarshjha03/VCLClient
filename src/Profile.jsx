@@ -80,7 +80,7 @@ const ProfilePage = () => {
         }
 
         setUser({
-          avatar: userData.avatar ||1  ,
+          avatar: userData.avatar || 1,
           firstName: userData.first_name || "",
           lastName: userData.last_name || "",
           email: userData.email || "",
@@ -142,8 +142,8 @@ const ProfilePage = () => {
     navigate("/home"); // Navigate to the home page
   };
   const completionRate = user.totalChallenges > 0 ? (user.solvedChallenges.length / user.totalChallenges) * 100 : 0;
-  const radius = 36; // Radius of the circle
-  const circumference = 2 * Math.PI * radius; // Circumference of the circle
+  const radius = 42; // Radius of the circle
+  const circumference = 2 * Math.PI * radius;
   const strokeVal = (completionRate / 100) * circumference;
 
   return (
@@ -260,36 +260,32 @@ const ProfilePage = () => {
           </div>
           <div className="w-3/4">
             <div className="flex space-x-4">
-              <div className="bg-white rounded-lg p-4 w-1/2 flex flex-col justify-center items-center shadow-md h-[33vh]">
-                <h3 className="text-xl font-semibold text-gray-900 text-center mb-2">PROGRESS</h3>
-         
-                <div className="flex w-full justify-between items-center">
+              <div className="bg-white rounded-lg p-4 w-full md:w-1/2 h-[33vh] flex flex-col justify-center items-center shadow-md">
+                <h3 className="text-xl font-semibold text-gray-900 text-center mb-2 pt-2">PROGRESS</h3>
+                <div className="flex flex-col md:flex-row w-full justify-between items-center">
                   <div className="relative pl-8">
-                    <svg width="100" height="100">
-                      <circle cx="50" cy="50" r={radius} fill="none" stroke="#ddd" strokeWidth="4" />
-                      <circle cx="50" cy="50" r={radius} fill="none" stroke="#1E88E5" strokeWidth="4"
-                        strokeDasharray={circumference}
-                        strokeDashoffset={circumference - strokeVal}
-                        style={{ transition: 'stroke-dashoffset 0.5s ease 0s', transform: 'rotate(-90deg)', transformOrigin: 'center' }}
-                      />
-                    </svg>
+                  <svg width="140" height="140">
+          <circle cx="70" cy="70" r={radius} fill="none" stroke="#ddd" strokeWidth="8" /> {/* Background circle */}
+          <circle cx="70" cy="70" r={radius} fill="none" stroke="#1E88E5" strokeWidth="8"
+            strokeDasharray={circumference}
+            strokeDashoffset={circumference - strokeVal}
+            style={{ transition: 'stroke-dashoffset 0.5s ease 0s', transform: 'rotate(-90deg)', transformOrigin: 'center' }}
+          /> {/* Foreground circle (progress) */}
+        </svg>
                     <div className="absolute inset-0 flex justify-center items-center pl-10">
                       {completionRate.toFixed(0)}%
                     </div>
+
                   </div>
-                  <ul className="ml-4  mr-4 text-justify">
+                  <ul className="ml-4 md:ml-8 mr-4 md:mr-8 text-center md:text-left">
                     <li><strong>Completed Labs:</strong> {user.solvedChallenges.length}</li>
                     <li><strong>Total Labs:</strong> {user.totalChallenges}</li>
                     <li><strong>Completed Topics:</strong> {user.completedTopics.length}</li>
-                    <li><strong>Completed Topics:</strong> {user.totalTopics}</li>
+                    <li><strong>Total Topics:</strong> {user.totalTopics}</li>
                   </ul>
                 </div>
-                
               </div>
-
-
-
-              <div className="bg-white rounded-lg p-6 pt-12 mb-4 w-1/2 h-[33vh] flex flex-col shadow-md ">
+              <div className="bg-white rounded-lg p-6  mb-4 w-1/2 h-[33vh] flex flex-col shadow-md ">
                 <h3 className="text-xl font-semibold text-gray-900 mb-2 text-center">BADGES</h3>
                 <div className="grid grid-cols-3 gap-4 justify-center items-center mt-2" style={{ overflow: 'hidden' }}> {/* Using grid for badge placement */}
                   {badges.map((badge, index) => (

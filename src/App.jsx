@@ -7,7 +7,7 @@ import  Login from './Login';
 import HomePage from './Home';
 import ProfilePage from './Profile';
 import ProblemPage from  "./Problem";
-import YourComponent from "./openLab"
+import YourComponent from "./openLab";
 import AddChallenge from './addChallenge';
 import AddTopic from './addTopic';
 import EditChallenge from './editChallenge';
