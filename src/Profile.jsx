@@ -231,7 +231,7 @@ const ProfilePage = () => {
           <div className="w-3/4">
             <div className="flex space-x-4">
               <div className="bg-white rounded-lg p-4 w-1/2 flex flex-col justify-center items-center shadow-md h-[33vh]">
-                <h3 className="text-xl font-semibold text-gray-900 text-center mb-4">PROGRESS</h3>
+                <h3 className="text-xl font-semibold text-gray-900 text-center mb-2">PROGRESS</h3>
                 <div className="flex w-full justify-between items-center">
                   <div className="relative">
                     <svg width="100" height="100">
@@ -256,24 +256,23 @@ const ProfilePage = () => {
 
 
 
-
               <div className="bg-white rounded-lg p-6 mb-4 w-1/2 h-[33vh] flex flex-col shadow-md ">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2 text-center">BADGES</h3> {/* Horizontally centered */}
-                <div className="flex flex-wrap justify-center items-center mt-2"> {/* Centering badges */}
+                <h3 className="text-xl font-semibold text-gray-900 mb-2 text-center">BADGES</h3>
+                <div className="grid grid-cols-3 gap-4 justify-center items-center mt-2" style={{ overflow: 'hidden' }}> {/* Using grid for badge placement */}
                   {badges.map((badge, index) => (
                     <div
                       key={index}
-                      className="w-24 h-24 rounded-full border-2 border-gray-400 m-2 overflow-hidden flex justify-center items-center"
-                    >
+                      className="relative w-full h-full max-w-xs max-h-xs rounded-full border-2 border-gray-400 overflow-hidden" style={{ aspectRatio: '1 / 1' }}>  {/* Maintained aspect ratio */}
                       <img
                         src={badge}
                         alt={`Badge ${index + 1}`}
-                        className="w-full h-full object-cover"
+                        className="absolute inset-0 w-full h-full object-cover"
                       />
                     </div>
                   ))}
                 </div>
               </div>
+
 
 
             </div>
