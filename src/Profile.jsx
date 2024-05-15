@@ -277,7 +277,7 @@ const ProfilePage = () => {
                     </div>
 
                   </div>
-                  <ul className="ml-4 md:ml-8 mr-4 md:mr-8 text-center md:text-left">
+                  <ul className="ml-2  mr-4 md:mr-8 text-justify md:text-left">
                     <li><strong>Completed Labs:</strong> {user.solvedChallenges.length}</li>
                     <li><strong>Total Labs:</strong> {user.totalChallenges}</li>
                     <li><strong>Completed Topics:</strong> {user.completedTopics.length}</li>
