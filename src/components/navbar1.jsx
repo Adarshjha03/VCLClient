@@ -6,6 +6,7 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [username, setUsername] = useState('');
+  const [avatar, setAvatar] = useState(1);
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -27,6 +28,7 @@ const Navbar = () => {
         }
         const userData = await userResponse.json();
         setUsername(userData.username);
+        setAvatar(userData.avatar);
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -82,8 +84,10 @@ const Navbar = () => {
 
         {/* Profile icon with dropdown */}
         <div className="relative" ref={dropdownRef}>
-          <FaUser
-            className="text-2xl text-white cursor-pointer"
+          <img
+            src={`/src/components/avatars/${avatar}.png`}
+            alt="User Avatar"
+            className="w-8 h-8 text-white cursor-pointer"
             onClick={toggleDropdown}
           />
           {isDropdownOpen && (
