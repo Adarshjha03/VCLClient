@@ -23,10 +23,11 @@ const avatars = [
 
 const AvatarSelector = () => {
   const [selectedAvatar, setSelectedAvatar] = useState(null);
+  const [responseMessage, setResponseMessage] = useState(null); // State variable for response message
   const backendUrl = "https://api.virtualcyberlabs.com";
+  
   const handleSubmit = async () => {
     if (selectedAvatar !== null) {
-      
       const token = localStorage.getItem("Token");
       const response = await fetch(`${backendUrl}/user`, {
         method: 'PUT',
@@ -38,17 +39,17 @@ const AvatarSelector = () => {
       });
 
       if (response.ok) {
-        console.log('Avatar selected successfully');
+        setResponseMessage('Avatar selected successfully'); // Set success message
       } else {
-        console.error('Error selecting avatar');
+        setResponseMessage('Error selecting avatar'); // Set error message
       }
     } else {
-      console.error('No avatar selected');
+      setResponseMessage('No avatar selected'); // Set error message
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center ">
+    <div className="flex flex-col items-center justify-center">
       <div className="grid grid-cols-3 gap-4">
         {avatars.map((avatar, index) => (
           <div
@@ -72,6 +73,12 @@ const AvatarSelector = () => {
       >
         Submit
       </button>
+      {/* Conditionally render response message */}
+      {responseMessage && (
+        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mt-4" role="alert">
+          {responseMessage}
+        </div>
+      )}
     </div>
   );
 };
