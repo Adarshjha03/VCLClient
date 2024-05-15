@@ -80,7 +80,7 @@ const ProfilePage = () => {
         }
 
         setUser({
-          avatar: userData.avatar || 1,
+          avatar: userData.avatar ||1  ,
           firstName: userData.first_name || "",
           lastName: userData.last_name || "",
           email: userData.email || "",
@@ -252,8 +252,8 @@ const ProfilePage = () => {
               <div className="flex items-center space-x-2">
                 <FaFlagCheckered className="text-red-500" size={24} />
                 <div className="text-sm text-gray-900">
-                  Total Points
-                  <p className="text-gray-500">{user.score + user.bonusScore}</p>
+                  Challenge Points
+                  <p className="text-gray-500">{user.score}</p>
                 </div>
               </div>
             </div>

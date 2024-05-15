@@ -28,6 +28,9 @@ const Navbar = () => {
         }
         const userData = await userResponse.json();
         setUsername(userData.username);
+        if (typeof userData.avatar === 'undefined') {
+          userData.avatar = 1;
+        }
         setAvatar(userData.avatar);
       } catch (error) {
         console.error('Error fetching user data:', error);
