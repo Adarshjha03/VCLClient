@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaBars } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Sidebar from './components/Sidebar';
 import Navbar from './components/navbar1';
@@ -205,7 +205,7 @@ const HomePage = () => {
       color: 'black',
     }}
   >
-    Close
+    <FaTimes/>
   </button>
   <AddChallenge />
 </Modal>

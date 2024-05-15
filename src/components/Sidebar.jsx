@@ -4,7 +4,7 @@ import plusLogo from '../assets/add.png';
 import Modal from 'react-modal';
 import AddTopic from '../addTopic';
 import { Link } from 'react-router-dom';
-import { FaBell, FaLaptopCode, FaCog, FaMedal, FaCode, FaTrophy, FaQuestionCircle, FaSearch, FaUser } from 'react-icons/fa'; // Importing Font Awesome icons
+import { FaTimes, FaLaptopCode, FaCog, FaMedal, FaCode, FaTrophy, FaQuestionCircle, FaSearch, FaUser } from 'react-icons/fa'; // Importing Font Awesome icons
 
 const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
   const [topicsWithIcons, setTopicsWithIcons] = useState([]);
@@ -189,7 +189,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
             color: 'black',
           }}
         >
-          Close
+          <FaTimes />
         </button>
         <AddTopic />
       </Modal>

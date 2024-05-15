@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { FaBars, FaCalendar, FaCheck, FaEdit, FaFlagCheckered, FaRegCheckCircle } from "react-icons/fa";
+import { FaBars, FaCalendar, FaTimes, FaEdit, FaFlagCheckered, FaRegCheckCircle } from "react-icons/fa";
 import Sidebar from "./components/Sidebar";
-import Profile from "./assets/avatar.png";
 import Navbar from "./components/navbar1";
 import { FaGithub, FaLinkedin, FaBookOpen, FaEnvelope, FaUser } from 'react-icons/fa';
 import badge1 from './assets/badges/b1.jpg';
 import badge2 from './assets/badges/b2.jpg';
 import badge3 from './assets/badges/b3.jpg';
-
+import Modal from 'react-modal';
+import AvatarSelector from "./components/avatar";
 const badges = [badge1, badge2, badge3];
 
 const ProfilePage = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const [showAvatarModal, setShowAvatarModal] = useState(false);
   const [user, setUser] = useState({
+    avatar: 1,
     firstName: "",
     lastName: "",
     username: "",
@@ -30,12 +32,12 @@ const ProfilePage = () => {
     completedTopics: [],
     dateJoined: "",
     bonusScore: 0,
+    totalScore: 0,
+    totalTopics: 8,
+    totalChallenges: 32,
+
   });
-  const [statistics, setStatistics] = useState([
-    { label: "Total Labs Completed", value: 0 },
-    { label: "Topics Completed", value: 0 },
-    { label: "Total Score", value: 0 },
-  ]);
+
 
   const [selectedTopic, setSelectedTopic] = useState(() => {
     const storedTopic = localStorage.getItem("selectedTopic");
@@ -45,6 +47,12 @@ const ProfilePage = () => {
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
+  const toggleAvatarModal = () => {
+    console.log("toggleAvatarModal called");
+   // console.log(showAvatarModal);
+    setShowAvatarModal(!showAvatarModal);
+  };
+  
 
   const navigate = useNavigate();
 
@@ -69,6 +77,7 @@ const ProfilePage = () => {
         }
 
         setUser({
+          avatar: userData.avatar || 1,
           firstName: userData.first_name || "",
           lastName: userData.last_name || "",
           email: userData.email || "",
@@ -84,25 +93,20 @@ const ProfilePage = () => {
           solvedChallenges: userData.solved_challenges || [],
           completedTopics: userData.completed_topics || [],
           dateJoined: userData.date_joined ? userData.date_joined.split(" ")[0] : "",
-          bonusScore: user.bonus_score || 0, // Only take the date part if date_joined is defined
+          bonusScore: user.bonus_score || 0,
+          totalChallenges: user.total_challenges || 32,
+          totalScore: user.total_score || 0,
+          totalTopics: user.total_topics || 8, // Only take the date part if date_joined is defined
         });
 
-        const totalLabsCompleted = userData.solved_challenges ? userData.solved_challenges.length : 0;
-        const topicsCompleted = userData.completed_topics ? userData.completed_topics.length : 0;
-        const totalScore = userData.score || 0;
 
-        setStatistics([
-          { label: "Total Labs Completed", value: totalLabsCompleted },
-          { label: "Topics Completed", value: topicsCompleted },
-          { label: "Total Score", value: totalScore },
-        ]);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
 
     fetchUserData();
-  }, []); // Empty dependency array to ensure the effect runs only once
+  }, []);
 
   // Function to handle topic selection
   const handleTopicChange = (topicId) => {
@@ -119,13 +123,13 @@ const ProfilePage = () => {
         <div className="container mx-auto px-12 py-8 flex flex-row space-x-4" style={{ marginTop: "1px", overflowY: "auto", height: "calc(100vh - 60px)" }}> {/* Center align elements */}
           <div className="w-1/4 bg-white rounded-lg p-6 mb-0 h-full shadow-lg">
             <div className="relative mb-3 flex items-center justify-center"> {/* Changed justify-end to justify-center */}
-              <div className="relative inline-block mr-4"> {/* Removed mr-4 */}
-                <img src={Profile} alt="User" className="w-24 h-24 rounded-full" />
-                <a href="/temp" className="absolute top-16 right-0">
-                  <button className="bg-blue-500 text-white rounded-full p-1">
+              <div className="relative inline-block mr-4">
+                <img src={`/src/components/avatars/${user.avatar}.png`} alt="User" className="w-24 h-24 rounded-full" />
+                <div className="absolute top-16 right-0">
+                  <button className="bg-blue-500 text-white rounded-full p-1" onClick={toggleAvatarModal}>
                     <FaEdit />
                   </button>
-                </a>
+                </div>
               </div>
               <div className="text-left">
                 <h1 className="text-2xl font-bold">{`${user.firstName} ${user.lastName}`}</h1>
@@ -270,41 +274,47 @@ const ProfilePage = () => {
             </div>
 
             <div className="bg-white rounded-lg p-6 shadow-lg">
-  <h2 className="text-xl font-semibold text-gray-900 mb-4 text-center">RECENT LABS</h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4 text-center">RECENT LABS</h2>
 
-  <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center">
 
-    <table className="w-full border-collapse border border-gray-700">
-      <thead>
-        <tr>
-          <th className="text-left border border-gray-700 px-4 py-2">Lab</th>
-          <th className="text-center border border-gray-700 px-4 py-2">Difficulty</th>
-          <th className="text-center border border-gray-700 px-4 py-2">Score</th>
-          <th className="text-right border border-gray-700 px-4 py-2">Time</th>
-        </tr>
-      </thead>
-      <tbody>
-        {user.solvedChallenges.map((challenge, index) => (
-          <tr key={index} className="border-b border-gray-700">
-            <td className="text-left border border-gray-700 px-4 py-2">
-              <Link to={`/problem/${challenge.challenge_id}`} className="text-blue-600 font-semibold">
-                {challenge.challenge_name}
-              </Link>
-            </td>
-            <td className="text-center border border-gray-700 px-4 py-2">
-              <span className="inline-block bg-green-100 border border-green-600 text-green-600 rounded-xl px-2 py-1">
-                Easy
-              </span>
-            </td>
-            <td className="text-center border border-gray-700 px-4 py-2">{challenge.score}</td>
-            <td className="text-right border border-gray-700 px-4 py-2">{new Date(challenge.solved_at).toLocaleString()}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+                <table className="w-full border-collapse border border-gray-700">
+                  <thead>
+                    <tr>
+                      <th className="text-left border border-gray-700 px-4 py-2">Lab</th>
+                      <th className="text-center border border-gray-700 px-4 py-2">Difficulty</th>
+                      <th className="text-center border border-gray-700 px-4 py-2">Score</th>
+                      <th className="text-right border border-gray-700 px-4 py-2">Time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {user.solvedChallenges.map((challenge, index) => (
+                      <tr key={index} className="border-b border-gray-700">
+                        <td className="text-left border border-gray-700 px-4 py-2">
+                          <Link to={`/problem/${challenge.challenge_id}`} className="text-blue-600 font-semibold">
+                            {challenge.challenge_name}
+                          </Link>
+                        </td>
+                        <td className="text-center border border-gray-700 px-4 py-2">
+                          <span className={`inline-block rounded-xl px-2 py-1 ${challenge.difficulty === "Easy" ? "bg-green-100 border-green-600 text-green-600" :
+                              challenge.difficulty === "Medium" ? "bg-yellow-100 border-yellow-600 text-yellow-600" :
+                                challenge.difficulty === "Hard" ? "bg-red-100 border-red-600 text-red-600" :
+                                  "" // Default styling if difficulty is not specified
+                            }`}>
+                            {challenge.difficulty === "Medium" ? "Med." : challenge.difficulty}
+                          </span>
+                        </td>
 
-  </div>
-</div>
+
+                        <td className="text-center border border-gray-700 px-4 py-2">{challenge.score}</td>
+                        <td className="text-right border border-gray-700 px-4 py-2">{new Date(challenge.solved_at).toLocaleString()}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+
+              </div>
+            </div>
 
 
           </div>
@@ -312,6 +322,44 @@ const ProfilePage = () => {
         </div>
         <FaBars className="sm:hidden absolute top-4 left-4 text-2xl text-gray-600 cursor-pointer" onClick={toggleMenu} />
       </div>
+      {showAvatarModal && (
+  <div
+    style={{
+      position: "fixed",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      zIndex: 1000,
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center"
+    }}
+    onClick={toggleAvatarModal} // Close modal when clicking outside
+  >
+    <div
+      style={{
+        backgroundColor: "white",
+        padding: "20px",
+        borderRadius: "8px",
+        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)"
+      }}
+      onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
+    >
+      <div className="flex justify-between items-center py-4 px-6">
+        <h2 className="text-xl font-bold">Select Your Avatar</h2>
+        <button onClick={toggleAvatarModal}>
+          <FaTimes />
+        </button>
+      </div>
+      <div className="px-6 pb-4">
+        <AvatarSelector />
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };
