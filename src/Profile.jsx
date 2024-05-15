@@ -62,7 +62,12 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`${backendUrl}/user/${id}`,);
+        const token = localStorage.getItem("Token");
+        const response = await fetch(`${backendUrl}/user/${id}`, {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        });
         if (!response.ok) {
           throw new Error("Failed to fetch user data.");
         }
@@ -257,8 +262,9 @@ const ProfilePage = () => {
             <div className="flex space-x-4">
               <div className="bg-white rounded-lg p-4 w-1/2 flex flex-col justify-center items-center shadow-md h-[33vh]">
                 <h3 className="text-xl font-semibold text-gray-900 text-center mb-2">PROGRESS</h3>
+         
                 <div className="flex w-full justify-between items-center">
-                  <div className="relative">
+                  <div className="relative pl-8">
                     <svg width="100" height="100">
                       <circle cx="50" cy="50" r={radius} fill="none" stroke="#ddd" strokeWidth="4" />
                       <circle cx="50" cy="50" r={radius} fill="none" stroke="#1E88E5" strokeWidth="4"
@@ -267,20 +273,23 @@ const ProfilePage = () => {
                         style={{ transition: 'stroke-dashoffset 0.5s ease 0s', transform: 'rotate(-90deg)', transformOrigin: 'center' }}
                       />
                     </svg>
-                    <div className="absolute inset-0 flex justify-center items-center">
+                    <div className="absolute inset-0 flex justify-center items-center pl-10">
                       {completionRate.toFixed(0)}%
                     </div>
                   </div>
-                  <ul className="ml-4 text-justify">
+                  <ul className="ml-4  mr-4 text-justify">
                     <li><strong>Completed Labs:</strong> {user.solvedChallenges.length}</li>
                     <li><strong>Total Labs:</strong> {user.totalChallenges}</li>
+                    <li><strong>Completed Topics:</strong> {user.completedTopics.length}</li>
+                    <li><strong>Completed Topics:</strong> {user.totalTopics}</li>
                   </ul>
                 </div>
+                
               </div>
 
 
 
-              <div className="bg-white rounded-lg p-6 mb-4 w-1/2 h-[33vh] flex flex-col shadow-md ">
+              <div className="bg-white rounded-lg p-6 pt-12 mb-4 w-1/2 h-[33vh] flex flex-col shadow-md ">
                 <h3 className="text-xl font-semibold text-gray-900 mb-2 text-center">BADGES</h3>
                 <div className="grid grid-cols-3 gap-4 justify-center items-center mt-2" style={{ overflow: 'hidden' }}> {/* Using grid for badge placement */}
                   {badges.map((badge, index) => (
