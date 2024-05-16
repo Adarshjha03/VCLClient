@@ -145,7 +145,7 @@ const ProfilePage = () => {
   const radius = 42; // Radius of the circle
   const circumference = 2 * Math.PI * radius;
   const strokeVal = (completionRate / 100) * circumference;
-
+  const avatarImagePath = `/src/components/avatars/${user.avatar}.png`;
   return (
     <div className="flex h-screen font-sans-relative">
       <Sidebar showMenu={showMenu} onTopicSelect={handleTopicChange} activeTopic={selectedTopic} />
@@ -155,7 +155,7 @@ const ProfilePage = () => {
           <div className="w-1/4 bg-white rounded-lg p-6 mb-0 h-auto shadow-lg">
             <div className="relative mb-3 flex items-center justify-center"> {/* Changed justify-end to justify-center */}
               <div className="relative inline-block mr-4">
-                <img src={`/src/components/avatars/${user.avatar}.png`} alt="User" className="w-24 h-24 rounded-full" />
+                <img src={avatarImagePath} alt="User" className="w-24 h-24 rounded-full" />
                 {isValid && (
                   <div className="absolute top-16 right-0">
                     <button className="bg-blue-500 text-white rounded-full p-1" onClick={toggleAvatarModal}>

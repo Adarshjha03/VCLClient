@@ -66,7 +66,7 @@ const Navbar = () => {
       document.removeEventListener('mousedown', closeDropdownOnClickOutside);
     };
   }, [isDropdownOpen]);
-
+  const avatarImagePath =`/src/components/avatars/${avatar}.png` ;
   return (
     <div
       className="flex justify-between items-center p-4"
@@ -88,7 +88,7 @@ const Navbar = () => {
         {/* Profile icon with dropdown */}
         <div className="relative" ref={dropdownRef}>
           <img
-            src={`/src/components/avatars/${avatar}.png`}
+            src={avatarImagePath}
             alt="User Avatar"
             className="w-8 h-8 text-white cursor-pointer"
             onClick={toggleDropdown}
