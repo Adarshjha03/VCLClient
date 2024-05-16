@@ -334,7 +334,7 @@ const ProfilePage = () => {
                               challenge.difficulty === "Hard" ? "bg-red-100 border-red-600 text-red-600" :
                                 "" // Default styling if difficulty is not specified
                             }`}>
-                            {challenge.difficulty === "Medium" ? "Med." : challenge.difficulty}
+                            {challenge.difficulty}
                           </span>
                         </td>
 
