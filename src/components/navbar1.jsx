@@ -102,8 +102,11 @@ const Navbar = () => {
                 aria-labelledby="options-menu"
               >
                 <Link
-                  to={`/profile/${username}`}
-                  onClick={closeDropdown}
+                  to={`/profile/${username}`}    
+                  onClick={(event) => {
+                    closeDropdown(); // Close the dropdown
+                    window.location.href = `/profile/${username}`; // Reload the page
+                }}
                   role="menuitem"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
                 >
@@ -111,7 +114,10 @@ const Navbar = () => {
                 </Link>
                 <Link
                   to={`/settings/${username}`}
-                  onClick={closeDropdown}
+                  onClick={(event) => {
+                    closeDropdown(); // Close the dropdown
+                    window.location.href = `/settings/${username}`; // Reload the page
+                }}
                   role="menuitem"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
                 >

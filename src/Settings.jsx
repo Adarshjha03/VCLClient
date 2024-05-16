@@ -86,6 +86,11 @@ const Settings = () => {
             }
             const currentUserData = await response.json();
             setAdmin(currentUserData.admin);
+            if (currentUserData.username !== id && !currentUserData.admin) {
+                navigate(`/profile/${id}`); // Redirect to /profile/id
+            }
+
+
         } catch (error) {
             console.error("Error fetching current user data:", error);
         }
@@ -120,7 +125,9 @@ const Settings = () => {
 
             if (response.ok) {
                 setResponseMessage('Profile updated successfully');
-                window.location.reload();
+                setTimeout(() => {
+                    window.location.href = `/profile/${id}`;
+                }, 2000);
             } else {
                 setResponseMessage('Error updating profile');
             }
@@ -154,7 +161,9 @@ const Settings = () => {
 
             if (response.ok) {
                 setResponseMessage('Password updated successfully');
-                window.location.reload();
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
             } else {
                 setResponseMessage('Error updating password');
             }
@@ -183,7 +192,9 @@ const Settings = () => {
                 setResponseMessage('Bonus points added successfully');
                 // Update the bonus points state
                 setShowAddPoints(false);
-                window.location.reload(); // Hide the popup
+                setTimeout(() => {
+                    window.location.reload(); // Redirect after 3 seconds
+                }, 1000);
             } else {
                 setResponseMessage('Error adding bonus points');
             }
@@ -212,7 +223,9 @@ const Settings = () => {
                 setResponseMessage(`User type changed to ${newUserType} successfully`);
                 // Update the user type state
                 setUserType(newUserType);
-                window.location.reload();
+                setTimeout(() => {
+                    window.location.reload(); // Redirect after 3 seconds
+                }, 1000);
             } else {
                 setResponseMessage('Error changing user type');
             }
@@ -238,8 +251,13 @@ const Settings = () => {
             <div className="flex-1 overflow-y-auto" style={{ background: "#ffffff", overflowY: "hidden" }}>
                 <Navbar style={{ position: "fixed", width: "100%", zIndex: 1000 }} />
                 <div className="p-6">
+                {responseMessage && (
+                        <div className={`bg-${responseMessage.includes('success') ? 'green' : 'red'}-100 border border-${responseMessage.includes('success') ? 'green' : 'red' }-400 text-${responseMessage.includes('success') ? 'green' : 'red'}-700 px-4 py-3 rounded -mt-3 mb-2`} role="alert">
+                            {responseMessage}
+                        </div>
+                    )}
                     <h2 className="text-2xl font-bold mb-4">Settings</h2>
-
+                    
                     <div className="mb-6">
                         <h3 className="text-xl font-bold mb-2">Profile</h3>
                         <div className="relative inline-block   mr-4 mb-2">
@@ -305,7 +323,7 @@ const Settings = () => {
                                     className="p-2 border rounded"
                                 />
                             </div>
-                            <button type="submit" className="mt-4 px-4 py-2 bg-blue-500 text-white items-center rounded hover:bg-blue-600">
+                            <button type="submit" className="mt-4 px-4 py-2 bg-[#213099] text-white items-center rounded hover:bg-blue-600">
                                 Update Profile
                             </button>
                         </form>
@@ -339,7 +357,7 @@ const Settings = () => {
                                 className="p-2 border rounded mb-2 w-full md:w-auto mr-4"
                             />
                             <p>
-                                <button type="submit" className="mb-2 mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                                <button type="submit" className="mb-2 mt-2 px-4 py-2 bg-[#213099] text-white rounded hover:bg-blue-600">
                                     Update Password
                                 </button>
                             </p>
@@ -362,7 +380,7 @@ const Settings = () => {
 
                                 </div>
                                 <p>
-                                    <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                                    <button type="submit" className="px-4 py-2 bg-[#213099] text-white rounded hover:bg-blue-600">
                                         Add Points
                                     </button>
                                 </p>
@@ -370,28 +388,34 @@ const Settings = () => {
                         </div>
                     )}
                     {admin && (
-                        <div className="mb-12">
-                            <h3 className="text-xl font-semibold mb-2">Change User Type</h3>
-                            <p>Current User Type: {user.userType}</p>
-                            <form onSubmit={handleChangeUserType} className="mt-4">
-                                <div className="flex items-center mb-2">
-                                    <input
-                                        type="text"
-                                        placeholder="(user/subadmin)"
-                                        value={newUserType}
-                                        onChange={(e) => setNewUserType(e.target.value)}
-                                        className="p-2 border rounded mr-2"
-                                    />
-                                   
-                                </div>
-                                <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                                        Change User Type
-                                    </button>
-                            </form>
-                        </div>
+                       <div className="mb-12">
+                       <h3 className="text-xl font-semibold mb-2">Change User Type</h3>
+                       <p>Current User Type: {user.userType}</p>
+                       <form onSubmit={handleChangeUserType} className="mt-4">
+                           <div className="flex items-center mb-2">
+                               <select
+                                   value={newUserType}
+                                   onChange={(e) => setNewUserType(e.target.value)}
+                                   className="p-2 border rounded mr-2"
+                               >
+                                   <option value="">Select User Type</option>
+                                   <option value="user">User</option>
+                                   <option value="subadmin">Subadmin</option>
+                               </select>
+                           </div>
+                           <button type="submit" className="px-4 py-2 bg-[#213099] text-white rounded hover:bg-blue-600">
+                               Change User Type
+                           </button>
+                           {responseMessage && (
+                               <div className={`bg-${responseMessage.includes('success') ? 'green' : 'red'}-100 border border-${responseMessage.includes('success') ? 'green' : 'red'}-400 text-${responseMessage.includes('success') ? 'green' : 'red'}-700 px-4 py-3 rounded mt-4`} role="alert">
+                                   {responseMessage}
+                               </div>
+                           )}
+                       </form>
+                   </div>
                     )}
                     {responseMessage && (
-                        <div className={`bg-${responseMessage.includes('success') ? 'green' : 'red'}-100 border border-${responseMessage.includes('success') ? 'green' : 'red'}-400 text-${responseMessage.includes('success') ? 'green' : 'red'}-700 px-4 py-3 rounded mt-4`} role="alert">
+                        <div className={`bg-${responseMessage.includes('success') ? 'green' : 'red'}-100 border border-${responseMessage.includes('success') ? 'green' : 'red'}-400 text-${responseMessage.includes('success') ? 'green' : 'red'}-700 px-4 py-3 rounded -mt-4`} role="alert">
                             {responseMessage}
                         </div>
                     )}

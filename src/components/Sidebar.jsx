@@ -104,11 +104,15 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
 
           {/* Profile section */}
           <div className="space-y-2 border-b border-gray-100/55 py-2">
-            <Link to={`/profile/${username}`} className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -1 && 'bg-blue-600 text-white'}`} style={{ textTransform: 'uppercase' }}>
+            <Link to={`/profile/${username}`} onClick={() => {
+        window.location.href = `/profile/${username}`;
+    }} className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -1 && 'bg-blue-600 text-white'}`} style={{ textTransform: 'uppercase' }}>
               <FaUser className="w-4 h-4 mr-2" /> {/* Larger icon */}
               My Profile
             </Link>
-            <Link to={`/settings/${username}`} className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -2 && 'bg-blue-600 text-white'}`} style={{ textTransform: 'uppercase' }}>
+            <Link to={`/settings/${username}`} onClick={() => {
+        window.location.href = `/settings/${username}`;
+    }} className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -2 && 'bg-blue-600 text-white'}`} style={{ textTransform: 'uppercase' }}>
               <FaCog className="w-4 h-4 mr-2" />
               Settings
             </Link>

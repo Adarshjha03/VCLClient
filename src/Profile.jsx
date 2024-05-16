@@ -15,7 +15,6 @@ const ProfilePage = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [showAvatarModal, setShowAvatarModal] = useState(false);
   const [admin, setAdmin] = useState(false);
-  const [username, setUsername] = useState('');
   const [user, setUser] = useState({
     avatar: 1,
     firstName: "",
@@ -123,7 +122,6 @@ const ProfilePage = () => {
           throw new Error('Failed to fetch user data');
         }
         const userData = await userResponse.json();
-        setUsername(userData.username);
         setAdmin(userData.admin);
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -133,7 +131,7 @@ const ProfilePage = () => {
     fetchUserData();
   }, []);
 
-  let isValid = username === id || admin;
+  let isValid = user.username === id || admin;
   //console.log(isValid);
   // Function to handle topic selection
   const handleTopicChange = (topicId) => {
@@ -146,35 +144,46 @@ const ProfilePage = () => {
   const circumference = 2 * Math.PI * radius;
   const strokeVal = (completionRate / 100) * circumference;
   const avatarImagePath = `https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/${user.avatar}.png`;
+  const addHttpsIfNeeded = (url) => {
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+        return "https://" + url;
+    }
+    return url;
+};
+
+// Usage example:
+const githubUrl = addHttpsIfNeeded(user.githubUrl);
+const portfolioUrl = addHttpsIfNeeded(user.portfolioUrl);
+const linkedinUrl = addHttpsIfNeeded(user.linkedinUrl);
   return (
     <div className="flex h-screen font-sans-relative">
       <Sidebar showMenu={showMenu} onTopicSelect={handleTopicChange} activeTopic={selectedTopic} />
       <div className="flex-1 " style={{ background: "#ffffff", overflowY: "hidden" }}>
         <Navbar style={{ position: "fixed", width: "100%", zIndex: 1000 }} />
         <div className="container mx-auto px-12 py-8 flex flex-row space-x-4" style={{ marginTop: "1px", overflowY: "auto", height: "calc(100vh - 60px)" }}> {/* Center align elements */}
-          <div className="w-1/4 bg-white rounded-lg p-6 mb-0 h-auto shadow-lg">
-            <div className="relative mb-3 flex items-center justify-center"> {/* Changed justify-end to justify-center */}
-              <div className="relative inline-block mr-4">
-                <img src={avatarImagePath} alt="User" className="w-24 h-24 rounded-full" />
-                {username=== id && (
-                  <div className="absolute top-16 right-0">
-                    <button className="bg-blue-500 text-white rounded-full p-1" onClick={toggleAvatarModal}>
-                      <FaEdit />
-                    </button>
-                  </div>
-                )}
-
-              </div>
-              <div className="text-left">
+          <div className="w-1/3 bg-white rounded-lg py-6 px-4 mb-0 h-auto shadow-lg">
+          <div className="relative mb-3 flex items-center justify-center"> {/* Changed justify-end to justify-center */}
+            <div className="w-1/2 flex items-center justify-center">
+                <div className="relative inline-block mr-4">
+                    <img src={avatarImagePath} alt="User" className="w-24 h-24 rounded-full" />
+                    {user.username === id && (
+                        <div className="absolute top-16 right-0">
+                            <button className="bg-blue-500 text-white rounded-full p-1" onClick={toggleAvatarModal}>
+                                <FaEdit />
+                            </button>
+                        </div>
+                    )}
+                </div>
+            </div>
+            <div className="w-1/2 text-left"> {/* Changed text-right to text-left */}
                 <h1 className="text-2xl font-bold">{`${user.firstName} ${user.lastName}`}</h1>
                 <p className="text-gray-900">@{user.username}</p>
                 <p className="text-gray-500">
-                  Rank <span className="text-blue-700">121</span>
+                    Rank <span className="text-blue-700">121</span>
                 </p>
-
-              </div>
             </div>
-            {isValid && (<a href="/temp">
+            </div>
+            {isValid && (<a href={`/settings/${id}`}>
               <div className="flex justify-center items-center mb-3 bg-blue-300 w-full h-9 rounded-md cursor-pointer">
                 <p className="text-blue-800 text-md font-bold">Edit Profile</p>
               </div>
@@ -184,7 +193,7 @@ const ProfilePage = () => {
                 <FaGithub className="text-black " size={18} />
                 <div className="text-xs">
                   {user.githubUrl ? (
-                    <Link to={user.githubUrl} target="_blank" rel="noopener noreferrer">
+                    <Link to={githubUrl} target="_blank" rel="noopener noreferrer">
                       Github
                     </Link>
                   ) : (
@@ -196,7 +205,7 @@ const ProfilePage = () => {
                 <FaBookOpen className="text-black " size={18} />
                 <div className="text-xs">
                   {user.portfolioUrl ? (
-                    <Link to={user.portfolioUrl} target="_blank" rel="noopener noreferrer">
+                    <Link to={portfolioUrl} target="_blank" rel="noopener noreferrer">
                       Portfolio
                     </Link>
                   ) : (
@@ -208,7 +217,7 @@ const ProfilePage = () => {
                 <FaLinkedin className="text-black " size={18} />
                 <div className="text-xs">
                   {user.linkedinUrl ? (
-                    <Link to={user.linkedinUrl} target="_blank" rel="noopener noreferrer">
+                    <Link to={linkedinUrl} target="_blank" rel="noopener noreferrer">
                       LinkedIn
                     </Link>
                   ) : (
