@@ -66,7 +66,7 @@ const Navbar = () => {
       document.removeEventListener('mousedown', closeDropdownOnClickOutside);
     };
   }, [isDropdownOpen]);
-  const avatarImagePath =`/src/components/avatars/${avatar}.png` ;
+  const avatarImagePath =`https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/${avatar}.png` ;
   return (
     <div
       className="flex justify-between items-center p-4"

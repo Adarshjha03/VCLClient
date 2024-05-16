@@ -11,6 +11,7 @@ import YourComponent from "./openLab";
 import AddChallenge from './addChallenge';
 import AddTopic from './addTopic';
 import EditChallenge from './editChallenge';
+import Settings from './Settings';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Temp from './Temp'
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
         <Route path='/Home' element={<HomePage/>}></Route>
         <Route path='/' element={<LandingPage/>}></Route>
         <Route path='/Profile/:id' element={<ProfilePage/>}></Route>
+        <Route path='/settings/:id' element={<Settings/>}></Route>
         <Route path='/problem/:id' element={<ProblemPage/>}></Route> 
         <Route path='/openLab' element={<YourComponent/>}></Route>
         <Route path= '/addChallenge' element={<AddChallenge/>}></Route>

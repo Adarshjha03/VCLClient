@@ -145,7 +145,7 @@ const ProfilePage = () => {
   const radius = 42; // Radius of the circle
   const circumference = 2 * Math.PI * radius;
   const strokeVal = (completionRate / 100) * circumference;
-  const avatarImagePath = `/src/components/avatars/${user.avatar}.png`;
+  const avatarImagePath = `https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/${user.avatar}.png`;
   return (
     <div className="flex h-screen font-sans-relative">
       <Sidebar showMenu={showMenu} onTopicSelect={handleTopicChange} activeTopic={selectedTopic} />

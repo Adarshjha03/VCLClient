@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import avatar1 from './avatars/1.png';
-import avatar2 from './avatars/2.png';
-import avatar3 from './avatars/3.png';
-import avatar4 from './avatars/4.png';
-import avatar5 from './avatars/5.png';
-import avatar6 from './avatars/6.png';
-import avatar7 from './avatars/7.png';
-import avatar8 from './avatars/8.png';
-import avatar9 from './avatars/9.png';
+import avatar1 from 'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/1.png';
+import avatar2 from 'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/2.png';
+import avatar3 from 'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/3.png';
+import avatar4 from 'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/4.png';
+import avatar5 from 'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/5.png';
+import avatar6 from 'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/6.png';
+import avatar7 from 'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/7.png';
+import avatar8 from 'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/8.png';
+import avatar9 from 'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/9.png';
 
 const avatars = [
   avatar1,

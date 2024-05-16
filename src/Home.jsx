@@ -73,7 +73,7 @@ const HomePage = () => {
     const fetchProblems = async () => {
       try {
         const token = localStorage.getItem("Token");
-        const response = await fetch(`${backendUrl}/challenges/${selectedTopic}`, {
+        const response = await fetch(`${backendUrl}/challenges/${selectedTopic}?difficulty=all`, {
           headers: {
             Authorization: `Token ${token}`,
           },
