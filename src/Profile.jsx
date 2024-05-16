@@ -163,13 +163,13 @@ const linkedinUrl = addHttpsIfNeeded(user.linkedinUrl);
       <div className="flex-1 " style={{ background: "#ffffff", overflowY: "hidden" }}>
         <Navbar style={{ position: "fixed", width: "100%", zIndex: 1000 }} />
         <div className="container mx-auto px-12 py-8 flex flex-row space-x-4" style={{ marginTop: "1px", overflowY: "auto", height: "calc(100vh - 60px)" }}> {/* Center align elements */}
-          <div className="w-1/3 bg-white rounded-lg py-6 px-4 mb-0 h-auto shadow-lg">
+          <div className="w-1/4 bg-white rounded-lg py-6 px-4 mb-0 h-auto shadow-lg">
           <div className="relative mb-3 flex items-center justify-center"> {/* Changed justify-end to justify-center */}
             <div className="w-1/2 flex items-center justify-center">
                 <div className="relative inline-block mr-4">
-                    <img src={avatarImagePath} alt="User" className="w-24 h-24 rounded-full" />
+                    <img src={avatarImagePath} alt="User" className="w-20 h-20 rounded-full" />
                     {CurrUser === id && (
-                        <div className="absolute top-16 right-0">
+                        <div className="absolute top-14 right-0">
                             <button className="bg-blue-500 text-white rounded-full p-1" onClick={toggleAvatarModal}>
                                 <FaEdit />
                             </button>
@@ -178,7 +178,7 @@ const linkedinUrl = addHttpsIfNeeded(user.linkedinUrl);
                 </div>
             </div>
             <div className="w-1/2 text-left"> {/* Changed text-right to text-left */}
-                <h1 className="text-2xl font-bold">{`${user.firstName} ${user.lastName}`}</h1>
+                <h1 className="text-xl font-bold">{`${user.firstName} ${user.lastName}`}</h1>
                 <p className="text-gray-900">@{user.username}</p>
                 <p className="text-gray-500">
                     Rank <span className="text-blue-700">121</span>
