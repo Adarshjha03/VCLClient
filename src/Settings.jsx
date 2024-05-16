@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/navbar1";
-import { FaBars, FaPlus } from "react-icons/fa";
+import { FaBars, FaEdit,FaTimes } from "react-icons/fa";
+import AvatarSelector from "./components/avatar";
 
 const Settings = () => {
     const [showMenu, setShowMenu] = useState(false);
     const [admin, setAdmin] = useState(false);
     const [username, setUsername] = useState('');
+    
+  const [showAvatarModal, setShowAvatarModal] = useState(false);
     const [user, setUser] = useState({
         firstName: "",
         lastName: "",
@@ -17,6 +20,7 @@ const Settings = () => {
         portfolioUrl: "",
         linkedinUrl: "",
         avatar: 1,
+        userType: "",
     });
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -25,7 +29,7 @@ const Settings = () => {
     const [bonusPoints, setBonusPoints] = useState(0);
     const [showAddPoints, setShowAddPoints] = useState(false);
     const [newBonusPoints, setNewBonusPoints] = useState(0);
-
+    const [newUserType, setNewUserType] = useState('');
     const toggleMenu = () => {
         setShowMenu(!showMenu);
     };
@@ -60,6 +64,7 @@ const Settings = () => {
                 portfolioUrl: userData.portfolio_url || "",
                 linkedinUrl: userData.linkedin_url || "",
                 avatar: userData.avatar,
+                userType: userData.user_type,
             });
             setUsername(userData.username);
             setBonusPoints(userData.bonus_score || 0); // Set the bonus points
@@ -115,6 +120,7 @@ const Settings = () => {
 
             if (response.ok) {
                 setResponseMessage('Profile updated successfully');
+                window.location.reload();
             } else {
                 setResponseMessage('Error updating profile');
             }
@@ -148,6 +154,7 @@ const Settings = () => {
 
             if (response.ok) {
                 setResponseMessage('Password updated successfully');
+                window.location.reload();
             } else {
                 setResponseMessage('Error updating password');
             }
@@ -174,8 +181,9 @@ const Settings = () => {
 
             if (response.ok) {
                 setResponseMessage('Bonus points added successfully');
-                 // Update the bonus points state
-                setShowAddPoints(false); // Hide the popup
+                // Update the bonus points state
+                setShowAddPoints(false);
+                window.location.reload(); // Hide the popup
             } else {
                 setResponseMessage('Error adding bonus points');
             }
@@ -184,12 +192,46 @@ const Settings = () => {
             setResponseMessage('Error adding bonus points');
         }
     };
+    const handleChangeUserType = async (event) => {
+        event.preventDefault();
+        try {
+            const token = localStorage.getItem("Token");
+            const response = await fetch(`${backendUrl}/change_usertype`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Token ${token}`,
+                },
+                body: JSON.stringify({
+                    username: username,
+                    role: newUserType,
+                }),
+            });
 
+            if (response.ok) {
+                setResponseMessage(`User type changed to ${newUserType} successfully`);
+                // Update the user type state
+                setUserType(newUserType);
+                window.location.reload();
+            } else {
+                setResponseMessage('Error changing user type');
+            }
+        } catch (error) {
+            console.error("Error changing user type:", error);
+            setResponseMessage('Error changing user type');
+        }
+    };
     const handleTopicChange = (topicId) => {
         setSelectedTopic(topicId); // Update selected topic
         localStorage.setItem("selectedTopic", topicId);
         navigate("/home");
     };
+    const toggleAvatarModal = () => {
+        // console.log("toggleAvatarModal called");
+        // console.log(showAvatarModal);
+        setShowAvatarModal(!showAvatarModal);
+      };
+  const avatarImagePath = `https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/${user.avatar}.png`;
     return (
         <div className="flex h-screen font-sans-relative">
             <Sidebar showMenu={showMenu} onTopicSelect={handleTopicChange} activeTopic={selectedTopic} />
@@ -199,7 +241,18 @@ const Settings = () => {
                     <h2 className="text-2xl font-bold mb-4">Settings</h2>
 
                     <div className="mb-6">
-                        <h3 className="text-xl font-semibold mb-2">Profile</h3>
+                        <h3 className="text-xl font-bold mb-2">Profile</h3>
+                        <div className="relative inline-block   mr-4 mb-2">
+                <img src={avatarImagePath} alt="User" className="w-24 h-24 rounded-full" />
+                {username=== id && (
+                  <div className="absolute top-16 right-0">
+                    <button className="bg-blue-500 text-white rounded-full p-1" onClick={toggleAvatarModal}>
+                      <FaEdit />
+                    </button>
+                  </div>
+                )}
+
+              </div>
                         <form onSubmit={handleProfileSubmit}>
                             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                                 <input
@@ -277,7 +330,7 @@ const Settings = () => {
                                 onChange={(e) => setNewPassword(e.target.value)}
                                 className="p-2 border rounded mb-2 w-full md:w-auto mr-4"
                             />
-                            
+
                             <input
                                 type="password"
                                 placeholder="Confirm New Password"
@@ -286,9 +339,9 @@ const Settings = () => {
                                 className="p-2 border rounded mb-2 w-full md:w-auto mr-4"
                             />
                             <p>
-                            <button type="submit" className="mb-2 mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                                Update Password
-                            </button>
+                                <button type="submit" className="mb-2 mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                                    Update Password
+                                </button>
                             </p>
                         </form>
                     </div>
@@ -306,13 +359,34 @@ const Settings = () => {
                                         onChange={(e) => setNewBonusPoints(parseInt(e.target.value))}
                                         className="p-2 border rounded mr-2"
                                     />
-                                   
+
                                 </div>
                                 <p>
                                     <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
                                         Add Points
                                     </button>
-                                    </p>
+                                </p>
+                            </form>
+                        </div>
+                    )}
+                    {admin && (
+                        <div className="mb-12">
+                            <h3 className="text-xl font-semibold mb-2">Change User Type</h3>
+                            <p>Current User Type: {user.userType}</p>
+                            <form onSubmit={handleChangeUserType} className="mt-4">
+                                <div className="flex items-center mb-2">
+                                    <input
+                                        type="text"
+                                        placeholder="(user/subadmin)"
+                                        value={newUserType}
+                                        onChange={(e) => setNewUserType(e.target.value)}
+                                        className="p-2 border rounded mr-2"
+                                    />
+                                   
+                                </div>
+                                <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                                        Change User Type
+                                    </button>
                             </form>
                         </div>
                     )}
@@ -324,7 +398,45 @@ const Settings = () => {
                 </div>
             </div>
             <FaBars className="sm:hidden absolute top-4 left-4 text-2xl text-gray-600 cursor-pointer" onClick={() => setShowMenu(!showMenu)} />
+            {showAvatarModal && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            zIndex: 1000,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+          onClick={toggleAvatarModal} // Close modal when clicking outside
+        >
+          <div
+            style={{
+              backgroundColor: "white",
+              padding: "20px",
+              borderRadius: "8px",
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)"
+            }}
+            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
+          >
+            <div className="flex justify-between items-center py-4 px-6">
+              <h2 className="text-xl font-bold">Select Your Avatar</h2>
+              <button onClick={toggleAvatarModal}>
+                <FaTimes />
+              </button>
+            </div>
+            <div className="px-6 pb-4">
+              <AvatarSelector />
+            </div>
+          </div>
         </div>
+      )}
+        </div>
+        
     );
 };
 

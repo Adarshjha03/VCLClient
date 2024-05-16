@@ -110,7 +110,7 @@ const Navbar = () => {
                   My Profile
                 </Link>
                 <Link
-                  to="/temp"
+                  to={`/settings/${username}`}
                   onClick={closeDropdown}
                   role="menuitem"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"

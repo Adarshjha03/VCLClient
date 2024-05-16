@@ -33,10 +33,10 @@ const ProfilePage = () => {
     solvedChallenges: [],
     completedTopics: [],
     dateJoined: "",
-    bonusScore: 0,
-    totalScore: 0,
-    totalTopics: 8,
-    totalChallenges: 32,
+    bonusScore: 0 ,
+    totalScore: 0 ,
+    totalTopics: 8 ,
+    totalChallenges: 32 ,
 
   });
 
@@ -96,10 +96,10 @@ const ProfilePage = () => {
           solvedChallenges: userData.solved_challenges || [],
           completedTopics: userData.completed_topics || [],
           dateJoined: userData.date_joined ? userData.date_joined.split(" ")[0] : "",
-          bonusScore: user.bonus_score || 0,
-          totalChallenges: user.total_challenges || 32,
-          totalScore: user.total_score || 0,
-          totalTopics: user.total_topics || 8, // Only take the date part if date_joined is defined
+          bonusScore: userData.bonus_score || 0,
+          totalChallenges: userData.total_challenges || 32,
+          totalScore: userData.total_score || 0,
+          totalTopics: userData.total_topics || 8, // Only take the date part if date_joined is defined
         });
 
 

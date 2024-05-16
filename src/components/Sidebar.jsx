@@ -108,7 +108,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
               <FaUser className="w-4 h-4 mr-2" /> {/* Larger icon */}
               My Profile
             </Link>
-            <Link to="/temp" className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -2 && 'bg-blue-600 text-white'}`} style={{ textTransform: 'uppercase' }}>
+            <Link to={`/settings/${username}`} className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -2 && 'bg-blue-600 text-white'}`} style={{ textTransform: 'uppercase' }}>
               <FaCog className="w-4 h-4 mr-2" />
               Settings
             </Link>
