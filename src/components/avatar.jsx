@@ -1,24 +1,15 @@
 import React, { useState } from 'react';
-import avatar1 from 'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/1.png';
-import avatar2 from 'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/2.png';
-import avatar3 from 'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/3.png';
-import avatar4 from 'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/4.png';
-import avatar5 from 'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/5.png';
-import avatar6 from 'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/6.png';
-import avatar7 from 'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/7.png';
-import avatar8 from 'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/8.png';
-import avatar9 from 'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/9.png';
 
 const avatars = [
-  avatar1,
-  avatar2,
-  avatar3,
-  avatar4,
-  avatar5,
-  avatar6,
-  avatar7,
-  avatar8,
-  avatar9,
+  'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/1.png',
+  'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/2.png',
+  'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/3.png',
+  'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/4.png',
+  'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/5.png',
+  'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/6.png',
+  'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/7.png',
+  'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/8.png',
+  'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/9.png',
 ];
 
 const AvatarSelector = () => {
@@ -33,7 +24,7 @@ const AvatarSelector = () => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Token ${token}`
+          'Authorization': `Token ${token}`
         },
         body: JSON.stringify({ avatar: selectedAvatar }),
       });
@@ -51,7 +42,7 @@ const AvatarSelector = () => {
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="grid grid-cols-3 gap-4">
-        {avatars.map((avatar, index) => (
+        {avatars.map((avatarUrl, index) => (
           <div
             key={index}
             className={`w-24 h-24 rounded-full overflow-hidden cursor-pointer border-4 ${
@@ -60,7 +51,7 @@ const AvatarSelector = () => {
             onClick={() => setSelectedAvatar(index + 1)}
           >
             <img
-              src={avatar}
+              src={avatarUrl}
               alt={`Avatar ${index + 1}`}
               className="w-full h-full object-cover"
             />
@@ -75,7 +66,7 @@ const AvatarSelector = () => {
       </button>
       {/* Conditionally render response message */}
       {responseMessage && (
-        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mt-4" role="alert">
+        <div className={`bg-${responseMessage.includes('success') ? 'green' : 'red'}-100 border border-${responseMessage.includes('success') ? 'green' : 'red'}-400 text-${responseMessage.includes('success') ? 'green' : 'red'}-700 px-4 py-3 rounded mt-4`} role="alert">
           {responseMessage}
         </div>
       )}
