@@ -222,7 +222,7 @@ const Settings = () => {
             if (response.ok) {
                 setResponseMessage(`User type changed to ${newUserType} successfully`);
                 // Update the user type state
-                setUserType(newUserType);
+               
                 setTimeout(() => {
                     window.location.reload(); // Redirect after 3 seconds
                 }, 1000);
