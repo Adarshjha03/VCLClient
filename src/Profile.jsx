@@ -156,7 +156,7 @@ const ProfilePage = () => {
             <div className="relative mb-3 flex items-center justify-center"> {/* Changed justify-end to justify-center */}
               <div className="relative inline-block mr-4">
                 <img src={avatarImagePath} alt="User" className="w-24 h-24 rounded-full" />
-                {isValid && (
+                {username=== id && (
                   <div className="absolute top-16 right-0">
                     <button className="bg-blue-500 text-white rounded-full p-1" onClick={toggleAvatarModal}>
                       <FaEdit />
