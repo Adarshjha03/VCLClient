@@ -15,6 +15,7 @@ const ProfilePage = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [showAvatarModal, setShowAvatarModal] = useState(false);
   const [admin, setAdmin] = useState(false);
+  const [CurrUser, setCurrUser] = useState(false);
   const [user, setUser] = useState({
     avatar: 1,
     firstName: "",
@@ -123,6 +124,7 @@ const ProfilePage = () => {
         }
         const userData = await userResponse.json();
         setAdmin(userData.admin);
+        setCurrUser(userData.username);
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -131,7 +133,7 @@ const ProfilePage = () => {
     fetchUserData();
   }, []);
 
-  let isValid = user.username === id || admin;
+  let isValid = CurrUser === id || admin;
   //console.log(isValid);
   // Function to handle topic selection
   const handleTopicChange = (topicId) => {
@@ -166,7 +168,7 @@ const linkedinUrl = addHttpsIfNeeded(user.linkedinUrl);
             <div className="w-1/2 flex items-center justify-center">
                 <div className="relative inline-block mr-4">
                     <img src={avatarImagePath} alt="User" className="w-24 h-24 rounded-full" />
-                    {user.username === id && (
+                    {CurrUser === id && (
                         <div className="absolute top-16 right-0">
                             <button className="bg-blue-500 text-white rounded-full p-1" onClick={toggleAvatarModal}>
                                 <FaEdit />
