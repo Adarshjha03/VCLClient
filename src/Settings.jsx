@@ -190,8 +190,6 @@ const Settings = () => {
 
             if (response.ok) {
                 setResponseMessage('Bonus points added successfully');
-                // Update the bonus points state
-                setShowAddPoints(false);
                 setTimeout(() => {
                     window.location.reload(); // Redirect after 3 seconds
                 }, 1000);
