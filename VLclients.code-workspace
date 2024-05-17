@@ -9,5 +9,8 @@
         {
             "path": "../webd/RazorPayClone"
         }
-    ]
+    ],
+    "settings": {
+        "liveServer.settings.multiRootWorkspaceName": "VCLClient2"
+    }
 }

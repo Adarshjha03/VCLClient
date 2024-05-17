@@ -15,18 +15,16 @@ const HomePage = () => {
   });
   const [topics, setTopics] = useState([]);
   const [problems, setProblems] = useState([]);
-  const [constproblems, setConstProblems] = useState([]);
   const [error, setError] = useState(null);
   const backendUrl = "https://api.virtualcyberlabs.com";
   const [isLoading, setIsLoading] = useState(true);
   const [admin, setAdmin] = useState(false);
   const [subAdmin, setSubAdmin] = useState(false);
   const [isAddChallengeModalOpen, setAddChallengeModalOpen] = useState(false);
-  
   const handleSearch = (filteredProblems) => {
+setProblems(filteredProblems);
     console.log("Filtered Problems:",filteredProblems);
-    setProblems(filteredProblems);
-    console.log(filteredProblems);
+    // setProblems(filteredProblems);
   };
   useEffect(() => {
     const fetchUserData = async () => {
@@ -89,8 +87,7 @@ const HomePage = () => {
           throw new Error('Failed to fetch problems');
         }
         const data = await response.json();
-        setProblems(data.challenges);
-        setConstProblems(data.challenges); // Extracting challenges array from response
+        setProblems(data.challenges); // Extracting challenges array from response
       } catch (error) {
         setError(error.message);
       } finally {
@@ -141,7 +138,7 @@ const HomePage = () => {
         <div className="p-4" style={{ marginTop: "1px", overflowY: "auto", height: "calc(100vh - 80px)" }}>
  
             <h2 className="text-xl font-bold mb-4 uppercase">{activeTopicName}</h2>
-            <div className="m-4"> <SearchBar problems={constproblems} onSearch={handleSearch} /></div>
+            <div className="m-4"> <SearchBar problems={problems} onSearch={handleSearch} /></div>
             
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {problems.map((problem) => (
