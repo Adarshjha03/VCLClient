@@ -162,8 +162,9 @@ const linkedinUrl = addHttpsIfNeeded(user.linkedinUrl);
       <Sidebar showMenu={showMenu} onTopicSelect={handleTopicChange} activeTopic={selectedTopic} />
       <div className="flex-1 " style={{ background: "#ffffff", overflowY: "hidden" }}>
         <Navbar style={{ position: "fixed", width: "100%", zIndex: 1000 }} />
-        <div className="container mx-auto px-12 py-8 flex flex-row space-x-4" style={{ marginTop: "1px", overflowY: "auto", height: "calc(100vh - 60px)" }}> {/* Center align elements */}
-          <div className="w-1/4 bg-white rounded-lg py-6 px-4 mb-0 h-auto shadow-lg">
+        <h2 className="text-2xl font-bold mt-6 ml-10 ">Profile</h2>
+        <div className="container mx-auto px-10 py-4 flex flex-row space-x-4" style={{ marginTop: "1px", overflowY: "auto", height: "calc(100vh - 60px)" }}> {/* Center align elements */}
+          <div className="w-1/4 bg-white rounded-lg py-6 px-4 mb-0 h-fit shadow-lg">
           <div className="relative mb-3 flex items-center justify-center"> {/* Changed justify-end to justify-center */}
             <div className="w-1/2 flex items-center justify-center">
                 <div className="relative inline-block mr-4">
