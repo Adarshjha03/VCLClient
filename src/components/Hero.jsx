@@ -17,7 +17,7 @@ const Hero = () => {
                     <input 
                         className='bg-white'
                         type="text"
-                        placeholder='What do want to learn?'
+                        placeholder='What do you want to learn?'
                     />
                     <button>
                         <AiOutlineSearch 

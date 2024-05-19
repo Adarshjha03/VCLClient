@@ -8,6 +8,7 @@ import unsolved from "./assets/unsolved.png"
 import ideaicon from "./ideaicon.png";
 import EditButton from "./EditButton"; // Import EditButton component
 import { FaTachometerAlt, FaExclamationTriangle, FaTools, FaCog, FaChartLine, FaBolt, FaCheck, FaStar } from 'react-icons/fa';
+
 const ProblemPage = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
@@ -147,6 +148,7 @@ const ProblemPage = () => {
       <div className="flex-1 overflow-y-auto" style={{ background: "#e0efee" }}>
         <Navbar style={{ position: "fixed", width: "100%", zIndex: 1000 }}/>
         <div className="p-4">
+        
           <div className="container mx-auto p-8">
             <div className="mb-8 flex justify-between items-center font-semibold">
 

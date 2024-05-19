@@ -1,13 +1,16 @@
 {
     "folders": [
         {
-            "path": "."
-        },
-        {
             "path": "../Developer"
         },
         {
             "path": "../webd/RazorPayClone"
+        },
+        {
+            "path": "."
         }
-    ]
+    ],
+    "settings": {
+        "liveServer.settings.multiRootWorkspaceName": "VCLClient2"
+    }
 }
