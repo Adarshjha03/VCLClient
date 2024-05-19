@@ -1,13 +1,13 @@
 {
     "folders": [
         {
-            "path": "."
-        },
-        {
             "path": "../Developer"
         },
         {
             "path": "../webd/RazorPayClone"
+        },
+        {
+            "path": "."
         }
     ],
     "settings": {

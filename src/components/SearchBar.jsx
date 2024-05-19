@@ -28,10 +28,13 @@ const SearchBar = ({ problems, onSearch }) => {
         const filteredProblems = problems.filter(problem => {
             const matchesSearchTerm = problem.name && problem.name.toLowerCase().includes(searchTerm.toLowerCase());
             const matchesDifficulty = selectedDifficulty === "" || problem.difficulty.toLowerCase() === selectedDifficulty.toLowerCase();
-            return matchesSearchTerm && matchesDifficulty;
+            const matchesSolved = selectedSolved === "" || 
+                                  (selectedSolved === "SOLVED" && problem.solved) || 
+                                  (selectedSolved === "UNSOLVED" && !problem.solved);
+            return matchesSearchTerm && matchesDifficulty && matchesSolved;
         });
         onSearch(filteredProblems);
-    }, [problems, searchTerm, selectedDifficulty, onSearch]);
+    }, [problems, searchTerm, selectedDifficulty, selectedSolved, onSearch]);
 
     return (
         <div className="flex justify-center mt-6">
@@ -105,7 +108,7 @@ const SearchBar = ({ problems, onSearch }) => {
                                     UNSOLVED
                                 </button>
                                 <button
-                                    onClick={() => handleSolvedChange("ALL")}
+                                    onClick={() => handleSolvedChange("")}
                                     className="block w-full py-2 px-4 text-left hover:bg-gray-200"
                                 >
                                     ALL
