@@ -54,7 +54,7 @@ const SearchBar = ({ problems, onSearch }) => {
                             className="py-2 px-4 text-white text-sm font-semibold rounded-md bg-blue-600 focus:outline-none"
                             style={{ backgroundColor: "#000930", width: "120px", whiteSpace: "nowrap" }}
                         >
-                            {selectedDifficulty || "DIFFICULTY"} ▼
+                            {selectedDifficulty || "ALL"} ▼
                         </button>
                         {difficultyDropdownOpen && (
                             <div className="absolute mt-2 w-40 bg-white rounded-lg shadow-lg" ref={difficultyRef}>
@@ -91,7 +91,7 @@ const SearchBar = ({ problems, onSearch }) => {
                             className="py-2 px-4 text-white text-sm font-semibold rounded-md bg-blue-600 focus:outline-none"
                             style={{ backgroundColor: "#000930", width: "120px", whiteSpace: "nowrap" }}
                         >
-                            {selectedSolved || "SOLVED"} ▼
+                            {selectedSolved || "ALL"} ▼
                         </button>
                         {solvedDropdownOpen && (
                             <div className="absolute mt-2 w-40 bg-white rounded-lg shadow-lg" ref={solvedRef}>
