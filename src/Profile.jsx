@@ -33,10 +33,10 @@ const ProfilePage = () => {
     solvedChallenges: [],
     completedTopics: [],
     dateJoined: "",
-    bonusScore: 0 ,
-    totalScore: 0 ,
-    totalTopics: 8 ,
-    totalChallenges: 32 ,
+    bonusScore: 0,
+    totalScore: 0,
+    totalTopics: 8,
+    totalChallenges: 32,
 
   });
 
@@ -148,15 +148,15 @@ const ProfilePage = () => {
   const avatarImagePath = `https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/${user.avatar}.png`;
   const addHttpsIfNeeded = (url) => {
     if (!url.startsWith("http://") && !url.startsWith("https://")) {
-        return "https://" + url;
+      return "https://" + url;
     }
     return url;
-};
+  };
 
-// Usage example:
-const githubUrl = addHttpsIfNeeded(user.githubUrl);
-const portfolioUrl = addHttpsIfNeeded(user.portfolioUrl);
-const linkedinUrl = addHttpsIfNeeded(user.linkedinUrl);
+  // Usage example:
+  const githubUrl = addHttpsIfNeeded(user.githubUrl);
+  const portfolioUrl = addHttpsIfNeeded(user.portfolioUrl);
+  const linkedinUrl = addHttpsIfNeeded(user.linkedinUrl);
   return (
     <div className="flex h-screen font-sans-relative">
       <Sidebar showMenu={showMenu} onTopicSelect={handleTopicChange} activeTopic={selectedTopic} />
@@ -165,26 +165,26 @@ const linkedinUrl = addHttpsIfNeeded(user.linkedinUrl);
         <h2 className="text-2xl font-bold mt-6 ml-10 ">Profile</h2>
         <div className="container mx-auto px-10 py-4 flex flex-row space-x-4" style={{ marginTop: "1px", overflowY: "auto", height: "calc(100vh - 60px)" }}> {/* Center align elements */}
           <div className="w-1/4 bg-white rounded-lg py-6 px-4 mb-0 h-fit shadow-lg">
-          <div className="relative mb-3 flex items-center justify-center"> {/* Changed justify-end to justify-center */}
-            <div className="w-1/2 flex items-center justify-center">
+            <div className="relative mb-3 flex items-center justify-center"> {/* Changed justify-end to justify-center */}
+              <div className="w-1/2 flex items-center justify-center">
                 <div className="relative inline-block mr-4">
-                    <img src={avatarImagePath} alt="User" className="w-20 h-20 rounded-full" />
-                    {CurrUser === id && (
-                        <div className="absolute top-14 right-0">
-                            <button className="bg-blue-500 text-white rounded-full p-1" onClick={toggleAvatarModal}>
-                                <FaEdit />
-                            </button>
-                        </div>
-                    )}
+                  <img src={avatarImagePath} alt="User" className="w-20 h-20 rounded-full" />
+                  {CurrUser === id && (
+                    <div className="absolute top-14 right-0">
+                      <button className="bg-blue-500 text-white rounded-full p-1" onClick={toggleAvatarModal}>
+                        <FaEdit />
+                      </button>
+                    </div>
+                  )}
                 </div>
-            </div>
-            <div className="w-1/2 text-left"> {/* Changed text-right to text-left */}
+              </div>
+              <div className="w-1/2 text-left"> {/* Changed text-right to text-left */}
                 <h1 className="text-xl font-bold">{`${user.firstName} ${user.lastName}`}</h1>
                 <p className="text-gray-900">@{user.username}</p>
                 <p className="text-gray-500">
-                    Rank <span className="text-blue-700">121</span>
+                  Rank <span className="text-blue-700">121</span>
                 </p>
-            </div>
+              </div>
             </div>
             {isValid && (<a href={`/settings/${id}`}>
               <div className="flex justify-center items-center mb-3 bg-blue-300 w-full h-9 rounded-md cursor-pointer">
@@ -276,14 +276,14 @@ const linkedinUrl = addHttpsIfNeeded(user.linkedinUrl);
                 <h3 className="text-xl font-semibold text-gray-900 text-center mb-2 pt-2">PROGRESS</h3>
                 <div className="flex flex-col md:flex-row w-full justify-between items-center">
                   <div className="relative pl-8">
-                  <svg width="140" height="140">
-          <circle cx="70" cy="70" r={radius} fill="none" stroke="#ddd" strokeWidth="8" /> {/* Background circle */}
-          <circle cx="70" cy="70" r={radius} fill="none" stroke="#1E88E5" strokeWidth="8"
-            strokeDasharray={circumference}
-            strokeDashoffset={circumference - strokeVal}
-            style={{ transition: 'stroke-dashoffset 0.5s ease 0s', transform: 'rotate(-90deg)', transformOrigin: 'center' }}
-          /> {/* Foreground circle (progress) */}
-        </svg>
+                    <svg width="140" height="140">
+                      <circle cx="70" cy="70" r={radius} fill="none" stroke="#ddd" strokeWidth="8" /> {/* Background circle */}
+                      <circle cx="70" cy="70" r={radius} fill="none" stroke="#1E88E5" strokeWidth="8"
+                        strokeDasharray={circumference}
+                        strokeDashoffset={circumference - strokeVal}
+                        style={{ transition: 'stroke-dashoffset 0.5s ease 0s', transform: 'rotate(-90deg)', transformOrigin: 'center' }}
+                      /> {/* Foreground circle (progress) */}
+                    </svg>
                     <div className="absolute inset-0 flex justify-center items-center pl-10">
                       {completionRate.toFixed(0)}%
                     </div>
