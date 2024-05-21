@@ -175,7 +175,7 @@ const Badges = () => {
             {isModalOpen && (
             <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-900 bg-opacity-50">
                 <div className="bg-white p-6 rounded shadow-md relative" onClick={(e) => e.stopPropagation()}>
-                    <button className="absolute top-0 right-0 mt-1 mr-1 text-red-500" onClick={() => setIsModalOpen(false)}>
+                    <button className="absolute top-0 right-0 mt-1 mr-1 text-black" onClick={() => setIsModalOpen(false)}>
                         <FaTimes />
                     </button>
                     <h2 className="text-xl font-bold mb-4">Confirm Badge Deletion</h2>
