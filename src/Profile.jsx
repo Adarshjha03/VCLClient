@@ -294,39 +294,38 @@ const ProfilePage = () => {
                 </div>
               </div>
               <div className="bg-white rounded-lg p-6 mb-4 w-1/2 h-[33vh] flex flex-col shadow-md relative">
-    <h3 className="text-xl font-semibold text-gray-900 mb-2 text-center">BADGES</h3>
-    {user.completedTopics.filter(topic => topic.badge_url !== null && topic.badge_url !== '').length > 0 ? (
-        <div className="grid grid-cols-3 gap-4 justify-center items-center mt-2" style={{ overflow: 'hidden' }}>
-            {user.completedTopics
-                .filter(topic => topic.badge_url !== null && topic.badge_url !== '')
-                .slice(-3)
-                .map((topic, index) => (
-                    <div
-                        key={index}
-                        className="relative w-full max-w-[120px] max-h-[120px] overflow-hidden"
-                        style={{ aspectRatio: '1 / 1' }}
-                    >
-                        <img
-                            src={topic.badge_url}
-                            alt={topic.badge_name || `Badge ${index + 1}`}
-                            className="absolute inset-0 w-full h-full object-cover"
-                        />
-                    </div>
-                ))}
-        </div>
-    ) : (
-        <div className="flex justify-center items-center h-full">
-            <p className="text-gray-500">No Badges here...</p>
-        </div>
-    )}
-    {CurrUser === id && (
-        <Link
-            to="/badges"
-            className="absolute bottom-4 right-6 flex items-center text-blue-500 hover:text-blue-700 transition-colors duration-300"
-        >
-            View all <span className="ml-1">&#8594;</span>
-        </Link>
-    )}
+  <h3 className="text-xl font-semibold text-gray-900 mb-2 text-center">BADGES</h3>
+  {user.completedTopics.filter(topic => topic.badge_url !== null && topic.badge_url !== '').length > 0 ? (
+    <div className="flex overflow-x-auto mt-2">
+      {user.completedTopics
+        .filter(topic => topic.badge_url !== null && topic.badge_url !== '')
+        .map((topic, index) => (
+          <div
+            key={index}
+            className="relative w-[120px] h-[120px] flex-shrink-0 mr-4"
+            style={{ aspectRatio: '1 / 1' }}
+          >
+            <img
+              src={topic.badge_url}
+              alt={topic.badge_name || `Badge ${index + 1}`}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          </div>
+        ))}
+    </div>
+  ) : (
+    <div className="flex justify-center items-center h-full">
+      <p className="text-gray-500">No Badges here...</p>
+    </div>
+  )}
+  {CurrUser === id && (
+    <Link
+      to="/badges"
+      className="absolute bottom-4 right-6 flex items-center text-blue-500 hover:text-blue-700 transition-colors duration-300"
+    >
+      View all <span className="ml-1">&#8594;</span>
+    </Link>
+  )}
 </div>
 
 
