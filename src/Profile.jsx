@@ -4,12 +4,8 @@ import { FaBars, FaCalendar, FaTimes, FaEdit, FaFlagCheckered, FaRegCheckCircle 
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/navbar1";
 import { FaGithub, FaLinkedin, FaBookOpen, FaEnvelope, FaUser } from 'react-icons/fa';
-import badge1 from './assets/badges/b1.jpg';
-import badge2 from './assets/badges/b2.jpg';
-import badge3 from './assets/badges/b3.jpg';
-import Modal from 'react-modal';
 import AvatarSelector from "./components/avatar";
-const badges = [badge1, badge2, badge3];
+
 
 const ProfilePage = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -297,22 +293,41 @@ const ProfilePage = () => {
                   </ul>
                 </div>
               </div>
-              <div className="bg-white rounded-lg p-6  mb-4 w-1/2 h-[33vh] flex flex-col shadow-md ">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2 text-center">BADGES</h3>
-                <div className="grid grid-cols-3 gap-4 justify-center items-center mt-2" style={{ overflow: 'hidden' }}> {/* Using grid for badge placement */}
-                  {badges.map((badge, index) => (
+              <div className="bg-white rounded-lg p-6 mb-4 w-1/2 h-[33vh] flex flex-col shadow-md relative">
+    <h3 className="text-xl font-semibold text-gray-900 mb-2 text-center">BADGES</h3>
+    {user.completedTopics.filter(topic => topic.badge_url !== null && topic.badge_url !== '').length > 0 ? (
+        <div className="grid grid-cols-3 gap-4 justify-center items-center mt-2" style={{ overflow: 'hidden' }}>
+            {user.completedTopics
+                .filter(topic => topic.badge_url !== null && topic.badge_url !== '')
+                .slice(-3)
+                .map((topic, index) => (
                     <div
-                      key={index}
-                      className="relative w-full h-full max-w-xs max-h-xs rounded-full border-2 border-gray-400 overflow-hidden" style={{ aspectRatio: '1 / 1' }}>  {/* Maintained aspect ratio */}
-                      <img
-                        src={badge}
-                        alt={`Badge ${index + 1}`}
-                        className="absolute inset-0 w-full h-full object-cover"
-                      />
+                        key={index}
+                        className="relative w-full max-w-[120px] max-h-[120px] overflow-hidden"
+                        style={{ aspectRatio: '1 / 1' }}
+                    >
+                        <img
+                            src={topic.badge_url}
+                            alt={topic.badge_name || `Badge ${index + 1}`}
+                            className="absolute inset-0 w-full h-full object-cover"
+                        />
                     </div>
-                  ))}
-                </div>
-              </div>
+                ))}
+        </div>
+    ) : (
+        <div className="flex justify-center items-center h-full">
+            <p className="text-gray-500">No Badges here...</p>
+        </div>
+    )}
+    {CurrUser === id && (
+        <Link
+            to="/badges"
+            className="absolute bottom-4 right-6 flex items-center text-blue-500 hover:text-blue-700 transition-colors duration-300"
+        >
+            View all <span className="ml-1">&#8594;</span>
+        </Link>
+    )}
+</div>
 
 
 
