@@ -11,6 +11,9 @@
         }
     ],
     "settings": {
-        "liveServer.settings.multiRootWorkspaceName": "VCLClient2"
+        "liveServer.settings.multiRootWorkspaceName": "VCLClient2",
+        "files.associations": {
+            "iostream": "cpp"
+        }
     }
 }
