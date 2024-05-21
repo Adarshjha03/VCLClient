@@ -144,25 +144,32 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
               <FaCog className="w-4 h-4 mr-2" />
               Settings
             </Link>
-            <div className="flex items-center justify-between"> {/* Use flex container */}
-              <Link
-                to="/badges"
-                className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -3 && 'bg-blue-600 text-white'}`}
-                style={{ textTransform: 'uppercase' }}
-              >
-                <FaMedal className="w-4 h-4 mr-2" />
-                Earn Badges
-              </Link>
-              {admin && (
-                <button
-                  onClick={openBadgeModal}
-                  className="p-1 font-medium text-xs flex items-center justify-center rounded-sm hover:bg-blue-400 hover:text-white transition duration-300 "
-                  style={{ textTransform: 'uppercase' }}
-                >
-                  <img src={plusLogo} alt="Add Badge" className="w-4 h-4 ml-2" /> {/* Adjusted icon alignment */}
-                </button>
-              )}
-            </div>
+            <div className="flex items-center justify-between">
+  {/* Use flex container */}
+  <div
+    className={`flex items-center justify-start p-1 text-xs rounded-sm transition duration-300 hover:bg-blue-400 hover:text-white w-full ${
+      activeButton === -3 && 'bg-blue-600 text-white'
+    }`}
+    style={{ textTransform: 'uppercase' }}
+  >
+    <Link
+      to="/badges"
+      className="flex items-center justify-start"
+      style={{ marginRight: admin ? '0.5rem' : 0 }}
+    >
+      <FaMedal className="w-4 h-4 mr-2" />
+      Earn Badges
+    </Link>
+    {admin && (
+      <button
+        onClick={openBadgeModal}
+        className="flex items-center justify-center rounded-sm hover:bg-transparent transition duration-300 ml-3"
+      >
+        <img src={plusLogo} alt="Add Badge" className="w-4 h-4" />
+      </button>
+    )}
+  </div>
+</div>
             <div
               className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === 0 && 'bg-blue-600 text-white'}`}
               style={{ textTransform: 'uppercase' }}
