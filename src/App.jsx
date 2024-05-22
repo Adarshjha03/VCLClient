@@ -8,10 +8,8 @@ import HomePage from './Home';
 import ProfilePage from './Profile';
 import ProblemPage from  "./Problem";
 import YourComponent from "./openLab";
-import AddChallenge from './addChallenge';
-import AddTopic from './addTopic';
-import EditChallenge from './editChallenge';
 import Settings from './Settings';
+import Badges from './Badges';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Temp from './Temp'
 const App = () => {
@@ -26,10 +24,8 @@ const App = () => {
         <Route path='/settings/:id' element={<Settings/>}></Route>
         <Route path='/problem/:id' element={<ProblemPage/>}></Route> 
         <Route path='/openLab' element={<YourComponent/>}></Route>
-        <Route path= '/addChallenge' element={<AddChallenge/>}></Route>
-        <Route path= '/addTopic' element={<AddTopic/>}></Route>
-        <Route path= '/editChallenge/:id' element={<EditChallenge/>}></Route>
         <Route path= '/temp' element={<Temp/>}></Route>
+        <Route path= '/badges' element={<Badges/>}></Route>
       </Routes>
     </Router>
   )

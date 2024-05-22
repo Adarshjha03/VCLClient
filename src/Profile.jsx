@@ -4,18 +4,14 @@ import { FaBars, FaCalendar, FaTimes, FaEdit, FaFlagCheckered, FaRegCheckCircle 
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/navbar1";
 import { FaGithub, FaLinkedin, FaBookOpen, FaEnvelope, FaUser } from 'react-icons/fa';
-import badge1 from './assets/badges/b1.jpg';
-import badge2 from './assets/badges/b2.jpg';
-import badge3 from './assets/badges/b3.jpg';
-import Modal from 'react-modal';
 import AvatarSelector from "./components/avatar";
-const badges = [badge1, badge2, badge3];
+
 
 const ProfilePage = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [showAvatarModal, setShowAvatarModal] = useState(false);
   const [admin, setAdmin] = useState(false);
-  const [username, setUsername] = useState('');
+  const [CurrUser, setCurrUser] = useState(false);
   const [user, setUser] = useState({
     avatar: 1,
     firstName: "",
@@ -96,10 +92,10 @@ const ProfilePage = () => {
           solvedChallenges: userData.solved_challenges || [],
           completedTopics: userData.completed_topics || [],
           dateJoined: userData.date_joined ? userData.date_joined.split(" ")[0] : "",
-          bonusScore: user.bonus_score || 0,
-          totalChallenges: user.total_challenges || 32,
-          totalScore: user.total_score || 0,
-          totalTopics: user.total_topics || 8, // Only take the date part if date_joined is defined
+          bonusScore: userData.bonus_score || 0,
+          totalChallenges: userData.total_challenges || 32,
+          totalScore: userData.total_score || 0,
+          totalTopics: userData.total_topics || 8, // Only take the date part if date_joined is defined
         });
 
 
@@ -123,8 +119,8 @@ const ProfilePage = () => {
           throw new Error('Failed to fetch user data');
         }
         const userData = await userResponse.json();
-        setUsername(userData.username);
         setAdmin(userData.admin);
+        setCurrUser(userData.username);
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -133,7 +129,7 @@ const ProfilePage = () => {
     fetchUserData();
   }, []);
 
-  let isValid = username === id || admin;
+  let isValid = CurrUser === id || admin;
   //console.log(isValid);
   // Function to handle topic selection
   const handleTopicChange = (topicId) => {
@@ -146,35 +142,54 @@ const ProfilePage = () => {
   const circumference = 2 * Math.PI * radius;
   const strokeVal = (completionRate / 100) * circumference;
   const avatarImagePath = `https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/${user.avatar}.png`;
+  const addHttpsIfNeeded = (url) => {
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+      return "https://" + url;
+    }
+    return url;
+  };
+
+  // Usage example:
+  const githubUrl = addHttpsIfNeeded(user.githubUrl);
+  const portfolioUrl = addHttpsIfNeeded(user.portfolioUrl);
+  const linkedinUrl = addHttpsIfNeeded(user.linkedinUrl);
   return (
     <div className="flex h-screen font-sans-relative">
       <Sidebar showMenu={showMenu} onTopicSelect={handleTopicChange} activeTopic={selectedTopic} />
       <div className="flex-1 " style={{ background: "#ffffff", overflowY: "hidden" }}>
         <Navbar style={{ position: "fixed", width: "100%", zIndex: 1000 }} />
-        <div className="container mx-auto px-12 py-8 flex flex-row space-x-4" style={{ marginTop: "1px", overflowY: "auto", height: "calc(100vh - 60px)" }}> {/* Center align elements */}
-          <div className="w-1/4 bg-white rounded-lg p-6 mb-0 h-auto shadow-lg">
+        <h2 className="text-2xl font-bold mt-6 ml-10 ">Profile</h2>
+        <div
+          className="container mx-auto px-10 py-4 flex flex-row space-x-4"
+          style={{
+            marginTop: "1px",
+            overflowY: "hidden",
+            marginBottom: "2rem", // Add the bottom margin here
+          }}
+        > {/* Center align elements */}
+          <div className="w-1/4 bg-white rounded-lg py-6 px-4 mb-4 h-auto shadow-lg">
             <div className="relative mb-3 flex items-center justify-center"> {/* Changed justify-end to justify-center */}
-              <div className="relative inline-block mr-4">
-                <img src={avatarImagePath} alt="User" className="w-24 h-24 rounded-full" />
-                {isValid && (
-                  <div className="absolute top-16 right-0">
-                    <button className="bg-blue-500 text-white rounded-full p-1" onClick={toggleAvatarModal}>
-                      <FaEdit />
-                    </button>
-                  </div>
-                )}
-
+              <div className="w-1/2 flex items-center justify-center">
+                <div className="relative inline-block mr-4">
+                  <img src={avatarImagePath} alt="User" className="w-20 h-20 rounded-full" />
+                  {CurrUser === id && (
+                    <div className="absolute top-14 right-0">
+                      <button className="bg-blue-500 text-white rounded-full p-1" onClick={toggleAvatarModal}>
+                        <FaEdit />
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
-              <div className="text-left">
-                <h1 className="text-2xl font-bold">{`${user.firstName} ${user.lastName}`}</h1>
+              <div className="w-1/2 text-left"> {/* Changed text-right to text-left */}
+                <h1 className="text-xl font-bold">{`${user.firstName} ${user.lastName}`}</h1>
                 <p className="text-gray-900">@{user.username}</p>
                 <p className="text-gray-500">
                   Rank <span className="text-blue-700">121</span>
                 </p>
-
               </div>
             </div>
-            {isValid && (<a href="/temp">
+            {isValid && (<a href={`/settings/${id}`}>
               <div className="flex justify-center items-center mb-3 bg-blue-300 w-full h-9 rounded-md cursor-pointer">
                 <p className="text-blue-800 text-md font-bold">Edit Profile</p>
               </div>
@@ -184,7 +199,7 @@ const ProfilePage = () => {
                 <FaGithub className="text-black " size={18} />
                 <div className="text-xs">
                   {user.githubUrl ? (
-                    <Link to={user.githubUrl} target="_blank" rel="noopener noreferrer">
+                    <Link to={githubUrl} target="_blank" rel="noopener noreferrer">
                       Github
                     </Link>
                   ) : (
@@ -196,7 +211,7 @@ const ProfilePage = () => {
                 <FaBookOpen className="text-black " size={18} />
                 <div className="text-xs">
                   {user.portfolioUrl ? (
-                    <Link to={user.portfolioUrl} target="_blank" rel="noopener noreferrer">
+                    <Link to={portfolioUrl} target="_blank" rel="noopener noreferrer">
                       Portfolio
                     </Link>
                   ) : (
@@ -208,7 +223,7 @@ const ProfilePage = () => {
                 <FaLinkedin className="text-black " size={18} />
                 <div className="text-xs">
                   {user.linkedinUrl ? (
-                    <Link to={user.linkedinUrl} target="_blank" rel="noopener noreferrer">
+                    <Link to={linkedinUrl} target="_blank" rel="noopener noreferrer">
                       LinkedIn
                     </Link>
                   ) : (
@@ -264,14 +279,14 @@ const ProfilePage = () => {
                 <h3 className="text-xl font-semibold text-gray-900 text-center mb-2 pt-2">PROGRESS</h3>
                 <div className="flex flex-col md:flex-row w-full justify-between items-center">
                   <div className="relative pl-8">
-                  <svg width="140" height="140">
-          <circle cx="70" cy="70" r={radius} fill="none" stroke="#ddd" strokeWidth="8" /> {/* Background circle */}
-          <circle cx="70" cy="70" r={radius} fill="none" stroke="#1E88E5" strokeWidth="8"
-            strokeDasharray={circumference}
-            strokeDashoffset={circumference - strokeVal}
-            style={{ transition: 'stroke-dashoffset 0.5s ease 0s', transform: 'rotate(-90deg)', transformOrigin: 'center' }}
-          /> {/* Foreground circle (progress) */}
-        </svg>
+                    <svg width="140" height="140">
+                      <circle cx="70" cy="70" r={radius} fill="none" stroke="#ddd" strokeWidth="8" /> {/* Background circle */}
+                      <circle cx="70" cy="70" r={radius} fill="none" stroke="#1E88E5" strokeWidth="8"
+                        strokeDasharray={circumference}
+                        strokeDashoffset={circumference - strokeVal}
+                        style={{ transition: 'stroke-dashoffset 0.5s ease 0s', transform: 'rotate(-90deg)', transformOrigin: 'center' }}
+                      /> {/* Foreground circle (progress) */}
+                    </svg>
                     <div className="absolute inset-0 flex justify-center items-center pl-10">
                       {completionRate.toFixed(0)}%
                     </div>
@@ -285,28 +300,46 @@ const ProfilePage = () => {
                   </ul>
                 </div>
               </div>
-              <div className="bg-white rounded-lg p-6  mb-4 w-1/2 h-[33vh] flex flex-col shadow-md ">
+              <div className="bg-white rounded-lg p-6 mb-4 w-1/2 h-[33vh] flex flex-col shadow-md relative">
                 <h3 className="text-xl font-semibold text-gray-900 mb-2 text-center">BADGES</h3>
-                <div className="grid grid-cols-3 gap-4 justify-center items-center mt-2" style={{ overflow: 'hidden' }}> {/* Using grid for badge placement */}
-                  {badges.map((badge, index) => (
-                    <div
-                      key={index}
-                      className="relative w-full h-full max-w-xs max-h-xs rounded-full border-2 border-gray-400 overflow-hidden" style={{ aspectRatio: '1 / 1' }}>  {/* Maintained aspect ratio */}
-                      <img
-                        src={badge}
-                        alt={`Badge ${index + 1}`}
-                        className="absolute inset-0 w-full h-full object-cover"
-                      />
-                    </div>
-                  ))}
-                </div>
+                {user.completedTopics.filter(topic => topic.badge_url !== null && topic.badge_url !== '').length > 0 ? (
+                  <div className="flex overflow-x-auto mt-2">
+                    {user.completedTopics
+                      .filter(topic => topic.badge_url !== null && topic.badge_url !== '')
+                      .map((topic, index) => (
+                        <div
+                          key={index}
+                          className="relative w-[120px] h-[120px] flex-shrink-0 mr-4"
+                          style={{ aspectRatio: '1 / 1' }}
+                        >
+                          <img
+                            src={topic.badge_url}
+                            alt={topic.badge_name || `Badge ${index + 1}`}
+                            className="absolute inset-0 w-full h-full object-cover"
+                          />
+                        </div>
+                      ))}
+                  </div>
+                ) : (
+                  <div className="flex justify-center items-center h-full">
+                    <p className="text-gray-500">No Badges here...</p>
+                  </div>
+                )}
+                {CurrUser === id && (
+                  <Link
+                    to="/badges"
+                    className="absolute bottom-4 right-6 flex items-center text-blue-500 hover:text-blue-700 transition-colors duration-300"
+                  >
+                    View all <span className="ml-1">&#8594;</span>
+                  </Link>
+                )}
               </div>
 
 
 
             </div>
 
-            <div className="bg-white rounded-lg p-6 shadow-lg">
+            <div className="bg-white rounded-lg p-6 shadow-lg h-auto mb-4">
               <h2 className="text-xl font-semibold text-gray-900 mb-4 text-center">RECENT LABS</h2>
 
               <div className="flex flex-col items-center">
@@ -321,28 +354,36 @@ const ProfilePage = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {user.solvedChallenges.map((challenge, index) => (
-                      <tr key={index} className="border-b border-gray-700">
-                        <td className="text-left border border-gray-700 px-4 py-2">
-                          <Link to={`/problem/${challenge.challenge_id}`} className="text-blue-600 font-semibold">
-                            {challenge.challenge_name}
-                          </Link>
-                        </td>
-                        <td className="text-center border border-gray-700 px-4 py-2">
-                          <span className={`inline-block rounded-xl px-2 py-1 ${challenge.difficulty === "Easy" ? "bg-green-100 border-green-600 text-green-600" :
-                            challenge.difficulty === "Medium" ? "bg-yellow-100 border-yellow-600 text-yellow-600" :
-                              challenge.difficulty === "Hard" ? "bg-red-100 border-red-600 text-red-600" :
-                                "" // Default styling if difficulty is not specified
-                            }`}>
-                            {challenge.difficulty === "Medium" ? "Med." : challenge.difficulty}
-                          </span>
-                        </td>
-
-
-                        <td className="text-center border border-gray-700 px-4 py-2">{challenge.score}</td>
-                        <td className="text-right border border-gray-700 px-4 py-2">{new Date(challenge.solved_at).toLocaleString()}</td>
-                      </tr>
-                    ))}
+                    {user.solvedChallenges
+                      .sort((a, b) => new Date(b.solved_at) - new Date(a.solved_at))
+                      .slice(0, 5)
+                      .map((challenge, index) => (
+                        <tr key={index} className="border-b border-gray-700">
+                          <td className="text-left border border-gray-700 px-4 py-2">
+                            <Link to={`/problem/${challenge.challenge_id}`} className="text-blue-600 font-semibold">
+                              {challenge.challenge_name}
+                            </Link>
+                          </td>
+                          <td className="text-center border border-gray-700 px-4 py-2">
+                            <span
+                              className={`inline-block rounded-xl px-2 py-1 ${challenge.difficulty === "Easy"
+                                ? "bg-green-100 border-green-600 text-green-600"
+                                : challenge.difficulty === "Medium"
+                                  ? "bg-yellow-100 border-yellow-600 text-yellow-600"
+                                  : challenge.difficulty === "Hard"
+                                    ? "bg-red-100 border-red-600 text-red-600"
+                                    : "" // Default styling if difficulty is not specified
+                                }`}
+                            >
+                              {challenge.difficulty}
+                            </span>
+                          </td>
+                          <td className="text-center border border-gray-700 px-4 py-2">{challenge.score}</td>
+                          <td className="text-right border border-gray-700 px-4 py-2">
+                            {new Date(challenge.solved_at).toLocaleString()}
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
 

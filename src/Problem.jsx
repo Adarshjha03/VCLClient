@@ -146,7 +146,7 @@ const ProblemPage = () => {
     <div className="flex h-screen font-sans overflow-hidden">
       <Sidebar showMenu={showMenu} onTopicSelect={handleTopicChange} activeTopic={selectedTopic} />
       <div className="flex-1 overflow-y-auto" style={{ background: "#e0efee" }}>
-        <Navbar />
+        <Navbar style={{ position: "fixed", width: "100%", zIndex: 1000 }}/>
         <div className="p-4">
         
           <div className="container mx-auto p-8">
@@ -160,7 +160,7 @@ const ProblemPage = () => {
             <div className="grid grid-cols-2 gap-8">
               {/* Open the Virtual Lab */}
 
-              <div className="bg-gradient-to-r from-green-500 to-green-400 p-6 rounded-lg shadow-lg flex justify-center items-center">
+              <div className="bg-gradient-to-r from-green-500 to-green-400 p-6 rounded-lg shadow-lg w-full flex justify-center items-center">
                 <div className="flex flex-col items-center">
                   <h1 className="text-2xl font-bold mb-4 text-center text-white">{challenge.name}</h1>
                   <div className="flex justify-around w-full mb-4 space-x-8">
@@ -271,12 +271,20 @@ const ProblemPage = () => {
             </div>
             {/* Check Solution Button */}
             <div className="flex justify-start">
-              <div>
-                <a href={challenge.solution.startsWith("https") ? challenge.solution : `http://${challenge.solution}`} style={{ backgroundColor: "#11255a" }} className=" text-white px-6 py-4 rounded hover:bg-blue-600" target="_blank">
-                  <img src={ideaicon} alt="Image" className="w-6 h-6 mr-1 inline -mt-1" /> Check Solution
-                </a>
-              </div>
-            </div>
+  <div className="-mt-16"> {/* Adjust the negative margin value as needed */}
+    <a 
+      href={challenge.solution.startsWith("https") ? challenge.solution : `http://${challenge.solution}`} 
+      style={{ backgroundColor: "#11255a" }} 
+      className="text-white px-6 py-4 rounded hover:bg-blue-600" 
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <img src={ideaicon} alt="Image" className="w-6 h-6 mr-1 inline -mt-1" /> 
+      Check Solution
+    </a>
+  </div>
+</div>
+
           </div>
         </div>
       </div>

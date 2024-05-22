@@ -3,13 +3,15 @@ import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import animation from "./assets/GIF.json";
 import Lottie from "lottie-react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const backendUrl = "https://api.virtualcyberlabs.com";
-
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -29,7 +31,10 @@ function Login() {
       alert("An error occurred. Please try again later.");
     }
   };
-
+ 
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
   return (
     <div
       className="d-flex justify-content-center align-items-center vh-100"
@@ -58,20 +63,27 @@ function Login() {
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">
-              Password
-            </label>
-            <input
-              type="password"
-              name="password"
-              placeholder="Enter Password"
-              className="form-control"
-              style={{ backgroundColor: "#fff", color: "#000" }}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
+          <div className="mb-3 relative">
+  <label htmlFor="password" className="form-label">
+    Password
+  </label>
+  <input
+    type={passwordVisible ? "text" : "password"}
+    name="password"
+    placeholder="Enter Password"
+    className="form-control"
+    style={{ backgroundColor: "#fff", color: "#000" }}
+    value={password}
+    onChange={(e) => setPassword(e.target.value)}
+  />
+  <button
+    type="button"
+    onClick={togglePasswordVisibility}
+    className="absolute inset-y-12 right-0 pr-3 pt-1 flex items-center text-sm leading-5"
+  >
+    <FontAwesomeIcon icon={passwordVisible ? faEye : faEyeSlash} />
+  </button>
+</div>
           <button
             type="submit"
             className="btn btn-success w-100 mb-3"
