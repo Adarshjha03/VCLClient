@@ -167,7 +167,7 @@ const ProfilePage = () => {
             marginBottom: "2rem", // Add the bottom margin here
           }}
         > {/* Center align elements */}
-          <div className="w-1/4 bg-white rounded-lg py-6 px-4 mb-4 h-auto shadow-lg">
+          <div className="w-1/4 bg-white rounded-lg py-6 px-4 mb-4  shadow-lg">
             <div className="relative mb-3 flex items-center justify-center"> {/* Changed justify-end to justify-center */}
               <div className="w-1/2 flex items-center justify-center">
                 <div className="relative inline-block mr-4">

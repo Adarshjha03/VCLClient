@@ -4,13 +4,20 @@
             "path": "../Developer"
         },
         {
+            "path": "."
+        },
+        {
             "path": "../webd/RazorPayClone"
         },
         {
-            "path": "."
+            "path": "../webd/coutnerApp"
         }
     ],
     "settings": {
-        "liveServer.settings.multiRootWorkspaceName": "VCLClient2"
+        "liveServer.settings.multiRootWorkspaceName": "coutnerApp",
+        "files.associations": {
+            "iostream": "cpp",
+            "string": "cpp"
+        }
     }
 }
