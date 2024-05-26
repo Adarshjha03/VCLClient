@@ -36,6 +36,21 @@ const SearchBar = ({ problems, onSearch }) => {
         onSearch(filteredProblems);
     }, [problems, searchTerm, selectedDifficulty, selectedSolved, onSearch]);
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (difficultyRef.current && !difficultyRef.current.contains(event.target)) {
+                setDifficultyDropdownOpen(false);
+            }
+            if (solvedRef.current && !solvedRef.current.contains(event.target)) {
+                setSolvedDropdownOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
     return (
         <div className="flex justify-center mt-6">
             <div className="flex items-center bg-white rounded-md shadow-md p-2" style={{ minWidth: "600px" }}>
@@ -51,34 +66,34 @@ const SearchBar = ({ problems, onSearch }) => {
                     <div className="relative mx-2">
                         <button
                             onClick={() => setDifficultyDropdownOpen(!difficultyDropdownOpen)}
-                            className="py-2 px-4 text-white text-sm font-semibold rounded-md bg-blue-600 focus:outline-none"
-                            style={{ backgroundColor: "#000930", width: "120px", whiteSpace: "nowrap" }}
+                            className="py-2 px-2 text-white text-xs font-medium rounded-md bg-blue-600 focus:outline-none"
+                            style={{ backgroundColor: "#000930", width: "100px", whiteSpace: "nowrap" }}
                         >
                             {selectedDifficulty || "ALL"} ▼
                         </button>
                         {difficultyDropdownOpen && (
-                            <div className="absolute mt-2 w-40 bg-white rounded-lg shadow-lg" ref={difficultyRef}>
+                            <div className="absolute mt-2 w-32 bg-white rounded-lg shadow-lg" ref={difficultyRef}>
                                 <button
                                     onClick={() => handleDifficultyChange("HARD")}
-                                    className="block w-full py-2 px-4 text-left  transition  duration-300  delay-100 hover:bg-gray-200"
+                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 hover:bg-gray-200 text-sm"
                                 >
                                     HARD
                                 </button>
                                 <button
                                     onClick={() => handleDifficultyChange("MEDIUM")}
-                                    className="block w-full py-2 px-4 text-left duration-300 delay-100 hover:bg-gray-200"
+                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 hover:bg-gray-200 text-sm"
                                 >
                                     MEDIUM
                                 </button>
                                 <button
                                     onClick={() => handleDifficultyChange("EASY")}
-                                    className="block w-full py-2 px-4 text-left transition  duration-300 delay-100 hover:bg-gray-200"
+                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 hover:bg-gray-200 text-sm"
                                 >
                                     EASY
                                 </button>
                                 <button
                                     onClick={() => handleDifficultyChange("")}
-                                    className="block w-full py-2 px-4 text-left transition  duration-300 delay-100 hover:bg-gray-200"
+                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 hover:bg-gray-200 text-sm"
                                 >
                                     ALL
                                 </button>
@@ -88,28 +103,28 @@ const SearchBar = ({ problems, onSearch }) => {
                     <div className="relative mx-2">
                         <button
                             onClick={() => setSolvedDropdownOpen(!solvedDropdownOpen)}
-                            className="py-2 px-4 text-white text-sm font-semibold rounded-md bg-blue-600 focus:outline-none"
-                            style={{ backgroundColor: "#000930", width: "120px", whiteSpace: "nowrap" }}
+                            className="py-2 px-1 text-white text-xs font-medium rounded-md bg-blue-600 focus:outline-none"
+                            style={{ backgroundColor: "#000930", width: "100px", whiteSpace: "nowrap" }}
                         >
                             {selectedSolved || "ALL"} ▼
                         </button>
                         {solvedDropdownOpen && (
-                            <div className="absolute mt-2 w-40 bg-white rounded-lg shadow-lg" ref={solvedRef}>
+                            <div className="absolute mt-2 w-32 bg-white rounded-lg shadow-lg" ref={solvedRef}>
                                 <button
                                     onClick={() => handleSolvedChange("SOLVED")}
-                                    className="block w-full py-2 px-4 text-left transition duration-300 delay-100 hover:bg-gray-200"
+                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 hover:bg-gray-200 text-sm"
                                 >
                                     SOLVED
                                 </button>
                                 <button
                                     onClick={() => handleSolvedChange("UNSOLVED")}
-                                    className="block w-full py-2 px-4 text-left transition duration-300 delay-100 hover:bg-gray-200"
+                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 hover:bg-gray-200 text-sm"
                                 >
                                     UNSOLVED
                                 </button>
                                 <button
                                     onClick={() => handleSolvedChange("")}
-                                    className="block w-full py-2 px-4 text-left transition duration-300 delay-100 hover:bg-gray-200"
+                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 hover:bg-gray-200 text-sm"
                                 >
                                     ALL
                                 </button>
