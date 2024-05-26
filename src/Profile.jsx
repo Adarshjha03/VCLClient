@@ -159,7 +159,7 @@ const ProfilePage = () => {
       <div className="flex-1" style={{ background: "#ffffff", overflowY: "hidden" }}>  
         <Navbar style={{ position: "fixed", width: "100%", zIndex: 1000 }} /> 
         
-        <div  style={{ marginTop: "1px", overflowY: "auto", height: "calc(100vh - 80px)" }}>
+        <div  style={{ marginTop: "1px", overflowY: "auto", height: "calc(100vh - 20px)" }}>
         
         <h2 className="text-2xl font-bold mt-6 ml-10 ">PROFILE</h2>
         <div
