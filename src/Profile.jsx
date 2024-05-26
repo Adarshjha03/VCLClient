@@ -154,14 +154,16 @@ const ProfilePage = () => {
   const portfolioUrl = addHttpsIfNeeded(user.portfolioUrl);
   const linkedinUrl = addHttpsIfNeeded(user.linkedinUrl);
   return (
-    <div className="flex h-screen font-sans-relative">
-      <Sidebar showMenu={showMenu} onTopicSelect={handleTopicChange} activeTopic={selectedTopic} />
-      <div className="flex-1 " style={{ background: "#ffffff", overflowY: "hidden" }}>
-        <Navbar style={{ position: "fixed", width: "100%", zIndex: 1000 }} />
+<div className="flex h-screen font-sans relative">
+      <Sidebar showMenu={showMenu} onTopicSelect={handleTopicChange} activeTopic={selectedTopic}/>
+      <div className="flex-1" style={{ background: "#ffffff", overflowY: "hidden" }}>  
+        <Navbar style={{ position: "fixed", width: "100%", zIndex: 1000 }} /> 
+        
+        <div  style={{ marginTop: "1px", overflowY: "auto", height: "calc(100vh - 80px)" }}>
         
         <h2 className="text-2xl font-bold mt-6 ml-10 ">PROFILE</h2>
         <div
-          className="container mx-auto px-10 py-4 flex flex-row space-x-4"
+          className="container mx-auto px-10  flex flex-row space-x-4"
           style={{
             marginTop: "1px",
             overflowY: "hidden",
@@ -394,6 +396,7 @@ const ProfilePage = () => {
 
           </div>
 
+        </div>
         </div>
         <FaBars className="sm:hidden absolute top-4 left-4 text-2xl text-gray-600 cursor-pointer" onClick={toggleMenu} />
       </div>
