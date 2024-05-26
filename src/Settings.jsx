@@ -254,7 +254,7 @@ const Settings = () => {
                             {responseMessage}
                         </div>
                     )}
-                    <h2 className="text-2xl font-bold mb-4">Settings</h2>
+                    <h2 className="text-2xl font-bold mb-4">SETTINGS</h2>
                     
                     <div className="mb-6">
                         <h3 className="text-xl font-bold mb-2">Profile</h3>

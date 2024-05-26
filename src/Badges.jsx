@@ -111,7 +111,7 @@ const Badges = () => {
             <div className="flex-1 bg-white overflow-y-auto">
                 <Navbar style={{ position: "fixed", width: "100%", zIndex: 1000 }} />
                 <div className="p-6">
-                    <h2 className="text-2xl font-bold mb-6">Badges</h2>
+                    <h2 className="text-2xl font-bold mb-6">BADGES</h2>
                     {admin && (
                         <div className="bg-white rounded shadow p-4 mb-6">
                             <h3 className="text-xl font-semibold mb-4">All Badges</h3>

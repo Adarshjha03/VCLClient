@@ -158,7 +158,8 @@ const ProfilePage = () => {
       <Sidebar showMenu={showMenu} onTopicSelect={handleTopicChange} activeTopic={selectedTopic} />
       <div className="flex-1 " style={{ background: "#ffffff", overflowY: "hidden" }}>
         <Navbar style={{ position: "fixed", width: "100%", zIndex: 1000 }} />
-        <h2 className="text-2xl font-bold mt-6 ml-10 ">Profile</h2>
+        
+        <h2 className="text-2xl font-bold mt-6 ml-10 ">PROFILE</h2>
         <div
           className="container mx-auto px-10 py-4 flex flex-row space-x-4"
           style={{

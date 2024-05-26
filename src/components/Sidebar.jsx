@@ -179,7 +179,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
               All Problem Labs
             </div>
             <Link
-              to="/temp"
+              to="/leaderboard"
               className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -4 && 'bg-blue-600 text-white'}`}
               style={{ textTransform: 'uppercase' }}
             >

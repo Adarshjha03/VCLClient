@@ -11,7 +11,8 @@ import YourComponent from "./openLab";
 import Settings from './Settings';
 import Badges from './Badges';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Temp from './Temp'
+import Temp from './Temp';
+import LeaderboardPage from './leaderboard';
 const App = () => {
   return (
     <Router> 
@@ -26,6 +27,7 @@ const App = () => {
         <Route path='/openLab' element={<YourComponent/>}></Route>
         <Route path= '/temp' element={<Temp/>}></Route>
         <Route path= '/badges' element={<Badges/>}></Route>
+        <Route path= '/leaderboard' element={<LeaderboardPage/>}></Route>
       </Routes>
     </Router>
   )
