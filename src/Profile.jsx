@@ -33,6 +33,7 @@ const ProfilePage = () => {
     totalScore: 0,
     totalTopics: 8,
     totalChallenges: 32,
+    rank: 0,
 
   });
 
@@ -95,7 +96,8 @@ const ProfilePage = () => {
           bonusScore: userData.bonus_score || 0,
           totalChallenges: userData.total_challenges || 32,
           totalScore: userData.total_score || 0,
-          totalTopics: userData.total_topics || 8, // Only take the date part if date_joined is defined
+          totalTopics: userData.total_topics || 8,
+          rank: userData.rank ||0 , // Only take the date part if date_joined is defined
         });
 
 
@@ -188,7 +190,7 @@ const ProfilePage = () => {
                 <h1 className="text-xl font-bold">{`${user.firstName} ${user.lastName}`}</h1>
                 <p className="text-gray-900">@{user.username}</p>
                 <p className="text-gray-500">
-                  Rank <span className="text-blue-700">121</span>
+                  Rank <span className="text-blue-700">{user.rank}</span>
                 </p>
               </div>
             </div>
