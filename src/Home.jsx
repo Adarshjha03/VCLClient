@@ -24,9 +24,9 @@ const HomePage = () => {
   const [isAddChallengeModalOpen, setAddChallengeModalOpen] = useState(false);
   
   const handleSearch = (filteredProblems) => {
-    console.log("Filtered Problems:",filteredProblems);
+   
     setProblems(filteredProblems);
-    console.log(filteredProblems);
+   
   };
   useEffect(() => {
     const fetchUserData = async () => {
