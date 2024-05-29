@@ -2,24 +2,32 @@ import React, { useState, useEffect } from 'react';
 import headlogo from '../assets/dlogo.png';
 import plusLogo from '../assets/add.png';
 import Modal from 'react-modal';
-import AddTopic from '../addTopic';
+import AddTopic from '../addTopic.jsx';
+import AddCategory from '../addCategory.jsx';
 import AddBadges from './addBadge';
-import DeleteTopic from './DeleteTopic'; // Import the AddBadges component
+import DeleteTopic from './DeleteTopic';
 import { Link } from 'react-router-dom';
-import { FaTimes, FaLaptopCode, FaCog, FaMedal, FaCode, FaTrophy, FaQuestionCircle, FaSearch, FaUser, FaTrash } from 'react-icons/fa';
+import { FaTimes, FaCog, FaMedal, FaCode, FaTrophy, FaUser, FaTrash, FaHashtag } from 'react-icons/fa';
+// import './Sidebar.css'; // Import the CSS file for modal styles
 
 const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
-  const [topicsWithIcons, setTopicsWithIcons] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [topics, setTopics] = useState({});
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+  const [selectedTopicId, setSelectedTopicId] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [admin, setAdmin] = useState(false);
   const [subAdmin, setSubAdmin] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [PLmodalIsOpen, setPLModalIsOpen] = useState(false);
   const [badgeModalIsOpen, setBadgeModalIsOpen] = useState(false);
-  const [DeleteModalIsOpen, setDeleteModalIsOpen] = useState(false); // State for the badge modal
+  const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
+  const [deletePLModalIsOpen, setPLDeleteModalIsOpen] = useState(false);
   const [activeButton, setActiveButton] = useState(null);
   const [username, setUsername] = useState('');
   const backendUrl = "https://api.virtualcyberlabs.com";
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -45,20 +53,19 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
   }, []);
 
   useEffect(() => {
-    const fetchTopics = async () => {
+    const fetchCategories = async () => {
       try {
         const token = localStorage.getItem("Token");
-        const response = await fetch(`${backendUrl}/topic`, {
+        const response = await fetch(`${backendUrl}/category`, {
           headers: {
             Authorization: `Token ${token}`,
           },
         });
         if (!response.ok) {
-          throw new Error('Failed to fetch topics');
+          throw new Error('Failed to fetch categories');
         }
         const data = await response.json();
-        const updatedTopics = [...data];
-        setTopicsWithIcons(updatedTopics);
+        setCategories(data);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -66,12 +73,87 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
       }
     };
 
-    fetchTopics();
+    fetchCategories();
   }, []);
 
+  useEffect(() => {
+    const savedCategory = localStorage.getItem('selectedCategoryId');
+    const savedTopics = JSON.parse(localStorage.getItem('topics'));
+    const savedTopicId = localStorage.getItem('selectedTopicId');
+
+    if (savedCategory) {
+      setSelectedCategoryId(Number(savedCategory));
+      if (savedTopics && savedTopics[Number(savedCategory)]) {
+        setTopics(savedTopics);
+      } else {
+        fetchTopics(Number(savedCategory));
+      }
+    }
+    if (savedTopicId) {
+      setSelectedTopicId(Number(savedTopicId));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (selectedCategoryId !== null) {
+      localStorage.setItem('selectedCategoryId', selectedCategoryId);
+    }
+  }, [selectedCategoryId]);
+
+  useEffect(() => {
+    localStorage.setItem('topics', JSON.stringify(topics));
+  }, [topics]);
+
+  useEffect(() => {
+    if (selectedTopicId !== null) {
+      localStorage.setItem('selectedTopicId', selectedTopicId);
+    }
+  }, [selectedTopicId]);
+
+  const fetchTopics = async (categoryId) => {
+    try {
+      const token = localStorage.getItem("Token");
+      const response = await fetch(`${backendUrl}/category/${categoryId}`, {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Failed to fetch topics');
+      }
+      const data = await response.json();
+      setTopics((prevTopics) => ({ ...prevTopics, [categoryId]: data }));
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
+  const handleCategoryClick = (categoryId) => {
+    if (selectedCategoryId === categoryId) {
+      setSelectedCategoryId(null);
+    } else {
+      setSelectedCategoryId(categoryId);
+      if (!topics[categoryId]) {
+        fetchTopics(categoryId);
+      }
+    }
+    setSelectedTopicId(null);  // Reset selected topic when a category is selected
+    setActiveButton(categoryId);
+  };
+
+  const handleTopicClick = (topicId) => {
+    setSelectedTopicId(topicId);
+    onTopicSelect(topicId);
+  };
 
   const openModal = () => {
     setModalIsOpen(true);
+  };
+  const openPLModal = () => {
+    setPLModalIsOpen(true);
+  };
+  const closePLModal = () => {
+    setPLModalIsOpen(false);
   };
 
   const closeModal = () => {
@@ -85,6 +167,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
   const closeBadgeModal = () => {
     setBadgeModalIsOpen(false);
   };
+
   const openDeleteModal = () => {
     setDeleteModalIsOpen(true);
   };
@@ -92,7 +175,6 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
   const closeDeleteModal = () => {
     setDeleteModalIsOpen(false);
   };
-
   const handleButtonClick = (topicId) => {
     setActiveButton(topicId);
     onTopicSelect(topicId === 0 ? 0 : topicId);
@@ -112,15 +194,11 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
         <div className="flex justify-center">
           <img src={headlogo} alt="HeadLogo" className="w-50 content-evenly mb-3" />
         </div>
-
-
-        <div >
-          {/* Dashboard as main heading */}
-          <div className="p-2 font-semibold text-md flex items-center justify-start border-b border-gray-100/55   hover:bg-blue-400 rounded-sm hover:rounded-sm hover:text-white transition duration-300">
-            <span>DASHBOARD</span> {/* Larger text */}
+        <div>
+          <div className="p-2 font-semibold text-md flex items-center justify-start border-b border-gray-100/55 hover:bg-blue-400 rounded-sm hover:rounded-sm hover:text-white transition duration-300">
+            <span>DASHBOARD</span>
           </div>
-
-          {/* Profile section */}
+         {/* Profile Section */}
           <div className="space-y-2 border-b border-gray-100/55 py-2">
             <Link
               to={`/profile/${username}`}
@@ -145,31 +223,28 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
               Settings
             </Link>
             <div className="flex items-center justify-between">
-  {/* Use flex container */}
-  <div
-    className={`flex items-center justify-start p-1 text-xs rounded-sm transition duration-300 hover:bg-blue-400 hover:text-white w-full ${
-      activeButton === -3 && 'bg-blue-600 text-white'
-    }`}
-    style={{ textTransform: 'uppercase' }}
-  >
-    <Link
-      to="/badges"
-      className="flex items-center justify-start"
-      style={{ marginRight: admin ? '0.5rem' : 0 }}
-    >
-      <FaMedal className="w-4 h-4 mr-2" />
-      Earn Badges
-    </Link>
-    {admin && (
-      <button
-        onClick={openBadgeModal}
-        className="flex items-center justify-center rounded-sm hover:bg-transparent transition duration-300 ml-3"
-      >
-        <img src={plusLogo} alt="Add Badge" className="w-4 h-4" />
-      </button>
-    )}
-  </div>
-</div>
+              <div
+                className={`flex items-center justify-start p-1 text-xs rounded-sm transition duration-300 hover:bg-blue-400 hover:text-white w-full ${activeButton === -3 && 'bg-blue-600 text-white'}`}
+                style={{ textTransform: 'uppercase' }}
+              >
+                <Link
+                  to="/badges"
+                  className="flex items-center justify-start"
+                  style={{ marginRight: admin ? '0.5rem' : 0 }}
+                >
+                  <FaMedal className="w-4 h-4 mr-2" />
+                  Earn Badges
+                </Link>
+                {admin && (
+                  <button
+                    onClick={openBadgeModal}
+                    className="flex items-center justify-center rounded-sm hover:bg-transparent transition duration-300 ml-3"
+                  >
+                    <img src={plusLogo} alt="Add Badge" className="w-4 h-4 " />
+                  </button>
+                )}
+              </div>
+            </div>
             <div
               className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === 0 && 'bg-blue-600 text-white'}`}
               style={{ textTransform: 'uppercase' }}
@@ -187,46 +262,74 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
               Leaderboard
             </Link>
           </div>
-          {/* Problem Labs section */}
-          <div className="p-1 font-semibold text-md flex items-center justify-start rounded-sm hover:rounded-sm   hover:bg-blue-400 hover:text-white transition duration-300 ">
-            <span>PROBLEM LABS</span> {/* Larger text */}
-            {/* Add Topic button for admins */}
-            {subAdmin && (
-              <div className="p-2 font-medium text-xs flex items-center justify-start rounded-sm hover:rounded-sm   hover:bg-blue-400 hover:text-white transition duration-300 ">
-                <button onClick={openModal} className={`flex items-center focus:outline-none  rounded-md py-1 px-2   hover:bg-blue-400 hover:text-white`} style={{ textTransform: 'uppercase' }}>
-                  <img src={plusLogo} alt="Add Topic" className="w-4 h-4 mr-2 justify-evenly" />
-
-                </button>
-              </div>
-            )}
-            {admin && (
-              <div className="p-2 font-medium text-xs flex items-center justify-start rounded-sm hover:rounded-sm   hover:bg-blue-400 hover:text-white transition duration-300 ">
-                <button onClick={openDeleteModal} className={`flex items-center focus:outline-none  rounded-md   hover:bg-blue-400 hover:text-white`} style={{ textTransform: 'uppercase' }}>
-                  <FaTrash alt="Delete Topic" className="w-4 h-4  justify-evenly" />
-
-                </button>
-              </div>
-            )}
-          </div>
-
-          {/* List of topics */}
-          <div className="space-y-1"> {/* Indent and space the list of topics */}
-            {topicsWithIcons.map((topic) => (
-              <div
-                key={topic.id}
-                className={`p-2 text-xs flex items-center justify-start rounded-sm hover:rounded-sm   hover:bg-blue-400 hover:text-white transition duration-300 ${activeButton === topic.id && 'bg-blue-600 text-white'}`}
-                onClick={() => handleButtonClick(topic.id)}
-              >
-                <div className="flex items-center">
-                  <span className="mr-2"><FaLaptopCode className="w-4 h-4" /></span>
-                  {topic.name.toUpperCase()}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-      {/* Modal for adding topic */}
+          <div className="p-1 font-semibold text-md flex items-center justify-start rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white transition duration-300">
+           <span>PROBLEM LABS</span>
+           {subAdmin && (
+             <div className="p-2 font-medium text-xs flex items-center justify-start rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white transition duration-300">
+               <button onClick={openPLModal} className={`flex items-center focus:outline-none rounded-md py-1 px-2 hover:bg-blue-400 hover:text-white`} style={{ textTransform: 'uppercase' }}>
+                 <img src={plusLogo} alt="Add Topic" className="w-4 h-4 mr-2 fixed-size-icon" />
+               </button>
+             </div>
+           )}
+             {admin && (
+                     <button
+                       onClick={(e) => { e.stopPropagation(); openDeleteModal(); }}
+                       className="flex items-center justify-center rounded-sm hover:bg-transparent transition duration-300"
+                       style={{ width: '20px', height: '20px' }}
+                     >
+                       <FaTrash className="w-4 h-4" />
+                     </button>
+                   )}
+         </div>
+         <div className="space-y-1">
+           {categories.map((category) => (
+             <div key={category.id}>
+               <div
+                 className={`p-2 text-xs flex items-center justify-between rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white transition duration-300 ${selectedCategoryId === category.id && ' text-white'}`}
+                 onClick={() => handleCategoryClick(category.id)}
+               >
+                 <div className="flex items-center">
+                   <span className="mr-2"><FaHashtag className="w-4 h-4" /></span>
+                   {category.name.toUpperCase()}
+                 </div>
+                 <div className="flex items-center">
+                   {subAdmin && (
+                     <button
+                       onClick={(e) => { e.stopPropagation(); openModal(); }}
+                       className="flex items-center justify-center rounded-sm hover:bg-transparent transition duration-300 mr-2"
+                       style={{ width: '20px', height: '20px' }}
+                     >
+                       <img src={plusLogo} alt="Add Topic" style={{ width: '16px', height: '16px' }} />
+                     </button>
+                   )}
+                 
+                 </div>
+               </div>
+               <div
+                 className={`overflow-hidden transition-max-height duration-500 ease-in-out ${selectedCategoryId === category.id ? 'max-h-96' : 'max-h-0'}`}
+               >
+                 {selectedCategoryId === category.id && topics[category.id] && (
+                   <div className="pl-4">
+                     {topics[category.id].map((topic) => (
+                       <div
+                         key={topic.id}
+                         className={`p-2 text-xs flex items-center justify-between rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white transition duration-300 ${selectedTopicId === topic.id && 'bg-blue-600 text-white'}`}
+                         onClick={() => handleTopicClick(topic.id)}
+                       >
+                         <div className="flex items-center">
+                           
+                           {topic.name.toUpperCase()}
+                         </div>
+                       </div>
+                     ))}
+                   </div>
+                 )}
+               </div>
+             </div>
+           ))}
+         </div>
+       </div>
+     </div>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -262,6 +365,42 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
           <FaTimes />
         </button>
         <AddTopic />
+      </Modal>
+      <Modal
+        isOpen={PLmodalIsOpen}
+        onRequestClose={closePLModal}
+        style={{
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          },
+          content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+            borderRadius: '10px',
+            padding: '20px',
+          },
+        }}
+        shouldCloseOnOverlayClick={true}
+      >
+        <button
+          onClick={closePLModal}
+          style={{
+            position: 'absolute',
+            top: '10px',
+            right: '10px',
+            cursor: 'pointer',
+            backgroundColor: 'transparent',
+            border: 'none',
+            color: 'black',
+          }}
+        >
+          <FaTimes />
+        </button>
+        < AddCategory/>
       </Modal>
       <Modal
         isOpen={badgeModalIsOpen}
@@ -300,8 +439,8 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
         <AddBadges />
       </Modal>
       <Modal
-        isOpen={DeleteModalIsOpen}
-        onRequestClose={closeBadgeModal}
+        isOpen={deleteModalIsOpen}
+        onRequestClose={closeDeleteModal}
         style={{
           overlay: {
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
