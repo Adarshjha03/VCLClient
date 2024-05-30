@@ -33,6 +33,7 @@ const ProfilePage = () => {
     totalScore: 0,
     totalTopics: 8,
     totalChallenges: 32,
+    rank: 0,
 
   });
 
@@ -95,7 +96,8 @@ const ProfilePage = () => {
           bonusScore: userData.bonus_score || 0,
           totalChallenges: userData.total_challenges || 32,
           totalScore: userData.total_score || 0,
-          totalTopics: userData.total_topics || 8, // Only take the date part if date_joined is defined
+          totalTopics: userData.total_topics || 8,
+          rank: userData.rank ||0 , // Only take the date part if date_joined is defined
         });
 
 
@@ -154,21 +156,23 @@ const ProfilePage = () => {
   const portfolioUrl = addHttpsIfNeeded(user.portfolioUrl);
   const linkedinUrl = addHttpsIfNeeded(user.linkedinUrl);
   return (
-    <div className="flex h-screen font-sans-relative">
-      <Sidebar showMenu={showMenu} onTopicSelect={handleTopicChange} activeTopic={selectedTopic} />
-      <div className="flex-1 " style={{ background: "#ffffff", overflowY: "hidden" }}>
-        <Navbar style={{ position: "fixed", width: "100%", zIndex: 1000 }} />
+<div className="flex h-screen font-sans relative">
+      <Sidebar showMenu={showMenu} onTopicSelect={handleTopicChange} activeTopic={selectedTopic}/>
+      <div className="flex-1" style={{ background: "#ffffff", overflowY: "hidden" }}>  
+        <Navbar style={{ position: "fixed", width: "100%", zIndex: 1000 }} /> 
+        
+        <div  style={{ marginTop: "1px", overflowY: "auto", height: "calc(100vh - 20px)" }}>
         
         <h2 className="text-2xl font-bold mt-6 ml-10 ">PROFILE</h2>
         <div
-          className="container mx-auto px-10 py-4 flex flex-row space-x-4"
+          className="container mx-auto px-10  flex flex-row space-x-4"
           style={{
             marginTop: "1px",
             overflowY: "hidden",
             marginBottom: "2rem", // Add the bottom margin here
           }}
         > {/* Center align elements */}
-          <div className="w-1/4 bg-white rounded-lg py-6 px-4 mb-4  shadow-lg">
+          <div className="w-1/4 bg-white h-fit rounded-lg py-6 px-4 mb-4  shadow-lg">
             <div className="relative mb-3 flex items-center justify-center"> {/* Changed justify-end to justify-center */}
               <div className="w-1/2 flex items-center justify-center">
                 <div className="relative inline-block mr-4">
@@ -186,7 +190,7 @@ const ProfilePage = () => {
                 <h1 className="text-xl font-bold">{`${user.firstName} ${user.lastName}`}</h1>
                 <p className="text-gray-900">@{user.username}</p>
                 <p className="text-gray-500">
-                  Rank <span className="text-blue-700">121</span>
+                  Rank <span className="text-blue-700">{user.rank}</span>
                 </p>
               </div>
             </div>
@@ -394,6 +398,7 @@ const ProfilePage = () => {
 
           </div>
 
+        </div>
         </div>
         <FaBars className="sm:hidden absolute top-4 left-4 text-2xl text-gray-600 cursor-pointer" onClick={toggleMenu} />
       </div>

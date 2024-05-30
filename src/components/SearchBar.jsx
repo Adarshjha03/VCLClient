@@ -72,7 +72,7 @@ const SearchBar = ({ problems, onSearch }) => {
                             {selectedDifficulty || "ALL"} ▼
                         </button>
                         {difficultyDropdownOpen && (
-                            <div className="absolute mt-2 w-32 bg-white rounded-lg shadow-lg" ref={difficultyRef}>
+                            <div className="absolute mt-2 w-100 items-center bg-white rounded-lg shadow-lg" ref={difficultyRef}>
                                 <button
                                     onClick={() => handleDifficultyChange("HARD")}
                                     className="block w-full py-2 px-2 text-left transition duration-300 delay-100 hover:bg-gray-200 text-sm"
@@ -109,7 +109,7 @@ const SearchBar = ({ problems, onSearch }) => {
                             {selectedSolved || "ALL"} ▼
                         </button>
                         {solvedDropdownOpen && (
-                            <div className="absolute mt-2 w-32 bg-white rounded-lg shadow-lg" ref={solvedRef}>
+                            <div className="absolute mt-2 w-100 bg-white rounded-lg shadow-lg" ref={solvedRef}>
                                 <button
                                     onClick={() => handleSolvedChange("SOLVED")}
                                     className="block w-full py-2 px-2 text-left transition duration-300 delay-100 hover:bg-gray-200 text-sm"
