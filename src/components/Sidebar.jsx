@@ -6,10 +6,12 @@ import AddTopic from '../addTopic.jsx';
 import AddCategory from '../addCategory.jsx';
 import AddBadges from './addBadge';
 import DeleteTopic from './DeleteTopic';
+import DeleteCategory from './DeleteCategory';
+import { FaEdit } from 'react-icons/fa'
+import { FaPencilAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import { FaTimes, FaCog, FaMedal, FaCode, FaTrophy, FaUser, FaTrash, FaHashtag } from 'react-icons/fa';
-// import './Sidebar.css'; // Import the CSS file for modal styles
-
+import { FaTimes, FaCog, FaMedal, FaCode, FaTrophy, FaUser, FaTrash, FaHashtag, FaChevronRight, FaChevronDown } from 'react-icons/fa';
+//import './scrollbar.css';
 const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
   const [categories, setCategories] = useState([]);
   const [topics, setTopics] = useState({});
@@ -23,7 +25,8 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
   const [PLmodalIsOpen, setPLModalIsOpen] = useState(false);
   const [badgeModalIsOpen, setBadgeModalIsOpen] = useState(false);
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
-  const [deletePLModalIsOpen, setPLDeleteModalIsOpen] = useState(false);
+  const [deletePLModalIsOpen, setDeletePLModalIsOpen] = useState(false);
+  const [expandedCategories, setExpandedCategories] = useState([]);
   const [activeButton, setActiveButton] = useState(null);
   const [username, setUsername] = useState('');
   const backendUrl = "https://api.virtualcyberlabs.com";
@@ -129,16 +132,15 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
   };
 
   const handleCategoryClick = (categoryId) => {
-    if (selectedCategoryId === categoryId) {
-      setSelectedCategoryId(null);
+    if (expandedCategories.includes(categoryId)) {
+      setExpandedCategories(expandedCategories.filter(id => id !== categoryId));
     } else {
-      setSelectedCategoryId(categoryId);
+      setExpandedCategories([...expandedCategories, categoryId]);
       if (!topics[categoryId]) {
         fetchTopics(categoryId);
       }
     }
-    setSelectedTopicId(null);  // Reset selected topic when a category is selected
-    setActiveButton(categoryId);
+    setSelectedCategoryId(categoryId);
   };
 
   const handleTopicClick = (topicId) => {
@@ -171,10 +173,13 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
   const openDeleteModal = () => {
     setDeleteModalIsOpen(true);
   };
-
-  const closeDeleteModal = () => {
-    setDeleteModalIsOpen(false);
+  const openDeletePLModal = () => {
+    setDeletePLModalIsOpen(true);
   };
+  const closeDeletePLModal = () => {
+    setDeletePLModalIsOpen(false);
+  };
+
   const handleButtonClick = (topicId) => {
     setActiveButton(topicId);
     onTopicSelect(topicId === 0 ? 0 : topicId);
@@ -198,8 +203,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
           <div className="p-2 font-semibold text-md flex items-center justify-start border-b border-gray-100/55 hover:bg-blue-400 rounded-sm hover:rounded-sm hover:text-white transition duration-300">
             <span>DASHBOARD</span>
           </div>
-         {/* Profile Section */}
-          <div className="space-y-2 border-b border-gray-100/55 py-2">
+          <div className="space-y-2 py-2 ">
             <Link
               to={`/profile/${username}`}
               onClick={() => {
@@ -262,74 +266,89 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
               Leaderboard
             </Link>
           </div>
-          <div className="p-1 font-semibold text-md flex items-center justify-start rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white transition duration-300">
-           <span>PROBLEM LABS</span>
-           {subAdmin && (
-             <div className="p-2 font-medium text-xs flex items-center justify-start rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white transition duration-300">
-               <button onClick={openPLModal} className={`flex items-center focus:outline-none rounded-md py-1 px-2 hover:bg-blue-400 hover:text-white`} style={{ textTransform: 'uppercase' }}>
-                 <img src={plusLogo} alt="Add Topic" className="w-4 h-4 mr-2 fixed-size-icon" />
-               </button>
-             </div>
-           )}
-             {admin && (
-                     <button
-                       onClick={(e) => { e.stopPropagation(); openDeleteModal(); }}
-                       className="flex items-center justify-center rounded-sm hover:bg-transparent transition duration-300"
-                       style={{ width: '20px', height: '20px' }}
-                     >
-                       <FaTrash className="w-4 h-4" />
-                     </button>
-                   )}
-         </div>
-         <div className="space-y-1">
-           {categories.map((category) => (
-             <div key={category.id}>
-               <div
-                 className={`p-2 text-xs flex items-center justify-between rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white transition duration-300 ${selectedCategoryId === category.id && ' text-white'}`}
-                 onClick={() => handleCategoryClick(category.id)}
-               >
-                 <div className="flex items-center">
-                   <span className="mr-2"><FaHashtag className="w-4 h-4" /></span>
-                   {category.name.toUpperCase()}
-                 </div>
-                 <div className="flex items-center">
-                   {subAdmin && (
-                     <button
-                       onClick={(e) => { e.stopPropagation(); openModal(); }}
-                       className="flex items-center justify-center rounded-sm hover:bg-transparent transition duration-300 mr-2"
-                       style={{ width: '20px', height: '20px' }}
-                     >
-                       <img src={plusLogo} alt="Add Topic" style={{ width: '16px', height: '16px' }} />
-                     </button>
-                   )}
-                 
-                 </div>
-               </div>
-               <div
-                 className={`overflow-hidden transition-max-height duration-500 ease-in-out ${selectedCategoryId === category.id ? 'max-h-96' : 'max-h-0'}`}
-               >
-                 {selectedCategoryId === category.id && topics[category.id] && (
-                   <div className="pl-4">
-                     {topics[category.id].map((topic) => (
-                       <div
-                         key={topic.id}
-                         className={`p-2 text-xs flex items-center justify-between rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white transition duration-300 ${selectedTopicId === topic.id && 'bg-blue-600 text-white'}`}
-                         onClick={() => handleTopicClick(topic.id)}
-                       >
-                         <div className="flex items-center">
-                           
-                           {topic.name.toUpperCase()}
-                         </div>
-                       </div>
-                     ))}
-                   </div>
-                 )}
-               </div>
-             </div>
-           ))}
-         </div>
-       </div>
-     </div>
+          <div className="p-1 font-semibold text-md flex items-center justify-start  rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white transition duration-300 border-b border-gray-100/55">
+            <span>PROBLEM LABS</span>
+            {subAdmin && (
+              <div className="p-2 font-medium text-xs flex items-center justify-start rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white transition duration-300">
+                <button onClick={openPLModal} className={`flex items-center focus:outline-none rounded-md py-1 px-2 pr-0 hover:bg-blue-400 hover:text-white`} style={{ textTransform: 'uppercase' }}>
+                  <img src={plusLogo} alt="Add Topic" className="w-4 h-4  fixed-size-icon" />
+                </button>
+              </div>
+            )}
+            {admin && (
+              <button
+                onClick={(e) => { e.stopPropagation(); openDeletePLModal(); }}
+                className="flex items-center justify-center rounded-sm hover:bg-transparent transition duration-300"
+                style={{ width: '20px', height: '20px' }}
+              >
+                <FaTrash className="w-4 h-4" />
+              </button>
+            )}
+          </div>
+          <div className="space-y-1">
+  {categories.map((category) => (
+    <div key={category.id}>
+      <div
+        onClick={() => handleCategoryClick(category.id)}
+        className="p-2 text-xs flex items-center justify-between hover:bg-blue-400 rounded-sm hover:rounded-sm hover:text-white transition duration-300 cursor-pointer"
+      >
+        <div className="flex items-center">
+        <span className="mr-2"><FaHashtag className="w-4 h-4" /></span>
+          {category.name.toUpperCase()}
+        </div>
+        <div className="flex items-center">
+          {subAdmin && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal();
+              }}
+              className="flex items-center justify-center rounded-sm hover:bg-transparent transition duration-300 mr-2"
+              style={{ width: '20px', height: '20px' }}
+            >
+              <FaPencilAlt className="text-white w-3 h-4" />
+            </button>
+          )}
+        </div>
+        {!admin&&!subAdmin&&( <span className="mr-2 transition-transform duration-300">
+            {expandedCategories.includes(category.id) ? (
+              <FaChevronDown className="w-4 h-4 transform " />
+            ) : (
+              <FaChevronRight className="w-4 h-4" />
+            )}
+          </span>)}
+      </div>
+      <div
+        className={`overflow-hidden transition-max-height duration-500 ease-in-out ${
+          expandedCategories.includes(category.id) ? 'max-h-96' : 'max-h-0'
+        }`}
+      >
+        {expandedCategories.includes(category.id) && (
+          <div className="pl-4">
+            {topics[category.id] && topics[category.id].length > 0 ? (
+              topics[category.id].map((topic) => (
+                <div
+                  key={topic.id}
+                  onClick={() => handleTopicClick(topic.id)}
+                  className={`p-2 text-xs flex items-center justify-between rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white transition duration-300 ${
+                    selectedTopicId === topic.id && 'bg-blue-600 text-white'
+                  }`}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <div className="flex items-center text-blue-100">{topic.name.toUpperCase()}</div>
+                </div>
+              ))
+            ) : (
+              <div className="p-1 text-xs">No topics available</div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  ))}
+</div>
+        </div>
+      </div>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -350,8 +369,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
         }}
         shouldCloseOnOverlayClick={true}
       >
-        <button
-          onClick={closeModal}
+        <button onClick={closeModal}
           style={{
             position: 'absolute',
             top: '10px',
@@ -400,7 +418,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
         >
           <FaTimes />
         </button>
-        < AddCategory/>
+        <AddCategory />
       </Modal>
       <Modal
         isOpen={badgeModalIsOpen}
@@ -438,7 +456,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
         </button>
         <AddBadges />
       </Modal>
-      <Modal
+      {/* <Modal
         isOpen={deleteModalIsOpen}
         onRequestClose={closeDeleteModal}
         style={{
@@ -473,9 +491,49 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
           <FaTimes />
         </button>
         <DeleteTopic />
+      </Modal> */}
+      <Modal
+        isOpen={deletePLModalIsOpen}
+        onRequestClose={closeDeletePLModal}
+        style={{
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          },
+          content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+            borderRadius: '10px',
+            padding: '20px',
+          },
+        }}
+        shouldCloseOnOverlayClick={true}
+      >
+        <button
+          onClick={closeDeletePLModal}
+          style={{
+            position: 'absolute',
+            top: '10px',
+            right: '10px',
+            cursor: 'pointer',
+            backgroundColor: 'transparent',
+            border: 'none',
+            color: 'black',
+          }}
+        >
+          <FaTimes />
+        </button>
+        <DeleteCategory />
       </Modal>
     </div>
+    
   );
 };
 
 export default Sidebar;
+
+         
+
