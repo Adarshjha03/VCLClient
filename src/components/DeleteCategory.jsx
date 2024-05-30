@@ -124,7 +124,7 @@ const DeleteCategory = () => {
             onChange={() => setAgreed(!agreed)}
           />
           <label htmlFor="agreed" className="text-xs">
-            I understand that deleting the category will delete all the topics within the category.
+            I understand that deleting the category will delete all the labs within the category.
           </label>
         </div>
         <button

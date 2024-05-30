@@ -12,13 +12,16 @@ const AddTopic = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {const token = localStorage.getItem("Token");
+    const categoryId = localStorage.getItem("selectedCategoryId");
       const response = await fetch(`${backendUrl}/topic`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Token ${token}`,
         },
-        body: JSON.stringify({ name: topic }),
+        body: JSON.stringify({ name: topic
+          ,category_id:categoryId,
+         }),
       });
       if (!response.ok) {
         throw new Error("Failed to add topic.");

@@ -59,7 +59,7 @@ const AddCategory = () => {
       </form>
       {responseMessage && (
         <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mt-4" role="alert">
-          New topic added successfully: {responseMessage.name}
+          New category added successfully: {responseMessage.name}
         </div>
       )}
     </div>
