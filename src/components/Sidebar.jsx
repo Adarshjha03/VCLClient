@@ -7,7 +7,6 @@ import AddCategory from '../addCategory.jsx';
 import AddBadges from './addBadge';
 import DeleteTopic from './DeleteTopic';
 import DeleteCategory from './DeleteCategory';
-import { FaEdit } from 'react-icons/fa'
 import { FaPencilAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { FaTimes, FaCog, FaMedal, FaCode, FaTrophy, FaUser, FaTrash, FaHashtag, FaChevronRight, FaChevronDown } from 'react-icons/fa';
@@ -86,11 +85,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
 
     if (savedCategory) {
       setSelectedCategoryId(Number(savedCategory));
-      if (savedTopics && savedTopics[Number(savedCategory)]) {
-        setTopics(savedTopics);
-      } else {
         fetchTopics(Number(savedCategory));
-      }
     }
     if (savedTopicId) {
       setSelectedTopicId(Number(savedTopicId));
@@ -103,9 +98,6 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
     }
   }, [selectedCategoryId]);
 
-  useEffect(() => {
-    localStorage.setItem('topics', JSON.stringify(topics));
-  }, [topics]);
 
   useEffect(() => {
     if (selectedTopicId !== null) {
@@ -136,9 +128,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
       setExpandedCategories(expandedCategories.filter(id => id !== categoryId));
     } else {
       setExpandedCategories([...expandedCategories, categoryId]);
-      if (!topics[categoryId]) {
         fetchTopics(categoryId);
-      }
     }
     setSelectedCategoryId(categoryId);
   };
@@ -179,7 +169,9 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
   const closeDeletePLModal = () => {
     setDeletePLModalIsOpen(false);
   };
-
+  const closeDeleteModal = () => {
+    setDeleteModalIsOpen(false);
+  };
   const handleButtonClick = (topicId) => {
     setActiveButton(topicId);
     onTopicSelect(topicId === 0 ? 0 : topicId);
@@ -301,6 +293,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
             <button
               onClick={(e) => {
                 e.stopPropagation();
+                setSelectedCategoryId(category.id);
                 openModal();
               }}
               className="flex items-center justify-center rounded-sm hover:bg-transparent transition duration-300 mr-2"
@@ -309,6 +302,15 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
               <FaPencilAlt className="text-white w-3 h-4" />
             </button>
           )}
+          {admin && (
+              <button
+                onClick={(e) => { e.stopPropagation(); openDeleteModal(); }}
+                className="flex items-center justify-center rounded-sm hover:bg-transparent transition duration-300"
+                style={{ width: '20px', height: '20px' }}
+              >
+                <FaTrash className="w-3  h-4" />
+              </button>
+            )}   
         </div>
         {!admin&&!subAdmin&&( <span className="mr-2 transition-transform duration-300">
             {expandedCategories.includes(category.id) ? (
@@ -456,7 +458,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
         </button>
         <AddBadges />
       </Modal>
-      {/* <Modal
+      <Modal
         isOpen={deleteModalIsOpen}
         onRequestClose={closeDeleteModal}
         style={{
@@ -491,7 +493,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
           <FaTimes />
         </button>
         <DeleteTopic />
-      </Modal> */}
+      </Modal>
       <Modal
         isOpen={deletePLModalIsOpen}
         onRequestClose={closeDeletePLModal}
