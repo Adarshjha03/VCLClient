@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { Navigate } from "react-router-dom";
 
 const DeleteCategory = () => {
   const [topics, setTopics] = useState([]);
@@ -14,6 +15,7 @@ const DeleteCategory = () => {
     const fetchTopics = async () => {
       try {
         const token = localStorage.getItem("Token");
+      //  const  categoryId=localStorage.getItem("selectedCategoryId")
         const response = await fetch(`${backendUrl}/category`, {
           headers: {
             Authorization: `Token ${token}`,
@@ -65,6 +67,7 @@ const DeleteCategory = () => {
       setSelectedTopic("");
       setPassword("");
       setAgreed(false);
+      Navigate('/');
       setTopics((prevTopics) => prevTopics.filter((topic) => topic.id !== parseInt(selectedTopic, 10)));
     } catch (error) {
       console.error("Error deleting Category:", error);

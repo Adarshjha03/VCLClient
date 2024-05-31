@@ -14,7 +14,8 @@ const DeleteTopic = () => {
     const fetchTopics = async () => {
       try {
         const token = localStorage.getItem("Token");
-        const response = await fetch(`${backendUrl}/topic`, {
+        const  categoryId=localStorage.getItem("selectedCategoryId")
+        const response = await fetch(`${backendUrl}/category/${categoryId}`, {
           headers: {
             Authorization: `Token ${token}`,
           },

@@ -305,7 +305,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
           )}
           {admin && (
               <button
-                onClick={(e) => { e.stopPropagation(); openDeleteModal(); }}
+                onClick={(e) => { e.stopPropagation(); openDeleteModal();  setSelectedCategoryId(category.id); }}
                 className="flex items-center justify-center rounded-sm hover:bg-transparent transition duration-300"
                 style={{ width: '20px', height: '20px' }}
               >
@@ -322,7 +322,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
           </span>)}
       </div>
       <div
-        className={`overflow-hidden transition-max-height duration-500 ease-in-out ${
+        className={`overflow-hidden transition-all duration-500 ease-in-out ${
           expandedCategories.includes(category.id) ? 'max-h-96' : 'max-h-0'
         }`}
       >
