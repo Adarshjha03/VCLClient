@@ -147,9 +147,9 @@ const ProblemPage = () => {
       <Sidebar showMenu={showMenu} onTopicSelect={handleTopicChange} activeTopic={selectedTopic} />
       <div className="flex-1 overflow-y-auto" style={{ background: "#e0efee" }}>
         <Navbar style={{ position: "fixed", width: "100%", zIndex: 1000 }}/>
-        <div className="p-4">
+        <div className="px-4">
         
-          <div className="container mx-auto p-8">
+          <div className="container mx-auto pt-8 px-8 pb-2">
             <div className="mb-8 flex justify-between items-center font-semibold">
 
               {subAdmin && (
@@ -272,18 +272,21 @@ const ProblemPage = () => {
             {/* Check Solution Button */}
             <div className="flex justify-start">
   <div className="-mt-16"> {/* Adjust the negative margin value as needed */}
-    <a 
-      href={challenge.solution.startsWith("https") ? challenge.solution : `http://${challenge.solution}`} 
-      style={{ backgroundColor: "#11255a" }} 
-      className="text-white px-6 py-4 rounded hover:bg-blue-600" 
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <img src={ideaicon} alt="Image" className="w-6 h-6 mr-1 inline -mt-1" /> 
-      Check Solution
-    </a>
+    {(challenge.solution !== "" || admin) && (
+      <a 
+        href={challenge.solution.startsWith("https") ? challenge.solution : `http://${challenge.solution}`} 
+        style={{ backgroundColor: "#11255a" }} 
+        className="text-white px-6 py-4 rounded hover:bg-blue-600" 
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img src={ideaicon} alt="Image" className="w-6 h-6 mr-1 inline -mt-1" /> 
+        Check Solution
+      </a>
+    )}
   </div>
 </div>
+
 
           </div>
         </div>
