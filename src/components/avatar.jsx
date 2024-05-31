@@ -10,6 +10,15 @@ const avatars = [
   'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/7.png',
   'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/8.png',
   'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/9.png',
+  'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/10.png',
+  'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/11.png',
+  'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/12.png',
+  'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/13.png',
+  'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/14.png',
+  'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/15.png',
+  'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/16.png',
+  'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/17.png',
+  'https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/18.png',
 ];
 
 const AvatarSelector = () => {
@@ -41,7 +50,7 @@ const AvatarSelector = () => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-5 gap-4">
         {avatars.map((avatarUrl, index) => (
           <div
             key={index}

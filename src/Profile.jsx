@@ -163,9 +163,8 @@ const ProfilePage = () => {
         
         <div  style={{ marginTop: "1px", overflowY: "auto", height: "calc(100vh - 20px)" }}>
         
-        <h2 className="text-2xl font-bold mt-6 ml-10 ">PROFILE</h2>
         <div
-          className="container mx-auto px-10  flex flex-row space-x-4"
+          className="container mx-auto px-10 pt-8  flex flex-row space-x-4"
           style={{
             marginTop: "1px",
             overflowY: "hidden",
