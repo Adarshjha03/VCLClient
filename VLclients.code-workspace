@@ -17,7 +17,8 @@
         "liveServer.settings.multiRootWorkspaceName": "coutnerApp",
         "files.associations": {
             "iostream": "cpp",
-            "string": "cpp"
+            "string": "cpp",
+            "ostream": "cpp"
         }
     }
 }

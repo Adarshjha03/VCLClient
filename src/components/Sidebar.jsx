@@ -15,7 +15,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
   const [categories, setCategories] = useState([]);
   const [topics, setTopics] = useState({});
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
-  const [selectedTopicId, setSelectedTopicId] = useState(null);
+  const [selectedTopic, setselectedTopic] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [admin, setAdmin] = useState(false);
@@ -81,14 +81,14 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
   useEffect(() => {
     const savedCategory = localStorage.getItem('selectedCategoryId');
     const savedTopics = JSON.parse(localStorage.getItem('topics'));
-    const savedTopicId = localStorage.getItem('selectedTopicId');
+    const savedTopicId = localStorage.getItem('selectedTopic');
 
     if (savedCategory) {
       setSelectedCategoryId(Number(savedCategory));
         fetchTopics(Number(savedCategory));
     }
     if (savedTopicId) {
-      setSelectedTopicId(Number(savedTopicId));
+      setselectedTopic(Number(savedTopicId));
     }
   }, []);
 
@@ -100,10 +100,10 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
 
 
   useEffect(() => {
-    if (selectedTopicId !== null) {
-      localStorage.setItem('selectedTopicId', selectedTopicId);
+    if (selectedTopic !== null) {
+      localStorage.setItem('selectedTopic', selectedTopic);
     }
-  }, [selectedTopicId]);
+  }, [selectedTopic]);
 
   const fetchTopics = async (categoryId) => {
     try {
@@ -134,7 +134,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
   };
 
   const handleTopicClick = (topicId) => {
-    setSelectedTopicId(topicId);
+    setselectedTopic(topicId);
     onTopicSelect(topicId);
   };
 
@@ -332,8 +332,8 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
                 <div
                   key={topic.id}
                   onClick={() => handleTopicClick(topic.id)}
-                  className={`p-2 text-xs flex items-center justify-between rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white transition duration-300 ${
-                    selectedTopicId === topic.id && 'bg-blue-600 text-white'
+                  className={`p-2 text-xs flex items-center justify-between rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white transition duration-300 ease-in-out delay-150${
+                    selectedTopic === topic.id && 'bg-blue-600 text-white'
                   }`}
                   style={{ cursor: 'pointer' }}
                 >
@@ -341,7 +341,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
                 </div>
               ))
             ) : (
-              <div className="p-1 text-xs">No topics available</div>
+              <div className="p-1 text-xs duration-300">No topics available </div>
             )}
           </div>
         )}
