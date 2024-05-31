@@ -61,6 +61,7 @@ const DeleteCategory = () => {
       }
 
       alert("Category deleted successfully.");
+      localStorage.removeItem("selectedCategoryId");
       setSelectedTopic("");
       setPassword("");
       setAgreed(false);

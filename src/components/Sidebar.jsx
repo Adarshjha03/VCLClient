@@ -167,6 +167,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
     setDeletePLModalIsOpen(true);
   };
   const closeDeletePLModal = () => {
+    
     setDeletePLModalIsOpen(false);
   };
   const closeDeleteModal = () => {
