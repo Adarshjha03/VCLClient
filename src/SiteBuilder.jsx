@@ -182,8 +182,8 @@ function AdminPanel() {
       <Sidebar showMenu={showMenu} onTopicSelect={handleTopicChange} activeTopic={selectedTopic} />
       <div className="flex-1 bg-gray-100 overflow-y-auto">
         <Navbar style={{ position: 'fixed', width: '100%', zIndex: 1000 }} />
-        <div className="p-6 mt-16">
-          <h2 className="text-2xl font-bold mb-6">Site Builder</h2>
+        <div className="p-6 ">
+          <h2 className="text-2xl font-bold mb-6">SITE BUILDER</h2>
   
           <form onSubmit={handleSiteNameSubmit} className="mb-6 p-4 bg-white border rounded-lg flex">
             <div className="flex-1 pr-4">
