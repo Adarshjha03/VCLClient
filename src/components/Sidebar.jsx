@@ -199,6 +199,38 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
 
 
         <div>
+         {admin&&(<div>
+         <div className="p-2 font-semibold text-md flex items-center justify-start border-b border-gray-100/55 hover:bg-blue-400 rounded-sm hover:rounded-sm hover:text-white transition duration-300">
+            <span>Admin Settings</span>
+          </div>
+          <div className="space-y-2 py-2 ">
+          <div> <Link
+              to={`/adminConfig`}
+            
+              className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -2 && 'bg-blue-600 text-white'}`}
+              style={{ textTransform: 'uppercase' }}
+            >
+              <FaCog className="w-4 h-4 mr-2" />
+             Site Builder
+            </Link>
+            <Link
+                to="/temp"
+                className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -2 && 'bg-blue-600 text-white'}`}
+                style={{ textTransform: 'uppercase' }}
+              >
+                <FaCog className="w-4 h-4 mr-2" />
+               Intergations
+              </Link>
+              <Link
+                to="/temp"
+                className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -2 && 'bg-blue-600 text-white'}`}
+                style={{ textTransform: 'uppercase' }}
+              >
+                <FaCog className="w-4 h-4 mr-2" />
+              Configuration
+              </Link></div>
+          </div>
+         </div>)}
           <div className="p-2 font-semibold text-md flex items-center justify-start border-b border-gray-100/55 hover:bg-blue-400 rounded-sm hover:rounded-sm hover:text-white transition duration-300">
             <span>DASHBOARD</span>
           </div>
@@ -225,15 +257,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
                 <FaCog className="w-4 h-4 mr-2" />
                 Settings
               </Link></div>)}
-            {admin && (<div> <Link
-              to={`/adminConfig`}
-            
-              className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -2 && 'bg-blue-600 text-white'}`}
-              style={{ textTransform: 'uppercase' }}
-            >
-              <FaCog className="w-4 h-4 mr-2" />
-              Admin Configs
-            </Link></div>)}
+           
             <div className="flex items-center justify-between">
               <div
                 className={`flex items-center justify-start p-1 text-xs rounded-sm transition duration-300 hover:bg-blue-400 hover:text-white w-full ${activeButton === -3 && 'bg-blue-600 text-white'}`}
