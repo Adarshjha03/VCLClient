@@ -14,8 +14,12 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Temp from './Temp';
 import SiteBuilder from './siteBuilder';
 import LeaderboardPage from './leaderboard';
+import IDE from './components/idesrc/App';
+import { Provider } from 'react-redux';
+import store from './components/idesrc/store';
 const App = () => {
   return (
+    <Provider store={store}>
     <Router> 
       <Routes>
         <Route path='/login' element={<Login/>}></Route>
@@ -30,8 +34,11 @@ const App = () => {
         <Route path= '/badges' element={<Badges/>}></Route>
         <Route path= '/leaderboard' element={<LeaderboardPage/>}></Route>
         <Route path= '/adminConfig' element={<SiteBuilder/>}></Route>
+        <Route path= '/ide' element={<IDE/>}></Route>
       </Routes>
     </Router>
+    </Provider>
+
   )
 }
 
