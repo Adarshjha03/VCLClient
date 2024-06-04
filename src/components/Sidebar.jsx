@@ -85,7 +85,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
 
     if (savedCategory) {
       setSelectedCategoryId(Number(savedCategory));
-        fetchTopics(Number(savedCategory));
+      fetchTopics(Number(savedCategory));
     }
     if (savedTopicId) {
       setselectedTopic(Number(savedTopicId));
@@ -128,7 +128,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
       setExpandedCategories(expandedCategories.filter(id => id !== categoryId));
     } else {
       setExpandedCategories([...expandedCategories, categoryId]);
-        fetchTopics(categoryId);
+      fetchTopics(categoryId);
     }
     setSelectedCategoryId(categoryId);
   };
@@ -167,7 +167,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
     setDeletePLModalIsOpen(true);
   };
   const closeDeletePLModal = () => {
-    
+
     setDeletePLModalIsOpen(false);
   };
   const closeDeleteModal = () => {
@@ -189,15 +189,17 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
   return (
     <div className={`w-1/6 h-full overflow-y-auto border-r sm:block ${showMenu ? 'block' : 'hidden'}`} style={{ backgroundColor: '#000930' }}>
       <div className="p-3 text-white">
-        <div className="flex justify-center">
-          <img src={headlogo} alt="HeadLogo" className="w-50 content-evenly mb-3" />
-        </div>
+      <div className="flex justify-center">
+  <img src={"https://cyber-range-assets.s3.ap-south-1.amazonaws.com/assets/" + (window.location.origin.includes("http://") ? window.location.origin.slice(7) : window.location.origin) + "/logo.png"} alt="HeadLogo" className="w-50 content-evenly mb-3" />
+</div>
+
+
         <div>
           <div className="p-2 font-semibold text-md flex items-center justify-start border-b border-gray-100/55 hover:bg-blue-400 rounded-sm hover:rounded-sm hover:text-white transition duration-300">
             <span>DASHBOARD</span>
           </div>
           <div className="space-y-2 py-2 ">
-            <Link
+            {!admin && !subAdmin && (<div><Link
               to={`/profile/${username}`}
               onClick={() => {
                 window.location.href = `/profile/${username}`;
@@ -208,17 +210,26 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
               <FaUser className="w-4 h-4 mr-2" />
               My Profile
             </Link>
-            <Link
-              to={`/settings/${username}`}
-              onClick={() => {
-                window.location.href = `/settings/${username}`;
-              }}
+              <Link
+                to={`/settings/${username}`}
+                onClick={() => {
+                  window.location.href = `/settings/${username}`;
+                }}
+                className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -2 && 'bg-blue-600 text-white'}`}
+                style={{ textTransform: 'uppercase' }}
+              >
+                <FaCog className="w-4 h-4 mr-2" />
+                Settings
+              </Link></div>)}
+            {admin && (<div> <Link
+              to={`/adminConfig`}
+            
               className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -2 && 'bg-blue-600 text-white'}`}
               style={{ textTransform: 'uppercase' }}
             >
               <FaCog className="w-4 h-4 mr-2" />
-              Settings
-            </Link>
+              Admin Configs
+            </Link></div>)}
             <div className="flex items-center justify-between">
               <div
                 className={`flex items-center justify-start p-1 text-xs rounded-sm transition duration-300 hover:bg-blue-400 hover:text-white w-full ${activeButton === -3 && 'bg-blue-600 text-white'}`}
@@ -243,7 +254,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
               </div>
             </div>
             <div
-              className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === 0 && 'bg-blue-600 text-white'}`}
+              className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:cursor-pointer hover:bg-blue-400 hover:text-white ${activeButton === 0 && 'bg-blue-600 text-white'}`}
               style={{ textTransform: 'uppercase' }}
               onClick={() => handleButtonClick(0)}
             >
@@ -279,77 +290,75 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
             )}
           </div>
           <div className="space-y-1">
-  {categories.map((category) => (
-    <div key={category.id}>
-      <div
-        onClick={() => handleCategoryClick(category.id)}
-        className="p-2 text-xs flex items-center justify-between hover:bg-blue-400 rounded-sm hover:rounded-sm hover:text-white transition duration-300 cursor-pointer"
-      >
-        <div className="flex items-center">
-        <span className="mr-2"><FaHashtag className="w-4 h-4" /></span>
-          {category.name.toUpperCase()}
-        </div>
-        <div className="flex items-center">
-          {subAdmin && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setSelectedCategoryId(category.id);
-                openModal();
-              }}
-              className="flex items-center justify-center rounded-sm hover:bg-transparent transition duration-300 mr-2"
-              style={{ width: '20px', height: '20px' }}
-            >
-              <FaPencilAlt className="text-white w-3 h-4" />
-            </button>
-          )}
-          {admin && (
-              <button
-                onClick={(e) => { e.stopPropagation(); openDeleteModal();  setSelectedCategoryId(category.id); }}
-                className="flex items-center justify-center rounded-sm hover:bg-transparent transition duration-300"
-                style={{ width: '20px', height: '20px' }}
-              >
-                <FaTrash className="w-3  h-4" />
-              </button>
-            )}   
-        </div>
-        {!admin&&!subAdmin&&( <span className="mr-2 transition-transform duration-300">
-            {expandedCategories.includes(category.id) ? (
-              <FaChevronDown className="w-4 h-4 transform " />
-            ) : (
-              <FaChevronRight className="w-4 h-4" />
-            )}
-          </span>)}
-      </div>
-      <div
-        className={`overflow-hidden transition-all duration-500 ease-in-out ${
-          expandedCategories.includes(category.id) ? 'max-h-96' : 'max-h-0'
-        }`}
-      >
-        {expandedCategories.includes(category.id) && (
-          <div className="pl-4">
-            {topics[category.id] && topics[category.id].length > 0 ? (
-              topics[category.id].map((topic) => (
+            {categories.map((category) => (
+              <div key={category.id}>
                 <div
-                  key={topic.id}
-                  onClick={() => handleTopicClick(topic.id)}
-                  className={`p-2 text-xs flex items-center justify-between rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white transition duration-300 ease-in-out delay-150${
-                    selectedTopic === topic.id && 'bg-blue-600 text-white'
-                  }`}
-                  style={{ cursor: 'pointer' }}
+                  onClick={() => handleCategoryClick(category.id)}
+                  className="p-2 text-xs flex items-center justify-between hover:bg-blue-400 rounded-sm hover:rounded-sm hover:text-white transition duration-300 cursor-pointer"
                 >
-                  <div className="flex items-center text-blue-100">{topic.name.toUpperCase()}</div>
+                  <div className="flex items-center">
+                    <span className="mr-2"><FaHashtag className="w-4 h-4" /></span>
+                    {category.name.toUpperCase()}
+                  </div>
+                  <div className="flex items-center">
+                    {subAdmin && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedCategoryId(category.id);
+                          openModal();
+                        }}
+                        className="flex items-center justify-center rounded-sm hover:bg-transparent transition duration-300 mr-2"
+                        style={{ width: '20px', height: '20px' }}
+                      >
+                        <FaPencilAlt className="text-white w-3 h-4" />
+                      </button>
+                    )}
+                    {admin && (
+                      <button
+                        onClick={(e) => { e.stopPropagation(); openDeleteModal(); setSelectedCategoryId(category.id); }}
+                        className="flex items-center justify-center rounded-sm hover:bg-transparent transition duration-300"
+                        style={{ width: '20px', height: '20px' }}
+                      >
+                        <FaTrash className="w-3  h-4" />
+                      </button>
+                    )}
+                  </div>
+                  {!admin && !subAdmin && (<span className="mr-2 transition-transform duration-300">
+                    {expandedCategories.includes(category.id) ? (
+                      <FaChevronDown className="w-4 h-4 transform " />
+                    ) : (
+                      <FaChevronRight className="w-4 h-4" />
+                    )}
+                  </span>)}
                 </div>
-              ))
-            ) : (
-              <div className="p-1 text-xs duration-300">No topics available </div>
-            )}
+                <div
+                  className={`overflow-hidden transition-all duration-500 ease-in-out ${expandedCategories.includes(category.id) ? 'max-h-96' : 'max-h-0'
+                    }`}
+                >
+                  {expandedCategories.includes(category.id) && (
+                    <div className="pl-4">
+                      {topics[category.id] && topics[category.id].length > 0 ? (
+                        topics[category.id].map((topic) => (
+                          <div
+                            key={topic.id}
+                            onClick={() => handleTopicClick(topic.id)}
+                            className={`p-2 text-xs flex items-center justify-between rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white transition duration-300 ease-in-out delay-150${selectedTopic === topic.id && 'bg-blue-600 text-white'
+                              }`}
+                            style={{ cursor: 'pointer' }}
+                          >
+                            <div className="flex items-center text-blue-100">{topic.name.toUpperCase()}</div>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="p-1 text-xs duration-300">No topics available </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
           </div>
-        )}
-      </div>
-    </div>
-  ))}
-</div>
         </div>
       </div>
       <Modal
@@ -532,11 +541,11 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
         <DeleteCategory />
       </Modal>
     </div>
-    
+
   );
 };
 
 export default Sidebar;
 
-         
+
 

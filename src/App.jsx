@@ -12,6 +12,7 @@ import Settings from './Settings';
 import Badges from './Badges';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Temp from './Temp';
+import SiteBuilder from './siteBuilder';
 import LeaderboardPage from './leaderboard';
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
         <Route path= '/temp' element={<Temp/>}></Route>
         <Route path= '/badges' element={<Badges/>}></Route>
         <Route path= '/leaderboard' element={<LeaderboardPage/>}></Route>
+        <Route path= '/adminConfig' element={<SiteBuilder/>}></Route>
       </Routes>
     </Router>
   )
