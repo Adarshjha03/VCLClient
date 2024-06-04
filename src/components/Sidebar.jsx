@@ -201,7 +201,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
         <div>
          {admin&&(<div>
          <div className="p-2 font-semibold text-md flex items-center justify-start border-b border-gray-100/55 hover:bg-blue-400 rounded-sm hover:rounded-sm hover:text-white transition duration-300">
-            <span>Admin Settings</span>
+            <span>ADMIN SETTINGS</span>
           </div>
           <div className="space-y-2 py-2 ">
           <div> <Link
@@ -219,7 +219,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
                 style={{ textTransform: 'uppercase' }}
               >
                 <FaCog className="w-4 h-4 mr-2" />
-               Intergations
+               Integrations
               </Link>
               <Link
                 to="/temp"
