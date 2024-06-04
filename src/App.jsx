@@ -12,7 +12,7 @@ import Settings from './Settings';
 import Badges from './Badges';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Temp from './Temp';
-import SiteBuilder from './siteBuilder';
+import SiteBuilder from './SiteBuilder';
 import LeaderboardPage from './leaderboard';
 const App = () => {
   return (
