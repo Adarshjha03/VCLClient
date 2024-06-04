@@ -32,8 +32,8 @@ function AdminPanel() {
         setSiteName(siteNameData.title);
 
         // Construct URLs for favicon and logo
-        const baseUrl = window.location.origin.includes("http://") 
-          ? window.location.origin.slice(7) 
+        const baseUrl = window.location.origin.includes("https://") 
+          ? window.location.origin.slice(8) 
           : window.location.origin;
         const faviconUrl = `https://cyber-range-assets.s3.ap-south-1.amazonaws.com/assets/${baseUrl}/favicon.ico`;
         const logoUrl = `https://cyber-range-assets.s3.ap-south-1.amazonaws.com/assets/${baseUrl}/logo.png`;
