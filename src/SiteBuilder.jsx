@@ -110,7 +110,8 @@ function AdminPanel() {
     e.preventDefault();
     const token = localStorage.getItem('Token');
     if (favicon) {
-      const faviconBase64 = await convertToBase64(favicon);
+      const temp=await convertToBase64(favicon);
+      const faviconBase64 = temp.split(',')[1];
       const payload = { faviconbase64: faviconBase64 };
 
       try {
@@ -141,7 +142,8 @@ function AdminPanel() {
     e.preventDefault();
     const token = localStorage.getItem('Token');
     if (logo) {
-      const logoBase64 = await convertToBase64(logo);
+      const temp = await convertToBase64(logo);
+       const logoBase64=temp.split(',')[1];
       const payload = { logobase64: logoBase64 };
 
       try {
