@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Switch from '@mui/material/Switch';
 
 const AddChallenge = () => {
   const [challengeData, setChallengeData] = useState({
@@ -10,7 +11,8 @@ const AddChallenge = () => {
     solution: "",
     flag: "",
     topic: "",
-    score: 0, // Initialize score 0
+    score: 0,
+    show_solution: false, // Initialize show_solution to false
   });
   const [topics, setTopics] = useState([]);
   const [responseMessage, setResponseMessage] = useState(null);
@@ -76,6 +78,13 @@ const AddChallenge = () => {
         [name]: value,
       }));
     }
+  };
+
+  const handleToggleChange = () => {
+    setChallengeData((prevData) => ({
+      ...prevData,
+      show_solution: !prevData.show_solution,
+    }));
   };
 
   return (
@@ -158,6 +167,19 @@ const AddChallenge = () => {
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
             required
           ></textarea>
+          <div className="flex items-center mt-2">
+            <label className="block text-gray-700 text-sm font-bold mr-2">
+              Solution Visibility
+            </label>
+            <label className="flex items-center mt-1">
+              <Switch
+                checked={challengeData.show_solution}
+                onChange={handleToggleChange}
+                color="primary" // You can customize the color if needed
+              />
+            </label>
+
+          </div>
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
