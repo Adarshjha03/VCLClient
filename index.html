@@ -2,12 +2,34 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/bullet.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Virtual Labs</title>
+    <!-- Set default title -->
+    <title>Loading...</title>
+    <script>
+      // Dynamically set favicon URL
+      const faviconUrl = `https://cyber-range-assets.s3.ap-south-1.amazonaws.com/assets/${window.location.origin.includes("http://") ? window.location.origin.slice(7) : window.location.origin}/favicon.ico`;
+      const faviconLink = document.createElement('link');
+      faviconLink.rel = 'icon';
+      faviconLink.type = 'image/png';
+      faviconLink.href = faviconUrl;
+      document.head.appendChild(faviconLink);
+ 
+     const backendUrl = 'https://api.virtualcyberlabs.com';
+
+      fetch(`${backendUrl}/site_builder`)
+        .then(response => response.json())
+        .then(data => {
+          // Set the fetched title
+          document.title = data.title;
+        })
+        .catch(error => {
+          console.error('Error fetching the site title:', error);
+        });
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <!-- Assuming this is where your React or JavaScript app is rendered -->
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
