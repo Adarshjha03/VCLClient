@@ -14,6 +14,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Temp from './Temp';
 import SiteBuilder from './SiteBuilder';
 import LeaderboardPage from './leaderboard';
+import Intergraion from './Integration';
 const App = () => {
   return (
     <Router> 
@@ -30,6 +31,7 @@ const App = () => {
         <Route path= '/badges' element={<Badges/>}></Route>
         <Route path= '/leaderboard' element={<LeaderboardPage/>}></Route>
         <Route path= '/adminConfig' element={<SiteBuilder/>}></Route>
+        <Route path= '/integration' element={<Intergraion/>}></Route>
       </Routes>
     </Router>
   )
