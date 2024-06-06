@@ -32,8 +32,8 @@ function AdminPanel() {
         setSiteName(siteNameData.title);
 
         // Construct URLs for favicon and logo
-        const baseUrl = window.location.origin.includes("http://") 
-          ? window.location.origin.slice(7) 
+        const baseUrl = window.location.origin.includes("https://") 
+          ? window.location.origin.slice(8) 
           : window.location.origin;
         const faviconUrl = `https://cyber-range-assets.s3.ap-south-1.amazonaws.com/assets/${baseUrl}/favicon.ico`;
         const logoUrl = `https://cyber-range-assets.s3.ap-south-1.amazonaws.com/assets/${baseUrl}/logo.png`;
@@ -110,7 +110,8 @@ function AdminPanel() {
     e.preventDefault();
     const token = localStorage.getItem('Token');
     if (favicon) {
-      const faviconBase64 = await convertToBase64(favicon);
+      const temp=await convertToBase64(favicon);
+      const faviconBase64 = temp.split(',')[1];
       const payload = { faviconbase64: faviconBase64 };
 
       try {
@@ -141,7 +142,8 @@ function AdminPanel() {
     e.preventDefault();
     const token = localStorage.getItem('Token');
     if (logo) {
-      const logoBase64 = await convertToBase64(logo);
+      const temp = await convertToBase64(logo);
+       const logoBase64=temp.split(',')[1];
       const payload = { logobase64: logoBase64 };
 
       try {
@@ -180,8 +182,8 @@ function AdminPanel() {
       <Sidebar showMenu={showMenu} onTopicSelect={handleTopicChange} activeTopic={selectedTopic} />
       <div className="flex-1 bg-gray-100 overflow-y-auto">
         <Navbar style={{ position: 'fixed', width: '100%', zIndex: 1000 }} />
-        <div className="p-6 mt-16">
-          <h2 className="text-2xl font-bold mb-6">Site Builder</h2>
+        <div className="p-6 ">
+          <h2 className="text-2xl font-bold mb-6">SITE BUILDER</h2>
   
           <form onSubmit={handleSiteNameSubmit} className="mb-6 p-4 bg-white border rounded-lg flex">
             <div className="flex-1 pr-4">
