@@ -45,7 +45,6 @@ const Editor = ({ editorRef, inputRef, outputRef }) => {
         outputRef={outputRef}
         editorRef={editorRef}
       />
-
       <MonacoEditor
         ref={editorRef}
         style={{ flexGrow: 1 }}

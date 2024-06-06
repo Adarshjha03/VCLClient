@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default function runCode(code, input, languageChoice) {
-  // console.log(code);
+  console.log(code);
   const encodedParams = new URLSearchParams();
   encodedParams.append("LanguageChoice", languageChoice);
   encodedParams.append("Program", code);
