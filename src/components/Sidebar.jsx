@@ -235,12 +235,12 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
             <span>DASHBOARD</span>
           </div>
           <div className="space-y-2 py-2 ">
-            {!admin && !subAdmin && (<div><Link
+            {!admin && !subAdmin && (<div className=''><Link
               to={`/profile/${username}`}
               onClick={() => {
                 window.location.href = `/profile/${username}`;
               }}
-              className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -1 && 'bg-blue-600 text-white'}`}
+              className={`p-1 my-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -1 && 'bg-blue-600 text-white'}`}
               style={{ textTransform: 'uppercase' }}
             >
               <FaUser className="w-4 h-4 mr-2" />
@@ -251,7 +251,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
                 onClick={() => {
                   window.location.href = `/settings/${username}`;
                 }}
-                className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -2 && 'bg-blue-600 text-white'}`}
+                className={`p-1 mt-2 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -2 && 'bg-blue-600 text-white'}`}
                 style={{ textTransform: 'uppercase' }}
               >
                 <FaCog className="w-4 h-4 mr-2" />
