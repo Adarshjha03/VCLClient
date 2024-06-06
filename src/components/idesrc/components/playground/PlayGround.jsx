@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import Editor from "../editor/Editor";
 import "./PlayGround.css";
 import IO from "../io/IO";
-import { CodeStatus } from "../../util/runCode";
+import { CodeStatus } from "../util/runCode";
 import { useSelector } from "react-redux";
 
 const PlayGround = () => {
