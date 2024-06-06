@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Navbar from './components/navbar1';
@@ -18,6 +18,35 @@ function Integration() {
   const backendUrl = 'https://api.virtualcyberlabs.com';
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = localStorage.getItem('Token');
+      try {
+        const response = await fetch(`${backendUrl}/site_builder`, {
+          headers: {
+            Authorization: `Token ${token}`,
+            'Content-Type': 'application/json',
+          },
+          method: 'GET',
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setGoogleAnalyticsCode(data.google_analytics_key || '');
+          setOpenAiIntegration(data.need_ai || false);
+          setOpenAiKey(data.open_ai_key || '');
+          
+        } else {
+          setError('Failed to fetch data from the backend');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        setError('An error occurred while fetching data from the backend');
+      }
+    };
+
+    fetchData();
+  }, [backendUrl]);
+
   const handleTopicChange = (topicId) => {
     setSelectedTopic(topicId);
     localStorage.setItem('selectedTopic', topicId);
@@ -27,10 +56,10 @@ function Integration() {
   const handleGoogleAnalyticsSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem('Token');
-    const payload = { googleAnalyticsCode };
+    const payload = { google_analytics_key: googleAnalyticsCode };
 
     try {
-      const response = await fetch(`${backendUrl}/integration/google_analytics`, {
+      const response = await fetch(`${backendUrl}/site_builder`, {
         headers: {
           Authorization: `Token ${token}`,
           'Content-Type': 'application/json',
@@ -53,10 +82,13 @@ function Integration() {
   const handleOpenAiSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem('Token');
-    const payload = { openAiKey };
+    const payload = {
+      need_ai: openAiIntegration,
+      open_ai_key: openAiIntegration ? openAiKey : '',
+    };
 
     try {
-      const response = await fetch(`${backendUrl}/integration/open_ai`, {
+      const response = await fetch(`${backendUrl}/site_builder`, {
         headers: {
           Authorization: `Token ${token}`,
           'Content-Type': 'application/json',
@@ -66,13 +98,13 @@ function Integration() {
       });
 
       if (response.ok) {
-        alert('OpenAI key saved successfully!');
+        alert('OpenAI settings saved successfully!');
       } else {
-        alert('Failed to save OpenAI key');
+        alert('Failed to save OpenAI settings');
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('An error occurred while saving OpenAI key');
+      alert('An error occurred while saving OpenAI settings');
     }
   };
 
@@ -86,7 +118,7 @@ function Integration() {
 
           <form onSubmit={handleGoogleAnalyticsSubmit} className="mb-6 p-4 bg-white border rounded-lg flex">
             <div className="flex-1 pr-4">
-              <label className="block text-lg font-semibold text-gray-700">Google</label>
+              <label className="block text-lg font-semibold text-gray-700">Google Analytics</label>
             </div>
             <div className="flex-1">
               <textarea
@@ -138,6 +170,14 @@ function Integration() {
                     Save
                   </button>
                 </div>
+              )}
+              {!openAiIntegration && (
+                <button
+                  type="submit"
+                  className="mt-2 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                  Save
+                </button>
               )}
             </div>
           </form>
