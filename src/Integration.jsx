@@ -34,7 +34,6 @@ function Integration() {
           setGoogleAnalyticsCode(data.google_analytics_key || '');
           setOpenAiIntegration(data.need_ai || false);
           setOpenAiKey(data.open_ai_key || '');
-          
         } else {
           setError('Failed to fetch data from the backend');
         }
@@ -89,7 +88,7 @@ function Integration() {
 
     try {
       const response = await fetch(`${backendUrl}/site_builder`, {
-        headers: {
+          headers: {
           Authorization: `Token ${token}`,
           'Content-Type': 'application/json',
         },
@@ -109,78 +108,87 @@ function Integration() {
   };
 
   return (
-    <div className="flex h-screen font-sans bg-gray-200">
+    <div className="flex h-screen font-sans bg-gray-100">
       <Sidebar showMenu={showMenu} onTopicSelect={handleTopicChange} activeTopic={selectedTopic} />
-      <div className="flex-1 bg-gray-100 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto">
         <Navbar style={{ position: 'fixed', width: '100%', zIndex: 1000 }} />
-        <div className="p-6">
-          <h2 className="text-2xl font-bold mb-6">SITE INTEGRATION</h2>
+        <div className="p-8 mt-16">
+          <h2 className="text-3xl font-bold mb-8 text-gray-800">Site Integration</h2>
 
-          <form onSubmit={handleGoogleAnalyticsSubmit} className="mb-6 p-4 bg-white border rounded-lg flex">
-            <div className="flex-1 pr-4">
-              <label className="block text-lg font-semibold text-gray-700">Google Analytics</label>
+          <form onSubmit={handleOpenAiSubmit} className="mb-6 p-6 bg-white border rounded-lg shadow-md">
+            <h3 className="text-2xl font-semibold text-gray-700 mb-4">OpenAI Integration</h3>
+            <div className="flex items-center mb-4">
+              <label htmlFor="openAiIntegration" className="block text-lg font-medium text-gray-700 mr-2">Enable OpenAI Integration</label>
+              <input
+                type="checkbox"
+                id="openAiIntegration"
+                checked={openAiIntegration}
+                onChange={(e) => setOpenAiIntegration(e.target.checked)}
+                className="focus:ring-indigo-500 focus:border-indigo-500 h-6 w-6 text-indigo-600 border-gray-300 rounded"
+              />
             </div>
-            <div className="flex-1">
-              <textarea
-                id="googleAnalyticsCode"
-                value={googleAnalyticsCode}
-                onChange={(e) => setGoogleAnalyticsCode(e.target.value)}
-                rows="5"
-                className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                required
-              ></textarea>
-              <button
-                type="submit"
-                className="mt-2 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
-                Save
-              </button>
-            </div>
-          </form>
-
-          <form onSubmit={handleOpenAiSubmit} className="p-4 bg-white border rounded-lg flex">
-            <div className="flex-1 pr-4">
-              <label className="block text-lg font-semibold text-gray-700">OpenAI</label>
-            </div>
-            <div className="flex-1">
-              <div className="flex items-center mb-2">
-                <label htmlFor="openAiIntegration" className="block text-sm font-medium text-gray-700 mr-2">Enable OpenAI Integration</label>
-                <input
-                  type="checkbox"
-                  id="openAiIntegration"
-                  checked={openAiIntegration}
-                  onChange={(e) => setOpenAiIntegration(e.target.checked)}
-                  className="focus:ring-indigo-500 focus:border-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-                />
+            {openAiIntegration && (
+              <div className="mb-4">
+                <textarea
+                  id="openAiKey"
+                  value={openAiKey}
+                  onChange={(e) => setOpenAiKey(e.target.value)}
+                  rows="3"
+                  className="mt-1 p-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+                  placeholder="Enter your OpenAI API Key"
+                  required
+                ></textarea>
               </div>
-              {openAiIntegration && (
-                <div>
-                  <textarea
-                    id="openAiKey"
-                    value={openAiKey}
-                    onChange={(e) => setOpenAiKey(e.target.value)}
-                    rows="5"
-                    className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    required
-                  ></textarea>
-                  <button
-                    type="submit"
-                    className="mt-2 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                  >
-                    Save
-                  </button>
-                </div>
-              )}
-              {!openAiIntegration && (
-                <button
-                  type="submit"
-                  className="mt-2 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                >
-                  Save
-                </button>
-              )}
-            </div>
+            )}
+            <button
+              type="submit"
+              className="py-2 px-6 border border-transparent text-lg font-medium rounded-md text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              Save
+            </button>
           </form>
+
+          <form onSubmit={handleGoogleAnalyticsSubmit} className="mb-6 p-6 bg-white border rounded-lg shadow-md">
+            <h3 className="text-2xl font-semibold text-gray-700 mb-4">Google Analytics</h3>
+            <textarea
+              id="googleAnalyticsCode"
+              value={googleAnalyticsCode}
+              onChange={(e) => setGoogleAnalyticsCode(e.target.value)}
+              rows="3"
+              className="mt-1 p-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+              placeholder="Enter your Google Analytics Tracking ID"
+              required
+            ></textarea>
+            <button
+              type="submit"
+              className="mt-4 py-2 px-6 border border-transparent text-lg font-medium rounded-md text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              Save
+            </button>
+          </form>
+
+          <div className="mb-6 p-6 bg-white border rounded-lg shadow-md">
+            <h3 className="text-2xl font-semibold text-gray-700 mb-4">How to Get Your Google Analytics Tracking Code</h3>
+            <ol className="list-decimal list-inside text-gray-600">
+              <li>Sign in to <a href="https://analytics.google.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Google Analytics</a>.</li>
+              <li>Set up a Property:
+                <ul className="list-disc list-inside ml-4">
+                  <li>Go to the Admin panel in the bottom left corner.</li>
+                  <li>In the “Account” column, make sure your account is selected.</li>
+                  <li>In the “Property” column, click on “+ Create Property.”</li>
+                  <li>Follow the prompts to set up your property (your website).</li>
+                </ul>
+              </li>
+              <li>Get the Tracking ID:
+                <ul className="list-disc list-inside ml-4">
+                  <li>Go to Property settings.</li>
+                  <li>In the Property column, click on “Tracking Info” and then “Tracking Code.”</li>
+                  <li>Copy the “Tracking ID” (it starts with “UA-” followed by numbers).</li>
+                </ul>
+              </li>
+              <li>Use the Tracking ID in your website’s configuration to start tracking your site's traffic.</li>
+            </ol>
+          </div>
 
           {error && <div className="text-red-500 text-sm">{error}</div>}
         </div>
