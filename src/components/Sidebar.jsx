@@ -7,7 +7,7 @@ import AddCategory from '../addCategory.jsx';
 import AddBadges from './addBadge';
 import DeleteTopic from './DeleteTopic';
 import DeleteCategory from './DeleteCategory';
-import { FaPencilAlt } from 'react-icons/fa';
+import { FaLaptopCode, FaPencilAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { FaTimes, FaCog, FaMedal, FaCode, FaTrophy, FaUser, FaTrash, FaHashtag, FaChevronRight, FaChevronDown } from 'react-icons/fa';
 //import './scrollbar.css';
@@ -125,17 +125,18 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
 
   const handleCategoryClick = (categoryId) => {
     if (expandedCategories.length === 1 && expandedCategories[0] === categoryId) {
-      // If the clicked category is the only expanded category, collapse it
-      setExpandedCategories([]);
+        // If the clicked category is the only expanded category, collapse it
+        setExpandedCategories([]);
     } else {
-
-      setExpandedCategories([...expandedCategories, categoryId]);
-
-      fetchTopics(categoryId);
+        // Close any other expanded categories and expand the clicked category
+        setExpandedCategories([categoryId]);
+        
+        fetchTopics(categoryId);
     }
-  
+
     setSelectedCategoryId(categoryId);
-  };
+};
+
 
   const handleTopicClick = (topicId) => {
     setselectedTopic(topicId);
@@ -235,12 +236,12 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
             <span>DASHBOARD</span>
           </div>
           <div className="space-y-2 py-2 ">
-            {!admin && !subAdmin && (<div><Link
+            {!admin && !subAdmin && (<div className=''><Link
               to={`/profile/${username}`}
               onClick={() => {
                 window.location.href = `/profile/${username}`;
               }}
-              className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -1 && 'bg-blue-600 text-white'}`}
+              className={`p-1 my-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -1 && 'bg-blue-600 text-white'}`}
               style={{ textTransform: 'uppercase' }}
             >
               <FaUser className="w-4 h-4 mr-2" />
@@ -251,7 +252,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
                 onClick={() => {
                   window.location.href = `/settings/${username}`;
                 }}
-                className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -2 && 'bg-blue-600 text-white'}`}
+                className={`p-1 mt-2 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -2 && 'bg-blue-600 text-white'}`}
                 style={{ textTransform: 'uppercase' }}
               >
                 <FaCog className="w-4 h-4 mr-2" />
@@ -296,6 +297,14 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
             >
               <FaTrophy className="w-4 h-4 mr-2" />
               Leaderboard
+            </Link>
+            <Link
+              to="/ide-simulator"
+              className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -4 && 'bg-blue-600 text-white'}`}
+              style={{ textTransform: 'uppercase' }}
+            >
+              <FaLaptopCode className="w-4 h-4 mr-2" />
+              IDE Simulator
             </Link>
           </div>
           <div className="p-1 font-semibold text-md flex items-center justify-start  rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white transition duration-300 border-b border-gray-100/55">
@@ -574,6 +583,3 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
 };
 
 export default Sidebar;
-
-
-

@@ -5,7 +5,7 @@ import { languageOptions } from "../constants/languageOptions";
 import { snippet } from "../constants/snippet";
 import { classnames } from "../utils/general";
 import './codeEditor.css'
-import { FaExpand, FaCompress, FaRegCopy, FaHome } from 'react-icons/fa';
+import { FaExpand, FaCompress, FaRegCopy, FaBars,FaHome } from 'react-icons/fa';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { defineTheme } from "../lib/defineTheme"
@@ -17,9 +17,11 @@ import OutputDetails from './OutputDetails';
 import useKeyPress from '../hooks/useKeyPress';
 import DateDiff from 'date-diff';
 import copy from 'copy-to-clipboard';
-import StopWatch from './Stopwatch'
-import { Link } from 'react-router-dom';
 
+import StopWatch from './Stopwatch'
+import { Link,useNavigate } from 'react-router-dom';
+import Sidebar from '../Sidebar';
+import Navbar from '../navbar1';
 
 
 //Compiler API  deploy on server:  https://github.com/Jaagrav/CodeX-API/tree/master/executeCode
@@ -110,7 +112,8 @@ const CodeEditor = () => {
 
 
 
-
+    
+  const [showMenu, setShowMenu] = useState(false);
 
     const ctrlPress = useKeyPress("Control");
     const key_run = useKeyPress("F9");
@@ -522,206 +525,228 @@ const CodeEditor = () => {
             document.removeEventListener('mouseup', mouseUpHandler);
         };
     })
-
-
+    
+  const [selectedTopic, setSelectedTopic] = useState(() => {
+    const storedTopic = localStorage.getItem("selectedTopic");
+    return storedTopic ? parseInt(storedTopic) : 0;
+  });
+    const toggleMenu = () => {
+        setShowMenu(!showMenu);
+      };
+     
+    
+      const navigate = useNavigate();
+    const handleTopicChange = (topicId) => {
+        setSelectedTopic(topicId); // Update selected topic
+        localStorage.setItem("selectedTopic", topicId); // Save selected topic to localStorage
+        navigate("/home"); // Navigate to the home page
+      };
     const copyToClipboard = () => {
         copy(code);
         showSuccessToast('Copied')
     }
 
     return (
+        <div className="flex h-screen font-sans relative">
+        <Sidebar showMenu={showMenu} onTopicSelect={handleTopicChange} activeTopic={selectedTopic}/>
+    <div className="flex-1" style={{ overflowY: "hidden" }}>  
+     <Navbar style={{ position: "fixed", width: "100%", zIndex: 1000 }} /> 
+    <>
+    <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+    />
+
+    {
+        !fullScreen &&
         <>
-            <ToastContainer
-                position="top-right"
-                autoClose={2000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-            />
+          
 
-            {
-                !fullScreen &&
-                <>
-                    <div className="h-1 w-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 transition duration-200">
-                    </div>
+            <div className="flex flex-row pl-2 py-2 border-2 border-t-0 border-gray-600 gap-4" >
+                {/* <Link to="/" className='mt-1 ml-2'>
+                    <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center mr-5">
+                        <FaHome fontSize={18} color="black" />
+                    </button>
+                </Link> */}
 
-                    <div className="flex flex-row border-2 border-t-0 border-gray-600 gap-4" >
-                        <Link to="/" className='mt-1 ml-2'>
-                            <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center mr-5">
-                                <FaHome fontSize={18} color="black" />
-                            </button>
-                        </Link>
-
-                        <div className="dropdownInner">
-                            <LanguagesDropdown onSelectChange={onSelectChange} Userlanguage={language} />
-                        </div>
-                        <div className="dropdownInner">
-                            <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
-                        </div>
-                        {/* <span>fontsize :  {font_size}</span> */}
-                        <div className="px-4 justify-end">
-                            <div className="d-flex px-2 py-1 rounded-lg border focus:outline-none hover:bg-gray-700 hover:text-blue-700 focus:z-10  focus:ring-gray-500 bg-gray-800 border-gray-600 hover:text-white hover:bg-gray-700">
-                                <label htmlFor="fontsize_lable" className="form-label mr-2 text-gray-100">Font Size</label>
-                                <input
-                                    type="number"
-                                    className="form-control px-3 py-1  text-gray-700 bg-white  border border-solid border-gray-300 rounded transition ease-in-out m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                    id="fontsize_lable"
-                                    placeholder="Font size"
-                                    value={font_size}
-                                    onChange={(e) => set_font_size(parseInt(e.target.value))}
-                                    style={{
-                                        width: "80px"
-                                    }}
-                                />
-                            </div>
-                        </div>
-
-
-
-
-
-
-                        <div className="px-4  mx-auto justify-end flex items-center" style={{
-                            flex: 1
-                        }} >
-
-
-                            <button onClick={copyToClipboard} type="button" id="copytxt" className="flex items-center py-2 px-4 mr-3  text-xs font-medium  rounded-lg border focus:outline-none hover:bg-gray-700 hover:text-blue-700 focus:z-10  focus:ring-gray-500 bg-gray-800 border-gray-600 hover:text-white hover:bg-gray-700">
-                                <FaRegCopy fontSize={18} color="white" />
-                            </button>
-                            <button onClick={makeFullScreen} type="button" className="flex items-center py-2 px-4 mr-3 text-xs font-medium  rounded-lg border focus:outline-none hover:bg-gray-700 hover:text-blue-700 focus:z-10  focus:ring-gray-500 bg-gray-800 border-gray-600 hover:text-white hover:bg-gray-700">
-                                <FaExpand fontSize={16} color="white" />
-                            </button>
-
-
-                            <button
-                                disabled={processing || offlineStatus}
-                                onClick={handleCompile} type="button" className="text-white bg-indigo-600 hover:bg-indigo-800   focus:outline-none font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center focus:ring-[#2557D6]/50 mr-2">
-
-                                {
-
-                                    processing ?
-                                        <>
-                                            <svg role="status" className="inline w-4 h-4 mr-3 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB" />
-                                                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor" />
-                                            </svg>
-                                            running...
-                                        </>
-                                        :
-                                        "Run ( F9   ) "
-
-                                }
-                            </button>
-
-
-                            <button onClick={downloadTxtFile} type="button" className="text-white bg-indigo-600 hover:bg-indigo-800   focus:outline-none font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center focus:ring-[#2557D6]/50 mr-2">
-                                {"Save Code ( ctrl+s )"}
-                            </button>
-
-                            <button onClick={resetCode} type="button" className="text-white bg-indigo-600 hover:bg-indigo-800   focus:outline-none font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center focus:ring-[#2557D6]/50 mr-2">
-                                {"Erase Code ( ctrl+e )"}
-                            </button>
-                            <button onClick={handleShare} type="button" className="text-white bg-[#db2777] hover:bg-[#ec4899]   focus:outline-none font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center focus:ring-[#2557D6]/50 mr-2">
-                                Share
-                            </button>
-
-                            {/* <a href={`whatsapp://send?text=${code}`} data-action="share/whatsapp/share">
-                                
-                                <FaWhatsapp color='green' size="30" />
-                                
-                            </a> */}
-
-                            {/* <RWebShare
-                                data={{
-                                    text: "Web Share - GfG",
-                                    url: "http://localhost:3000",
-                                    title: "GfG",
-                                    files: [new File([code], 'codetext.txt', { type: "text/plain", })]
-                                }}
-                                onClick={() => console.log("shared successfully!")}
-                            >
-                                <button>Share on Web</button>
-                            </RWebShare> */}
-
-                        </div>
-                    </div >
-                </>
-            }
-
-
-            < div className="editorlayout flex flex-row  space-x-4 items-start border-2 border-t-0 border-b-0 border-gray-600"
-                style={{
-                    height: fullScreen ? "99vh" : `calc(100vh - 6.4vh )`,
-                }}>
-                <div className="flex flex-col h-full justify-start items-end container__left">
-                    <CodeEditorWindow
-                        code={code}
-                        Fontoptions={{
-                            fontSize: font_size
-                        }}
-                        onChange={onChange}
-                        language={language?.value}
-                        theme={theme.value}
-                        isFullScreen={fullScreen}
-                    />
+                <div className="dropdownInner">
+                    <LanguagesDropdown onSelectChange={onSelectChange} Userlanguage={language} />
                 </div>
-
-
-                <div className="resizer" id="dragMe">
-                    <svg stroke="currentColor" fill="#f1f5f9" strokeWidth="0" viewBox="0 0 24 24" height="1.5em" width="1.5em" xmlns="http://www.w3.org/2000/svg"><path d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 12c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg>
-                    <svg stroke="currentColor" fill="#f1f5f9" strokeWidth="0" viewBox="0 0 24 24" height="1.5em" width="1.5em" xmlns="http://www.w3.org/2000/svg"><path d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 12c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg>
+                <div className="dropdownInner">
+                    <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
                 </div>
-
-                <div className="flex  flex-col container__right relative h-full px-1 pt-1"
-                    style={{ flex: "1 1 0%" }}>
-                    {
-                        fullScreen && <button onClick={makeFullScreen} type="button" className="flex items-center py-2 px-4 mr-3 text-xs font-medium  rounded-lg border focus:outline-none hover:bg-gray-700 hover:text-blue-700 focus:z-10  focus:ring-gray-500 bg-gray-800 border-gray-600 hover:text-white hover:bg-gray-700 mt-2"
+                {/* <span>fontsize :  {font_size}</span> */}
+                {/* <div className="px-4 justify-end">
+                    <div className="d-flex px-2 py-1 rounded-lg border focus:outline-none hover:bg-gray-700 hover:text-blue-700 focus:z-10  focus:ring-gray-500 bg-gray-800 border-gray-600 hover:text-white hover:bg-gray-700">
+                        <label htmlFor="fontsize_lable" className="form-label mr-2 text-gray-100">Font Size</label>
+                        <input
+                            type="number"
+                            className="form-control px-3 py-1  text-gray-700 bg-white  border border-solid border-gray-300 rounded transition ease-in-out m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                            id="fontsize_lable"
+                            placeholder="Font size"
+                            value={font_size}
+                            onChange={(e) => set_font_size(parseInt(e.target.value))}
                             style={{
-                                width: "fit-content"
-                            }}>
-                            {
-                                fullScreen ? <FaCompress color='white' /> : <FaExpand color='white' />
-
-                            }
-                        </button>
-                    }
-
-                    <OutputWindow lang={language.value} outputDetails={outputDetails} offlineStatus={offlineStatus} />
-                    <div className="flex flex-col items-end">
-                        <CustomInput
-                            customInput={customInput}
-                            setCustomInput={setCustomInput}
+                                width: "80px"
+                            }}
                         />
-
-                        {fullScreen && <button
-                            onClick={handleCompile}
-                            disabled={!code || processing}
-                            className={classnames(
-                                "mt-4 border-2 border-black z-10 rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0 font-bold",
-                                (!code || processing) ? "opacity-50" : ""
-                            )}
-                        >
-                            {processing ? "Processing..." : "F9 -  Run Code"}
-                        </button>}
-
-
                     </div>
-                    {<OutputDetails runcode={handleCompile} savecode={downloadTxtFile} outputDetails={outputDetails}
+                </div> */}
 
-                        lang={language.value}
-                    />}
 
-                    <StopWatch />
+
+
+
+
+                <div className="px-4  mx-auto justify-end flex items-center" style={{
+                    flex: 1
+                }} >
+
+
+                    <button onClick={copyToClipboard} type="button" id="copytxt" className="flex items-center py-2 px-4 mr-3  text-xs font-medium  rounded-lg border focus:outline-none hover:bg-gray-700 hover:text-blue-700 focus:z-10  focus:ring-gray-500 bg-gray-800 border-gray-600 hover:text-white hover:bg-gray-700">
+                        <FaRegCopy fontSize={18} color="white" />
+                    </button>
+                    {/* <button onClick={makeFullScreen} type="button" className="flex items-center py-2 px-4 mr-3 text-xs font-medium  rounded-lg border focus:outline-none hover:bg-gray-700 hover:text-blue-700 focus:z-10  focus:ring-gray-500 bg-gray-800 border-gray-600 hover:text-white hover:bg-gray-700">
+                        <FaExpand fontSize={16} color="white" />
+                    </button> */}
+
+
+                    <button
+                        disabled={processing || offlineStatus}
+                        onClick={handleCompile} type="button" className="text-white bg-indigo-600 hover:bg-indigo-800   focus:outline-none font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center focus:ring-[#2557D6]/50 mr-2">
+
+                        {
+
+                            processing ?
+                                <>
+                                    <svg role="status" className="inline w-4 h-4 mr-3 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB" />
+                                        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor" />
+                                    </svg>
+                                    running...
+                                </>
+                                :
+                                "Run"
+
+                        }
+                    </button>
+
+
+                    <button onClick={downloadTxtFile} type="button" className="text-white bg-indigo-600 hover:bg-indigo-800   focus:outline-none font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center focus:ring-[#2557D6]/50 mr-2">
+                        {"Save"}
+                    </button>
+
+                    <button onClick={resetCode} type="button" className="text-white bg-indigo-600 hover:bg-indigo-800   focus:outline-none font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center focus:ring-[#2557D6]/50 mr-2">
+                        {"Erase"}
+                    </button>
+                    {/* <button onClick={handleShare} type="button" className="text-white bg-[#db2777] hover:bg-[#ec4899]   focus:outline-none font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center focus:ring-[#2557D6]/50 mr-2">
+                        Share
+                    </button> */}
+
+                    {/* <a href={`whatsapp://send?text=${code}`} data-action="share/whatsapp/share">
+                        
+                        <FaWhatsapp color='green' size="30" />
+                        
+                    </a> */}
+
+                    {/* <RWebShare
+                        data={{
+                            text: "Web Share - GfG",
+                            url: "http://localhost:3000",
+                            title: "GfG",
+                            files: [new File([code], 'codetext.txt', { type: "text/plain", })]
+                        }}
+                        onClick={() => console.log("shared successfully!")}
+                    >
+                        <button>Share on Web</button>
+                    </RWebShare> */}
 
                 </div>
             </div >
         </>
+    }
 
+
+    < div className="editorlayout flex flex-row  space-x-4 items-start border-2 border-t-0 border-b-0 border-gray-600"
+        style={{
+            height: fullScreen ? "99vh" : `calc(100vh - 8.5vh )`,
+        }}>
+        <div className="flex flex-col h-full justify-start items-end container__left">
+            <CodeEditorWindow
+                code={code}
+                Fontoptions={{
+                    fontSize: font_size
+                }}
+                onChange={onChange}
+                language={language?.value}
+                theme={theme.value}
+                isFullScreen={fullScreen}
+            />
+        </div>
+
+
+        <div className="resizer" id="dragMe">
+            <svg stroke="currentColor" fill="#f1f5f9" strokeWidth="0" viewBox="0 0 24 24" height="1.5em" width="1.5em" xmlns="http://www.w3.org/2000/svg"><path d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 12c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg>
+            <svg stroke="currentColor" fill="#f1f5f9" strokeWidth="0" viewBox="0 0 24 24" height="1.5em" width="1.5em" xmlns="http://www.w3.org/2000/svg"><path d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 12c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg>
+        </div>
+
+        <div className="flex  flex-col container__right relative h-full px-1 pt-1"
+            style={{ flex: "1 1 0%" }}>
+            {
+                fullScreen && <button onClick={makeFullScreen} type="button" className="flex items-center py-2 px-4 mr-3 text-xs font-medium  rounded-lg border focus:outline-none hover:bg-gray-700 hover:text-blue-700 focus:z-10  focus:ring-gray-500 bg-gray-800 border-gray-600 hover:text-white hover:bg-gray-700 mt-2"
+                    style={{
+                        width: "fit-content"
+                    }}>
+                    {
+                        fullScreen ? <FaCompress color='white' /> : <FaExpand color='white' />
+
+                    }
+                </button>
+            }
+
+            <OutputWindow lang={language.value} outputDetails={outputDetails} offlineStatus={offlineStatus} />
+            <div className="flex flex-col items-end">
+                <CustomInput
+                    customInput={customInput}
+                    setCustomInput={setCustomInput}
+                />
+
+                {fullScreen && <button
+                    onClick={handleCompile}
+                    disabled={!code || processing}
+                    className={classnames(
+                        "mt-4 border-2 border-black z-10 rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0 font-bold",
+                        (!code || processing) ? "opacity-50" : ""
+                    )}
+                >
+                    {processing ? "Processing..." : "F9 -  Run Code"}
+                </button>}
+
+
+            </div>
+            {<OutputDetails runcode={handleCompile} savecode={downloadTxtFile} outputDetails={outputDetails}
+
+                lang={language.value}
+            />}
+
+            <StopWatch />
+
+        </div>
+    </div >
+</>
+
+
+        </div>
+       
+        <FaBars className="sm:hidden absolute top-4 left-4 text-2xl text-gray-600 cursor-pointer" onClick={toggleMenu} />
+        </div>
     )
 }
 
