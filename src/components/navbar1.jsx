@@ -72,7 +72,7 @@ const Navbar = () => {
       style={{
         background:
           'linear-gradient(315deg, #2234ae 0%, #191714 80%)',
-        height: '60px',
+        height: '55px',
       }}
     >
       <div className="text-xl font-bold text-white flex items-center">
@@ -107,7 +107,7 @@ const Navbar = () => {
                     window.location.href = `/profile/${username}`; // Reload the page
                 }}
                   role="menuitem"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                  className="block px-4 py-2 text-sm text-black hover:bg-gray-100 w-full text-left"
                 >
                   My Profile
                 </Link>
@@ -118,7 +118,7 @@ const Navbar = () => {
                     window.location.href = `/settings/${username}`; // Reload the page
                 }}
                   role="menuitem"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                  className="block px-4 py-2 text-sm text-black hover:bg-gray-100 w-full text-left"
                 >
                   Settings
                 </Link>
@@ -126,7 +126,7 @@ const Navbar = () => {
                   to="/"
                   onClick={handleLogout}
                   role="menuitem"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                  className="block px-4 py-2 text-sm text-black hover:bg-gray-100 w-full text-left"
                 >
                   Logout
                 </Link>
