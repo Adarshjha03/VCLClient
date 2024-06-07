@@ -18,7 +18,7 @@ import useKeyPress from '../hooks/useKeyPress';
 import DateDiff from 'date-diff';
 import copy from 'copy-to-clipboard';
 
-import StopWatch from './Stopwatch'
+import StopWatch from './StopWatch'
 import { Link,useNavigate } from 'react-router-dom';
 import Sidebar from '../Sidebar';
 import Navbar from '../navbar1';

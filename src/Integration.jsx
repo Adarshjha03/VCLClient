@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Navbar from './components/navbar1';
+import googlelogo from './Google-Analytics-Logo.png';
+import openai from './OpenAiLogo.png';
 
 function Integration() {
   const [showMenu, setShowMenu] = useState(false);
@@ -119,6 +121,7 @@ function Integration() {
           <form onSubmit={handleGoogleAnalyticsSubmit} className="mb-6 p-4 bg-white border rounded-lg flex">
             <div className="flex-1 pr-4">
               <label className="block text-lg font-semibold text-gray-700">Google Analytics</label>
+              <img src={googlelogo} alt="Google Analytics Logo" className="m-2 ml-4 h-24 w-28" />
             </div>
             <div className="flex-1">
               <textarea
@@ -141,6 +144,7 @@ function Integration() {
           <form onSubmit={handleOpenAiSubmit} className="p-4 bg-white border rounded-lg flex">
             <div className="flex-1 pr-4">
               <label className="block text-lg font-semibold text-gray-700">OpenAI</label>
+              <img src={openai} alt="OpenAI Logo" className="mt-10 h-14 w-28" />
             </div>
             <div className="flex-1">
               <div className="flex items-center mb-2">
@@ -183,6 +187,40 @@ function Integration() {
           </form>
 
           {error && <div className="text-red-500 text-sm">{error}</div>}
+
+          <div className="mt-10 p-4 bg-white border rounded-lg">
+            <h3 className="text-xl font-semibold mb-4">Steps to integrate Google Analytics:</h3>
+            <ol className="list-decimal list-inside space-y-2">
+              <li><strong>Sign in to Google Analytics:</strong>
+                <ul className="list-disc list-inside ml-4">
+                  <li>Go to the <a href="https://analytics.google.com" className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">Google Analytics website</a>.</li>
+                  <li>Sign in with your Google account. If you don’t have an account, you will need to create one.</li>
+                </ul>
+              </li>
+              <li><strong>Set up a Property:</strong>
+                <ul className="list-disc list-inside ml-4">
+                  <li>Once logged in, you will see the Admin panel in the bottom left corner.</li>
+                  <li>In the “Account” column, make sure your account is selected.</li>
+                  <li>In the “Property” column, click on “+ Create Property.”</li>
+                  <li>Follow the prompts to set up your property (your website). This will include entering your website’s name, URL, and other details.</li>
+                </ul>
+              </li>
+              <li><strong>Get the Tracking ID:</strong>
+                <ul className="list-disc list-inside ml-4">
+                  <li>After setting up your property, you will be directed to the Property settings.</li>
+                  <li>In the Property column, click on “Tracking Info” and then “Tracking Code.”</li>
+                  <li>Here you will find your “Tracking ID” (it starts with “UA-” followed by numbers).</li>
+                </ul>
+              </li>
+              <li><strong>Copy the Tracking ID:</strong>
+                <ul className="list-disc list-inside ml-4">
+                  <li>Copy the Tracking ID provided in this section. This ID is what you'll use to link your website to Google Analytics.</li>
+                </ul>
+              </li>
+            </ol>
+            <p className="mt-4">By following these steps, you'll be able to obtain the Google Analytics tracking code for your website. Just use the Tracking ID in your website’s configuration to start tracking your site's traffic.</p>
+          </div>
+
         </div>
       </div>
     </div>
