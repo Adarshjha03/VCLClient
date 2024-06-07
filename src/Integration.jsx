@@ -121,7 +121,7 @@ function Integration() {
           <form onSubmit={handleGoogleAnalyticsSubmit} className="mb-6 p-4 bg-white border rounded-lg flex">
             <div className="flex-1 pr-4">
               <label className="block text-lg font-semibold text-gray-700">Google Analytics</label>
-              <img src={googlelogo} alt="Google Analytics Logo" className="m-2 ml-4 h-24 w-28" />
+              <img src={googlelogo} alt="Google Analytics Logo" className="m-2 ml-4 h-20 w-22" />
             </div>
             <div className="flex-1">
               <textarea
@@ -144,7 +144,7 @@ function Integration() {
           <form onSubmit={handleOpenAiSubmit} className="p-4 bg-white border rounded-lg flex">
             <div className="flex-1 pr-4">
               <label className="block text-lg font-semibold text-gray-700">OpenAI</label>
-              <img src={openai} alt="OpenAI Logo" className="mt-10 h-14 w-28" />
+              <img src={openai} alt="OpenAI Logo" className="mt-10 h-10 w-23" />
             </div>
             <div className="flex-1">
               <div className="flex items-center mb-2">
