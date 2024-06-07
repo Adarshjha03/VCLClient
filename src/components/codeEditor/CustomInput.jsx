@@ -12,7 +12,7 @@ const CustomInput = ({ customInput, setCustomInput }) => {
                 onChange={(e) => setCustomInput(e.target.value)}
                 placeholder={`Custom input`}
                 className={classnames(
-                    "focus:outline-none w-full border-2 border-black z-10 rounded-md  px-4 py-2 bg-white mt-2"
+                    "focus:outline-none w-full border-2 border-black z-10 rounded-md  px-4 py-2 bg-[#1e293b] shadow-lg rounded-md text-white font-normal text-sm mt-2"
                 )}
             ></textarea>
         </>

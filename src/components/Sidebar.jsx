@@ -321,12 +321,12 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
               </button>
             )}
           </div>
-          <div className="space-y-1">
+          <div className="space-y-">
             {categories.map((category) => (
               <div key={category.id}>
                 <div
                   onClick={() => handleCategoryClick(category.id)}
-                  className="p-2 text-xs flex items-center justify-between hover:bg-blue-400 rounded-sm hover:rounded-sm hover:text-white transition duration-300 cursor-pointer"
+                  className="py-2 px-1 text-xs flex items-center justify-between hover:bg-blue-400 rounded-sm hover:rounded-sm hover:text-white transition duration-300 cursor-pointer"
                 >
                   <div className="flex items-center">
                     <span className="mr-2"><FaHashtag className="w-4 h-4" /></span>
