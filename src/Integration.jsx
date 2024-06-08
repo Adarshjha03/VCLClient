@@ -33,10 +33,9 @@ function Integration() {
         });
         if (response.ok) {
           const data = await response.json();
-          setGoogleAnalyticsCode(data.google_analytics_key || '');
+          setGoogleAnalyticsCode(data.google_analytics_key||"");
           setOpenAiIntegration(data.need_ai || false);
           setOpenAiKey(data.open_ai_key || '');
-          
         } else {
           setError('Failed to fetch data from the backend');
         }
@@ -126,10 +125,11 @@ function Integration() {
             <div className="flex-1">
               <textarea
                 id="googleAnalyticsCode"
-                value={googleAnalyticsCode}
+                value={googleAnalyticsCode || ''}
                 onChange={(e) => setGoogleAnalyticsCode(e.target.value)}
                 rows="5"
                 className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                placeholder="Enter your Google Analytics code here"
                 required
               ></textarea>
               <button
@@ -161,10 +161,11 @@ function Integration() {
                 <div>
                   <textarea
                     id="openAiKey"
-                    value={openAiKey}
+                    value={openAiKey || ''}
                     onChange={(e) => setOpenAiKey(e.target.value)}
                     rows="5"
                     className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    placeholder="Enter your OpenAI key here"
                     required
                   ></textarea>
                   <button
