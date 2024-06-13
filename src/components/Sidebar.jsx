@@ -195,7 +195,7 @@ const Sidebar = ({ showMenu, onTopicSelect, activeTopic }) => {
 
   return (
     <div className={`w-1/6 h-full overflow-y-auto border-r sm:block ${showMenu ? 'block' : 'hidden'}`} style={{ backgroundColor: '#000930' }}>
-      <div className="p-3 text-white">
+      <div className="font-sans p-3 text-white">
       <div className="flex justify-center">
   <img src={"https://cyber-range-assets.s3.ap-south-1.amazonaws.com/assets/" + (window.location.origin.includes("https://") ? window.location.origin.slice(8) : window.location.origin) + "/logo.png"} alt="HeadLogo" className="w-50 content-evenly mb-3" />
 </div>
