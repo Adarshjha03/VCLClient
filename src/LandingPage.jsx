@@ -1,7 +1,7 @@
 import { Hero } from './components';
 import { Link } from "react-router-dom";
 import React, { useState } from 'react';
-import bgimage from "./LandingPage.jpg";
+import bgimage from "./assets/LandingPage.jpg";
 import { FaBars, FaTimes } from 'react-icons/fa';
 const LandingPage = () => {
   const [isOpen, setIsOpen] = useState(false);

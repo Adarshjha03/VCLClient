@@ -271,7 +271,7 @@ const ProblemPage = () => {
             </div>
             {/* Check Solution Button */}
             <div className="flex justify-start">
-  <div className="-mt-16"> {/* Adjust the negative margin value as needed */}
+  <div className="-mt-8 pb-4"> {/* Adjust the negative margin value as needed */}
     {(challenge.solution !== "" || admin) && (
       <a 
         href={challenge.solution.startsWith("https") ? challenge.solution : `http://${challenge.solution}`} 
@@ -291,7 +291,6 @@ const ProblemPage = () => {
           </div>
         </div>
       </div>
-      <FaBars className="sm:hidden absolute top-4 left-4 text-2xl text-gray-600 cursor-pointer" onClick={toggleMenu} />
     </div>
   );
 };

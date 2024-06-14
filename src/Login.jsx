@@ -47,10 +47,10 @@ function Login() {
 
       {/* Login box */}
       <div className="bg-white p-4 rounded shadow w-49" style={{ maxWidth: "400px" }}>
-        <h2 className="mb-4 text-center text-xl">Login</h2>
+        <h2 className="mb-4 font-semibold text-center text-xl">Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label htmlFor="username" className="form-label">
+            <label htmlFor="username" className="form-label ">
               Username
             </label>
             <input

@@ -107,7 +107,7 @@ const Navbar = () => {
                     window.location.href = `/profile/${username}`; // Reload the page
                 }}
                   role="menuitem"
-                  className="block px-4 py-2 text-sm text-black hover:bg-gray-100 w-full text-left"
+                  className=" block px-4 py-2 text-sm text-black hover:bg-gray-100 w-full text-left"
                 >
                   My Profile
                 </Link>
