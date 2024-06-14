@@ -41,7 +41,7 @@ function Login() {
       style={{ background: "linear-gradient(315deg, #2234ae 0%, #191714 74%)" }}
     >
       {/* Lottie animation */}
-      <div className="w-50 pr-4">
+      <div className="hidden md:block md:w-1/2 pr-4">
         <Lottie animationData={animation} style={{ width: "80%", height: "80%" }} />
       </div>
 
