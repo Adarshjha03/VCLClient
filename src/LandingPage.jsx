@@ -1,9 +1,14 @@
-import { Hero, Navbar, Companies, Courses, Achievement, Categories, Feedback, CTA, Footer } from './components';
-import { Link, useNavigate } from "react-router-dom";
+import { Hero } from './components';
+import { Link } from "react-router-dom";
 import React, { useState } from 'react';
 import bgimage from "./LandingPage.jpg";
+import { FaBars, FaTimes } from 'react-icons/fa';
 const LandingPage = () => {
+  const [isOpen, setIsOpen] = useState(false);
 
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
   return (
     <div style={{
       backgroundImage: `url(${bgimage})`,
@@ -16,7 +21,14 @@ const LandingPage = () => {
       <div className=' m-auto w-full h-full flex justify-between items-center px-0 px-4'>
         {/* Menu */}
         <div className='flex items-center'>
-          <ul className='flex gap-4'>
+        <div className='md:hidden' onClick={toggleMenu}>
+              {isOpen ? (
+                <FaTimes className="text-white text-2xl" />
+              ) : (
+                <FaBars className="text-white text-2xl" />
+              )}
+            </div>
+            <ul className={`flex-col md:flex-row md:flex gap-4 absolute md:static top-[80px] left-0 w-full md:w-auto bg-black md:bg-transparent ${isOpen ? 'flex' : 'hidden'}`}>
             <Link to="/Home" className="text-white hover:text-blue-500">Home</Link>
             <li className="text-white hover:text-blue-500">About</li>
             <li className="text-white hover:text-blue-500">Support</li>
@@ -37,11 +49,6 @@ const LandingPage = () => {
 
       </div>
     </div>
-      {/* <Navbar />
-        <Hero />
-        <Feedback />
-        <CTA />
-        <Footer /> */}
          <Hero />
     </div>
   )
