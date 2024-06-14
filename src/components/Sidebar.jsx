@@ -130,18 +130,18 @@ const Sidebar = ({ onTopicSelect }) => {
   };
 
   const handleCategoryClick = (categoryId) => {
-    if (expandedCategories.length === 1 && expandedCategories[0] === categoryId) {
-      // If the clicked category is the only expanded category, collapse it
-      setExpandedCategories([]);
+    if (expandedCategories.includes(categoryId)) {
+      // If the clicked category is already expanded, collapse it
+      setExpandedCategories(expandedCategories.filter(id => id !== categoryId));
     } else {
-
-      setExpandedCategories([...expandedCategories, categoryId]);
-
+      // Collapse any expanded category first
+      setExpandedCategories([categoryId]);
       fetchTopics(categoryId);
     }
-
+    
     setSelectedCategoryId(categoryId);
   };
+  
 
   const handleTopicClick = (topicId) => {
     setselectedTopic(topicId);
