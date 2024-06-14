@@ -45,10 +45,10 @@ function Signup() {
       }}
     >
       {/* Animation on the right */}
-      <div className="w-50 pl-4">
+      <div className="hidden md:block w-1/2 pl-4">
         <Lottie
           animationData={animation}
-          style={{ width: "80%", height: "80%" }}
+          className="w-4/5 h-4/5"
         />
       </div>
 
@@ -59,8 +59,8 @@ function Signup() {
       >
         <h2 className="mb-4 text-center font-weight-bold text-xl">Register</h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-3 d-flex">
-            <div className="w-50 pr-2">
+          <div className="mb-3 flex flex-col md:flex-row">
+            <div className="w-full md:pr-2 mb-3 md:mb-0">
               <label htmlFor="firstName" className="form-label">
                 First Name
               </label>
@@ -68,12 +68,12 @@ function Signup() {
                 type="text"
                 name="firstName"
                 placeholder="Enter First Name"
-                className="form-control"
+                className="form-control  w-full border-gray-300 rounded"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
               />
             </div>
-            <div className="w-50 pl-2">
+            <div className="w-full md:pl-2">
               <label htmlFor="lastName" className="form-label">
                 Last Name
               </label>
@@ -81,7 +81,7 @@ function Signup() {
                 type="text"
                 name="lastName"
                 placeholder="Enter Last Name"
-                className="form-control"
+                className="form-control w-full border-gray-300 rounded"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
               />
