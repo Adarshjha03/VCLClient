@@ -7,8 +7,8 @@ import addImage from "./assets/add2.png"; // Importing the PNG image
 import Modal from 'react-modal';
 import AddChallenge from './addChallenge';
 import SearchBar from "./components/SearchBar";
+import { Circles ,TailSpin} from 'react-loader-spinner';
 const HomePage = () => {
-  const [showMenu, setShowMenu] = useState(false);
   const [selectedTopic, setSelectedTopic] = useState(() => {
     const storedTopic = localStorage.getItem("selectedTopic");
     return storedTopic ? parseInt(storedTopic) :0;
@@ -112,9 +112,14 @@ const HomePage = () => {
   const handleCloseAddChallengeModal = () => {
     setAddChallengeModalOpen(false);
   };
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  if (isLoading) {  return   <div className="flex items-center justify-center h-screen">
+    <TailSpin
+      height="80"
+      width="80"
+      color="#0000FF"
+      ariaLabel="loading-indicator"
+    />
+  </div>;}
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -131,10 +136,10 @@ const HomePage = () => {
     Medium: "linear-gradient(to right, #f95b37, #fca339)",
     Hard: "linear-gradient(to right, #f43150, #f2512e)",
   };
-
+ 
   return (
     <div className="flex h-screen font-sans relative">
-      <Sidebar showMenu={showMenu} onTopicSelect={handleTopicChange} activeTopic={selectedTopic} topics={topics} />
+      <Sidebar  onTopicSelect={handleTopicChange} activeTopic={selectedTopic} topics={topics} />
       <div className="flex-1" style={{ background: "#e0efee", overflowY: "hidden" }}>  
         <Navbar style={{ position: "fixed", width: "100%", zIndex: 1000 }} /> 
         
@@ -180,7 +185,7 @@ const HomePage = () => {
             )}
         </div>
       </div>
-      <FaBars className="sm:hidden absolute top-4 left-4 text-2xl text-gray-600 cursor-pointer" onClick={() => setShowMenu(!showMenu)} />
+    
       <Modal
   isOpen={isAddChallengeModalOpen}
   onRequestClose={handleCloseAddChallengeModal}
