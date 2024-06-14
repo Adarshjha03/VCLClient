@@ -11,7 +11,9 @@ import { FaPencilAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { Circles ,TailSpin} from 'react-loader-spinner';
 import { FaTimes, FaCog, FaMedal, FaCode, FaTrophy, FaUser, FaTrash, FaHashtag, FaChevronRight, FaChevronDown, FaBars } from 'react-icons/fa';
-
+import { MdCorporateFare } from 'react-icons/md';
+import { BsBookshelf } from 'react-icons/bs';
+import { FaLaptopCode} from 'react-icons/fa';
 //import './scrollbar.css';
 const Sidebar = ({ onTopicSelect }) => {
   const [categories, setCategories] = useState([]);
@@ -393,8 +395,38 @@ const Sidebar = ({ onTopicSelect }) => {
           </div>
         ))}
       </div>
+      <div className="flex-grow mb-auto">
+  <div className="p-2 font-semibold text-md flex items-center justify-start border-b border-gray-100/55 hover:bg-blue-400 rounded-sm hover:rounded-sm hover:text-white transition duration-300">
+    <span>KNOWLEDGE BASE</span>
+  </div>
+  <div className="space-y-2 py-2">
+    <Link
+      to="/ide-simulator"
+      className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -5 && 'bg-blue-600 text-white'}`}
+      style={{ textTransform: 'uppercase' }}
+    >
+      <FaLaptopCode className="w-4 h-4 mr-2" />
+      IDE Simulator
+    </Link>
+    <Link
+      to="/temp"
+      className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -6 && 'bg-blue-600 text-white'}`}
+      style={{ textTransform: 'uppercase' }}
+    >
+      <MdCorporateFare className="w-4 h-4 mr-2" />
+      Placement Prep
+    </Link>
+    <Link
+      to="/temp"
+      className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -7 && 'bg-blue-600 text-white'}`}
+      style={{ textTransform: 'uppercase' }}
+    >
+      <BsBookshelf className="w-4 h-4 mr-2" />
+      Research Forum
+    </Link>
+  </div>
+</div>
     </div>
-
   </div>
   <Modal
     isOpen={modalIsOpen}
