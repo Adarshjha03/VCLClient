@@ -215,7 +215,7 @@ const ProblemPage = () => {
               {/* Submit Answer */}
               <div style={{ backgroundColor: "#11255a", height: "230px" }} className="p-6 rounded-lg shadow-lg">
                 <h2 className="text-lg font-semibold mb-4 text-white text-center">Submit Answer</h2>
-                <p className="text-sm text-white mb-4 text-center">Enumerate users and submit with comma separation</p>
+                <p className="text-sm text-white mb-4 text-center">Practice the given challenge and submit the answer</p>
                 <div className="flex items-center justify-center mb-4">
                   <input type="text" placeholder="Your answer..." className="w-100p px-4 py-2 rounded border border-003366 focus:outline-none focus:border-blue-400 text-003366" value={userAnswer} onChange={(e) => setUserAnswer(e.target.value)} />
                   <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded font-semibold ml-2" onClick={handleSubmitAnswer} disabled={isLoading}>
