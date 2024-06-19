@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Set default title -->
+    <title>Loading...</title>
+    <script>
+      const backendUrl = 'https://api.virtualcyberlabs.com';
+
+      // Fetch site builder data
+      fetch(`${backendUrl}/site_builder`)
+        .then(response => response.json())
+        .then(data => {
+          // Set the fetched title
+          document.title = data.title;
+
+          // Dynamically set the Google Analytics script with the fetched key
+          const gaScript = document.createElement('script');
+          gaScript.async = true;
+          gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${data.google_analytics_key}`;
+          document.head.appendChild(gaScript);
+
+          gaScript.onload = () => {
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', data.google_analytics_key);
+          };
+        })
+        .catch(error => {
+          console.error('Error fetching the site title and analytics key:', error);
+        });
+
+      // Dynamically set favicon URL
+      const faviconUrl = `https://cyber-range-assets.s3.ap-south-1.amazonaws.com/assets/${window.location.origin.includes("https://") ? window.location.origin.slice(8) : window.location.origin}/favicon.ico`;
+      const faviconLink = document.createElement('link');
+      faviconLink.rel = 'icon';
+      faviconLink.type = 'image/png';
+      faviconLink.href = faviconUrl;
+      document.head.appendChild(faviconLink);
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- Assuming this is where your React or JavaScript app is rendered -->
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

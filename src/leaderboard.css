@@ -1,0 +1,65 @@
+/* Mobile view adjustments */
+@media (max-width: 640px) {
+   /* Mobile view adjustments */
+.top-player-container {
+    flex-direction: column; /* Stack entries vertically */
+    align-items: center; /* Center horizontally */
+  }
+  
+  .top-player-card-1,
+  .top-player-card-2,
+  .top-player-card-3 {
+    width: 100%; /* Adjust width as needed */
+    margin-bottom: 16px; /* Add spacing between entries */
+  }
+  
+  /* Customize individual cards (you can adjust colors and styles) */
+  .top-player-card-1 {
+    background-color: #fff9e0; /* Light yellow */
+    border: 2px solid #FFD700; /* Gold border */
+  }
+  
+  .top-player-card-2 {
+    background-color: #f6f1ff; /* Light purple */
+  }
+  
+  .top-player-card-3 {
+    background-color: #fee7f1; /* Light pink */
+  }
+  
+    .leaderboard-table-container {
+        overflow-x: auto;
+    }
+
+    .leaderboard-table th,
+    .leaderboard-table td {
+        white-space: nowrap;
+    }
+
+    .leaderboard-table th {
+        position: -webkit-sticky; /* For Safari */
+        position: sticky;
+        top: 0;
+        background-color: #000930;
+        color: white;
+        z-index: 1;
+    }
+
+    .leaderboard-table td {
+        background-color: #000930;
+        color: white;
+    }
+
+    .leaderboard-table tbody tr:hover {
+        background-color: #63b3ed;
+    }
+
+    .leaderboard-table tbody tr.active {
+        background-color: #90cdf4;
+        color: black;
+    }
+
+    .leaderboard-table tbody tr.active td a {
+        color: black;
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "folders": [
+        {
+            "path": "../Developer"
+        },
+        {
+            "path": "."
+        },
+        {
+            "path": "../webd/RazorPayClone"
+        },
+        {
+            "path": "../webd/coutnerApp"
+        },
+        {
+            "path": "../webd/dummy"
+        }
+    ],
+    "settings": {
+        "liveServer.settings.multiRootWorkspaceName": "coutnerApp",
+        "files.associations": {
+            "iostream": "cpp",
+            "string": "cpp",
+            "ostream": "cpp",
+            "random": "cpp",
+            "vector": "cpp"
+        }
+    }
+}
