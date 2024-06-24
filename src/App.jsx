@@ -15,6 +15,7 @@ import Temp from './Temp';
 import SiteBuilder from './SiteBuilder';
 import LeaderboardPage from './leaderboard';
 import Intergraion from './Integration';
+import NotificationsPage from './notifications';
 import { Provider } from 'react-redux';
 //import store from './components/idesrc/store';
 import CodeEditor from './components/codeEditor/CodeEditor';
@@ -36,6 +37,7 @@ const App = () => {
         <Route path= '/adminConfig' element={<SiteBuilder/>}></Route>
         <Route path= '/integration' element={<Intergraion/>}></Route>
         <Route path= '/ide-simulator' element={<CodeEditor/>}></Route>
+        <Route path= '/notifications' element={<NotificationsPage/>}></Route>
       </Routes>
     </Router>
 
