@@ -168,7 +168,7 @@ const HomePage = () => {
       <div className="flex-1" style={{ background: "#e0efee", overflowY: "hidden" }}>
         <Navbar style={{ position: "fixed", width: "100%", zIndex: 1000 }} />
 
-        <div className="p-4" style={{ marginTop: "1px", overflowY: "auto", height: "calc(100vh - 80px)" }}>
+        <div className="p-4" style={{ marginTop: "1px", overflowY: "auto", height: "calc(100vh - 60px)" }}>
           <h2 className="text-xl font-bold mb-4 uppercase">{activeTopicName}</h2>
           <div className="m-4">
             <SearchBar problems={constproblems} onSearch={handleSearch} />
