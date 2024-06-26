@@ -5,6 +5,7 @@ import Navbar from "./components/navbar1";
 import PieChart from "./components/PieChart";
 import TopLabsTable from "./components/TopLabsTable";
 import BarChart from "./components/BarChart";
+import SearchUsers from "./components/SearchUsers";
 
 const Dashboard = () => {
     const [showMenu, setShowMenu] = useState(false);
@@ -13,6 +14,7 @@ const Dashboard = () => {
     const [labsPerCategory, setLabsPerCategory] = useState([]);
     const [topLabsPerCategory, setTopLabsPerCategory] = useState([]);
     const [topUsers, setTopUsers] = useState([]);
+    const [allUsers, setAllUsers] = useState([]);
     const [selectedTopic, setSelectedTopic] = useState(() => {
         const storedTopic = localStorage.getItem("selectedTopic");
         return storedTopic ? parseInt(storedTopic) : 0;
@@ -40,6 +42,7 @@ const Dashboard = () => {
                 setLabsPerCategory(responseData.labs_per_category);
                 setTopLabsPerCategory(responseData.top_labs_per_category);
                 setTopUsers(responseData.top_users);
+                setAllUsers(responseData.all_users); // Assuming the response has all_users
                 fetchBadges(); // Ensure this function is defined or remove this call
                 setLoading(false);
             } catch (error) {
@@ -87,7 +90,9 @@ const Dashboard = () => {
                     </div>
 
                     {/* Third row */}
-                    <div className="w-full h-[40vh] bg-gray-100 rounded-lg p-4"></div>
+                    <div className="w-full h-[40vh] bg-gray-100 rounded-lg p-4">
+                        <SearchUsers users={allUsers} backendUrl={backendUrl} />
+                    </div>
                 </div>
             </div>
         </div>
