@@ -5,6 +5,7 @@ import Navbar from "./components/navbar1";
 import PieChart from "./components/PieChart";
 import TopLabsTable from "./components/TopLabsTable";
 import BarChart from "./components/BarChart";
+import SearchUsers from "./components/SearchUsers";
 
 const Dashboard = () => {
     const [showMenu, setShowMenu] = useState(false);
@@ -14,6 +15,7 @@ const Dashboard = () => {
     const [topLabsPerCategory, setTopLabsPerCategory] = useState([]);
     const [topUsers, setTopUsers] = useState([]);
     const [totalUsers, setTotalUsers] = useState(0);
+    const [allUsers, setAllUsers] = useState([]);
     const [selectedTopic, setSelectedTopic] = useState(() => {
         const storedTopic = localStorage.getItem("selectedTopic");
         return storedTopic ? parseInt(storedTopic) : 0;
@@ -41,7 +43,11 @@ const Dashboard = () => {
                 setLabsPerCategory(responseData.labs_per_category);
                 setTopLabsPerCategory(responseData.top_labs_per_category);
                 setTopUsers(responseData.top_users);
+
                 setTotalUsers(responseData.total_users);
+
+                setAllUsers(responseData.all_users); // Assuming the response has all_users
+                fetchBadges(); // Ensure this function is defined or remove this call
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching Dashboard data:', error);
@@ -123,7 +129,9 @@ const Dashboard = () => {
                     </div>
 
                     {/* Third row */}
-                    <div className="w-full h-[40vh] bg-gray-100 rounded-lg p-4"></div>
+                    <div className="w-full h-[40vh] bg-gray-100 rounded-lg p-4">
+                        <SearchUsers users={allUsers} backendUrl={backendUrl} />
+                    </div>
                 </div>
             </div>
         </div>
