@@ -110,7 +110,7 @@ const NotificationsPage = () => {
       <div className="flex-1" style={{ background: "#e0efee", overflowY: "hidden" }}>
         <Navbar style={{ position: "fixed", width: "100%", zIndex: 1000 }} />
 
-        <div className="p-4" style={{ marginTop: "65px", overflowY: "auto", height: "calc(100vh - 80px)" }}>
+        <div className="p-4" style={{ marginTop: "5px", overflowY: "auto", height: "calc(100vh - 80px)" }}>
           <h1 className="text-3xl font-bold mb-6">Notifications</h1>
           <div className="bg-white rounded-lg shadow">
             {notifications.map((notification, index) => (
