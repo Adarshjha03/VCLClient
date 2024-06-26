@@ -91,8 +91,8 @@ const BarChart = ({ data }) => {
     }, [data]);
 
     return (
-        <div className="h-full p-2">
-            <canvas ref={canvasRef} style={{ width: '100%', height: '10%' }} />
+        <div className="h-full w-full p-2">
+            <canvas ref={canvasRef} style={{ width: '100%', height: '100%' }} />
         </div>
     );
 };

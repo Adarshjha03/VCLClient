@@ -33,7 +33,7 @@ const PieChart = ({ data }) => {
 
     return (
         <div className="flex items-center justify-center h-full space-x-2">
-            <div className=" h-full">
+            <div className=" h-fit">
                 <Pie data={chartData} options={options} />
             </div>
         </div>
