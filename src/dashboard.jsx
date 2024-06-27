@@ -64,6 +64,33 @@ const Dashboard = () => {
         navigate("/home");
     };
 
+    const handleExport = async () => {
+        try {
+            const token = localStorage.getItem("Token");
+            if (!token) {
+                throw new Error('No token found');
+            }
+            const response = await fetch(`${backendUrl}/export`, {
+                headers: {
+                    Authorization: `Token ${token}`,
+                },
+            });
+            if (!response.ok) {
+                throw new Error('Failed to export user data');
+            }
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'users_data.csv';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('Error exporting user data:', error);
+        }
+    };
     if (loading) {
         return <div>Loading...</div>; // Add a better loading indicator as needed
     }
@@ -126,12 +153,17 @@ const Dashboard = () => {
                         <div className="w-full md:w-5/12 h-[45vh] bg-gray-100 rounded-lg p-4">
                             <h3 className="text-xl font-bold mb-2 text-center">Notifications</h3>
                         </div>
+                       
+                        <div className="w-full md:w-5/12 h-[40vh] bg-gray-100 rounded-lg p-4">
+                        <SearchUsers users={allUsers} backendUrl={backendUrl} /></div>
+                       
                     </div>
-
-                    {/* Third row */}
-                    <div className="w-full h-[40vh] bg-gray-100 rounded-lg p-4">
-                        <SearchUsers users={allUsers} backendUrl={backendUrl} />
-                    </div>
+                    <button
+                                className="bg-blue-500 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-700"
+                                onClick={handleExport}
+                            >
+                                Extract All Users
+                            </button>
                 </div>
             </div>
         </div>

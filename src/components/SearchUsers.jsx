@@ -23,33 +23,7 @@ const SearchUsers = ({ users, backendUrl }) => {
     navigate(`/profile/${username}`);
   };
 
-  const handleExport = async () => {
-    try {
-      const token = localStorage.getItem("Token");
-      if (!token) {
-        throw new Error('No token found');
-      }
-      const response = await fetch(`${backendUrl}/export`, {
-        headers: {
-          Authorization: `Token ${token}`,
-        },
-      });
-      if (!response.ok) {
-        throw new Error('Failed to export user data');
-      }
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.style.display = 'none';
-      a.href = url;
-      a.download = 'users_data.csv';
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error('Error exporting user data:', error);
-    }
-  };
+  // Removed the handleExport function
 
   return (
     <div className="p-4 bg-white rounded-lg shadow-md">
@@ -83,12 +57,6 @@ const SearchUsers = ({ users, backendUrl }) => {
         ))}
       </ul>
       </div>
-      <button
-        onClick={handleExport}
-        className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
-      >
-        Export All Users
-      </button>
     </div>
   );
 };
