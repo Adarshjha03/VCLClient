@@ -22,7 +22,12 @@ function Login() {
       if (response.data.token) {
         localStorage.setItem("Token", response.data.token);
         localStorage.setItem("selectedTopic", 0);
-        navigate("/Home");
+  
+        if (response.data.isadmin) {
+          navigate("/dashboard");
+        } else {
+          navigate("/Home");
+        }
       } else {
         alert("Invalid credentials");
       }
@@ -31,7 +36,7 @@ function Login() {
       alert("An error occurred. Please try again later.");
     }
   };
- 
+  
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
