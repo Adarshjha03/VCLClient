@@ -151,13 +151,9 @@ const Dashboard = () => {
 </div>
 
                         <div className="w-full md:w-5/12 h-[45vh] bg-gray-100 rounded-lg p-4">
-                            <h3 className="text-xl font-bold mb-2 text-center">Notifications</h3>
-                        </div>
-                       
-                        <div className="w-full md:w-5/12 h-[40vh] bg-gray-100 rounded-lg p-4">
                         <SearchUsers users={allUsers} backendUrl={backendUrl} /></div>
-                       
-                    </div>
+                        </div>
+                    
                     <button
                                 className="bg-blue-500 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-700"
                                 onClick={handleExport}
