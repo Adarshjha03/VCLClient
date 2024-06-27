@@ -11,7 +11,7 @@ import { FaPencilAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { Circles ,TailSpin} from 'react-loader-spinner';
 import { FaTimes, FaCog, FaMedal, FaCode, FaTrophy, FaUser, FaTrash, FaHashtag, FaChevronRight, FaChevronDown, FaBars } from 'react-icons/fa';
-import { MdCorporateFare } from 'react-icons/md';
+import { MdAnalytics,MdCorporateFare } from 'react-icons/md';
 import { BsBookshelf } from 'react-icons/bs';
 import { FaLaptopCode} from 'react-icons/fa';
 //import './scrollbar.css';
@@ -239,9 +239,19 @@ const Sidebar = ({ onTopicSelect }) => {
             </Link></div>
         </div>
       </div>)}
-      <div className="p-2 font-semibold text-md flex items-center justify-start border-b border-gray-100/55 hover:bg-blue-400 rounded-sm hover:rounded-sm hover:text-white transition duration-300">
-        <span>DASHBOARD</span>
-      </div>
+      {admin ? (
+        <Link to="/dashboard">
+          <div className="p-2 font-semibold text-md flex items-center justify-start border-b border-gray-100/55 hover:bg-blue-400 rounded-sm hover:rounded-sm hover:text-white transition duration-300">
+            <span>DASHBOARD</span>
+            <MdAnalytics className="ml-2 text-lg" />
+          </div>
+        </Link>
+      ) : (
+        <div className="p-2 font-semibold text-md flex items-center justify-start border-b border-gray-100/55 hover:bg-blue-400 rounded-sm hover:rounded-sm hover:text-white transition duration-300">
+          <span>DASHBOARD</span>
+        </div>
+      )}
+
       <div className="space-y-2 py-2 ">
         {!admin && !subAdmin && (<div className=''><Link
           to={`/profile/${username}`}
