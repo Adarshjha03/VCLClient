@@ -123,15 +123,18 @@ const Dashboard = () => {
     </div>
 </div>
 
-                        <div className="w-full md:w-5/12 h-[45vh] bg-gray-100 rounded-lg p-4">
-                            <h3 className="text-xl font-bold mb-2 text-center">Notifications</h3>
+                        <div className="w-full md:w-5/12 h-[45vh]  rounded-lg py-4">
+                        <h3 className="text-xl font-bold mb-2 text-center">Search Users</h3>
+                        <SearchUsers users={allUsers} backendUrl={backendUrl} />
                         </div>
                     </div>
 
                     {/* Third row */}
-                    <div className="w-full h-[40vh] bg-gray-100 rounded-lg p-4">
+                    {/* <div className="w-full h-[40vh]  rounded-lg py-4">
+                        
+    <h3 className="text-xl font-bold mb-2 text-center">Search Users</h3>
                         <SearchUsers users={allUsers} backendUrl={backendUrl} />
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

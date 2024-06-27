@@ -52,7 +52,7 @@ const SearchUsers = ({ users, backendUrl }) => {
   };
 
   return (
-    <div className="p-4 bg-white rounded-lg shadow-md">
+    <div className="p-4 bg-white rounded-lg shadow-lg">
         <div> 
             <input
         type="text"
