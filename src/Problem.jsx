@@ -88,6 +88,9 @@ const ProblemPage = () => {
     try {
       const response = await fetch(`${backendUrl}/req_vm`, {
         method: "POST",
+        headers: {
+          Authorization: `Token ${token}`,
+        },
       });
       if (!response.ok) {
         throw new Error(`Failed to request virtual machine. Status: ${response.status}`);
