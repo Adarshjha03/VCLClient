@@ -86,6 +86,8 @@ const ProblemPage = () => {
   const requestVirtualMachine = async () => {
     setIsLoading(true);
     try {
+      
+      const token = localStorage.getItem("Token");
       const response = await fetch(`${backendUrl}/req_vm`, {
         method: "POST",
         headers: {
