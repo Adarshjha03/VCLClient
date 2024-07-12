@@ -507,12 +507,13 @@ const AddChallenge = () => {
             <label className="block text-gray-700 text-sm font-bold mb-2">
               Supporting Material
             </label>
-            <ReactQuill
-              theme="snow"
+            <input
+              type="text"
+              name="upportingMaterial"
               value={quizData.supportingMaterial}
-              onChange={(content) => handleCodeChange('supportingMaterial', content)}
-              modules={modules}
-              formats={formats}
+              onChange={handleQuizChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+              required
             />
           </div>
           <div className="mb-4">

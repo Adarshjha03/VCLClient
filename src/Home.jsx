@@ -10,7 +10,7 @@ import SearchBar from "./components/SearchBar";
 import { TailSpin } from "react-loader-spinner";
 import { FaPlus, FaTrash } from "react-icons/fa";
 import AddVideos from "./addVideos";
-import Switch from '@mui/material/Switch';
+import Switch from "@mui/material/Switch";
 
 const HomePage = () => {
   const [selectedTopic, setSelectedTopic] = useState(() => {
@@ -87,13 +87,16 @@ const HomePage = () => {
     const fetchProblemsAndQuizzes = async () => {
       try {
         const token = localStorage.getItem("Token");
-        const response = await fetch(`${backendUrl}/challenges/${selectedTopic}?difficulty=all`, {
-          headers: {
-            Authorization: `Token ${token}`,
-          },
-        });
+        const response = await fetch(
+          `${backendUrl}/challenges/${selectedTopic}?difficulty=all`,
+          {
+            headers: {
+              Authorization: `Token ${token}`,
+            },
+          }
+        );
         if (!response.ok) {
-          throw new Error('Failed to fetch problems');
+          throw new Error("Failed to fetch problems");
         }
         const data = await response.json();
         setProblems(data.challenges);
@@ -195,9 +198,7 @@ const HomePage = () => {
           }}
         >
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-bold uppercase">
-              {activeTopicName}
-            </h2>
+            <h2 className="text-xl font-bold uppercase">{activeTopicName}</h2>
             <div className="flex items-center">
               <span className="mr-2  font-semibold">Quizzes</span>
               <Switch checked={showChallenges} onChange={handleToggleChange} />
@@ -307,46 +308,50 @@ const HomePage = () => {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {quizzes.length > 0 ? (
-  quizzes.map((quiz) => (
-    <div
-      key={quiz.id}
-      className="border border-gray-300 flex flex-col p-6 rounded-md"
-      style={{
-        background: colors[quiz.difficulty],
-        boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
-        transition: "all 0.3s ease",
-        height: "auto",
-      }}
-    >
-      <div className="flex-grow">
-        <div className="flex justify-between items-center">
-          <h3 className="text-white text-lg font-semibold ">
-            {quiz.name}
-          </h3>
-          <span
-            className="text-sm font-bold text-black bg-white px-2 py-1 rounded-md"
-            style={{ marginLeft: "8px", alignSelf: "flex-start" }}
-          >
-            {quiz.difficulty}
-          </span>
-        </div>
-        <p className="text-justify text-sm text-white mb-3 mt-2">
-          {quiz.description}
-        </p>
-      </div>
-      <Link
-        to={`/Quiz/${quiz.id}`}
-        className="bg-cyan-50 hover:bg-gray-300 text-black px-3 py-1 rounded-md font-bold hover:text-cyan-500 transition duration-300 self-start mt-auto"
-      >
-        View
-      </Link>
-    </div>
-  ))
-) : (
-  <div className="w-full text-center py-8">
-    <p className="text-lg font-semibold text-gray-600">Currently no quizzes are present.</p>
-  </div>
-)}
+                quizzes.map((quiz) => (
+                  <div
+                    key={quiz.id}
+                    className="border border-gray-300 flex flex-col p-6 rounded-md"
+                    style={{
+                      background: colors[quiz.difficulty],
+                      boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+                      transition: "all 0.3s ease",
+                      height: "auto",
+                    }}
+                  >
+                    <div className="flex-grow">
+                      <div className="flex justify-between items-center">
+                        <h3 className="text-white text-lg font-semibold ">
+                          {quiz.name}
+                        </h3>
+                        <span
+                          className="text-sm font-bold text-black bg-white px-2 py-1 rounded-md"
+                          style={{ marginLeft: "8px", alignSelf: "flex-start" }}
+                        >
+                          {quiz.difficulty}
+                        </span>
+                      </div>
+                      <p
+  className="text-justify text-sm text-white mb-3 mt-2"
+  dangerouslySetInnerHTML={{ __html: quiz.description }}
+/>
+
+                    </div>
+                    <Link
+                      to={`/Quiz/${quiz.id}`}
+                      className="bg-cyan-50 hover:bg-gray-300 text-black px-3 py-1 rounded-md font-bold hover:text-cyan-500 transition duration-300 self-start mt-auto"
+                    >
+                      View
+                    </Link>
+                  </div>
+                ))
+              ) : (
+                <div className="w-full text-center py-8">
+                  <p className="text-lg font-semibold text-gray-600">
+                    Currently no quizzes are present.
+                  </p>
+                </div>
+              )}
             </div>
           )}
 

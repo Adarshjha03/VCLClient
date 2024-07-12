@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Modal from 'react-modal';
 import EditChallenge from './editChallenge';
 import editImage from "./assets/edit.png";
+import { FaTimes } from 'react-icons/fa'; // Import the FaTimes cross icon from react-icons/fa
 
 const EditButton = ({ admin }) => {
   const [isEditChallengeModalOpen, setEditChallengeModalOpen] = useState(false);
@@ -53,7 +54,7 @@ const EditButton = ({ admin }) => {
                 color: 'black',
               }}
             >
-              Close
+              <FaTimes /> {/* Replace 'Close' text with FaTimes cross icon */}
             </button>
             <EditChallenge />
           </Modal>
