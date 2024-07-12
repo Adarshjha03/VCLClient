@@ -20,6 +20,7 @@ import { Provider } from 'react-redux';
 //import store from './components/idesrc/store';
 import CodeEditor from './components/codeEditor/CodeEditor';
 import Dashboard from './dashboard';
+import QuizPage from './quiz';
 const App = () => {
   return (
     <Router> 
@@ -31,6 +32,7 @@ const App = () => {
         <Route path='/Profile/:id' element={<ProfilePage/>}></Route>
         <Route path='/settings/:id' element={<Settings/>}></Route>
         <Route path='/problem/:id' element={<ProblemPage/>}></Route> 
+        <Route path='/quiz/:id' element={<QuizPage/>}></Route> 
         <Route path='/openLab' element={<YourComponent/>}></Route>
         <Route path= '/temp' element={<Temp/>}></Route>
         <Route path= '/badges' element={<Badges/>}></Route>
