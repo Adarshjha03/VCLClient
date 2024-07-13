@@ -242,70 +242,72 @@ const QuizPage = () => {
                   <h2 className="text-lg pt-4 font-semibold mb-4 text-center sticky top-0 bg-white py-2 ">
                     Quiz Questions
                   </h2>
-                  {quiz.questions.map((question) => {
-                    const evaluation = quizEvaluation?.evaluation?.find(
-                      (q) => q.question_id === question.id
-                    );
-                    return (
-                      <div key={question.id} className="mb-6">
-                        <p
-                          className="mb-2 font-semibold"
-                          dangerouslySetInnerHTML={{ __html: question.text }}
-                        />
-                        {question.options.map((option) => {
-  const isCorrect =
-    evaluation?.correct_answers[
-      `is_option${option.id}_answer`
-    ];
-  const isSubmitted =
-    evaluation?.submitted_answers[
-      `is_option${option.id}_answer`
-    ];
-
+                  {quiz.questions.map((question, index) => {
+  const evaluation = quizEvaluation?.evaluation?.find(
+    (q) => q.question_id === question.id
+  );
   return (
-    <div
-      key={option.id}
-      className="flex items-start mb-1 "
-    >
-      <div className="flex-shrink-0 mt-1 mr-3">
-        <input
-          type="checkbox"
-          name={`question-${question.id}`}
-          id={`option-${option.id}`}
-          value={option.id}
-          checked={
-            userAnswers[question.id]?.includes(
-              option.id
-            ) || false
-          }
-          onChange={() =>
-            handleAnswerChange(question.id, option.id)
-          }
-          disabled={quizEvaluation !== null}
+    <div key={question.id} className="mb-6">
+      <div className="flex">
+        <span className="font-semibold mr-2 flex-shrink-0">Q{index + 1}.</span>
+        <div 
+          className="font-semibold"
+          dangerouslySetInnerHTML={{ __html: question.text }}
         />
       </div>
-      <label
-        htmlFor={`option-${option.id}`}
-        className={`text-sm flex-grow ${
-          quizEvaluation
-            ? isCorrect
-              ? "text-green-500 font-bold"
-              : isSubmitted
-              ? "text-red-500"
-              : ""
-            : ""
-        }`}
-      >
-        <div
-          dangerouslySetInnerHTML={{
-            __html: option.text,
-          }}
-        />
-      </label>
-    </div>
-  );
-})}
+                        {question.options.map((option) => {
+                          const isCorrect =
+                            evaluation?.correct_answers[
+                              `is_option${option.id}_answer`
+                            ];
+                          const isSubmitted =
+                            evaluation?.submitted_answers[
+                              `is_option${option.id}_answer`
+                            ];
 
+                          return (
+                            <div
+                              key={option.id}
+                              className="flex items-start mb-1 "
+                            >
+                              <div className="flex-shrink-0 mt-1 mr-3">
+                                <input
+                                  type="checkbox"
+                                  name={`question-${question.id}`}
+                                  id={`option-${option.id}`}
+                                  value={option.id}
+                                  checked={
+                                    userAnswers[question.id]?.includes(
+                                      option.id
+                                    ) || false
+                                  }
+                                  onChange={() =>
+                                    handleAnswerChange(question.id, option.id)
+                                  }
+                                  disabled={quizEvaluation !== null}
+                                />
+                              </div>
+                              <label
+                                htmlFor={`option-${option.id}`}
+                                className={`text-sm flex-grow ${
+                                  quizEvaluation
+                                    ? isCorrect
+                                      ? "text-green-500 font-bold"
+                                      : isSubmitted
+                                      ? "text-red-500"
+                                      : ""
+                                    : ""
+                                }`}
+                              >
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html: option.text,
+                                  }}
+                                />
+                              </label>
+                            </div>
+                          );
+                        })}
 
                         {quizEvaluation?.evaluation && (
                           <div
