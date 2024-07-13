@@ -253,62 +253,59 @@ const QuizPage = () => {
                           dangerouslySetInnerHTML={{ __html: question.text }}
                         />
                         {question.options.map((option) => {
-                          const isCorrect =
-                            evaluation?.correct_answers[
-                              `is_option${option.id}_answer`
-                            ];
-                          const isSubmitted =
-                            evaluation?.submitted_answers[
-                              `is_option${option.id}_answer`
-                            ];
+  const isCorrect =
+    evaluation?.correct_answers[
+      `is_option${option.id}_answer`
+    ];
+  const isSubmitted =
+    evaluation?.submitted_answers[
+      `is_option${option.id}_answer`
+    ];
 
-                          const showCheckbox = question.options.length > 3; // Condition to show checkbox
+  return (
+    <div
+      key={option.id}
+      className="flex items-start mb-1 "
+    >
+      <div className="flex-shrink-0 mt-1 mr-3">
+        <input
+          type="checkbox"
+          name={`question-${question.id}`}
+          id={`option-${option.id}`}
+          value={option.id}
+          checked={
+            userAnswers[question.id]?.includes(
+              option.id
+            ) || false
+          }
+          onChange={() =>
+            handleAnswerChange(question.id, option.id)
+          }
+          disabled={quizEvaluation !== null}
+        />
+      </div>
+      <label
+        htmlFor={`option-${option.id}`}
+        className={`text-sm flex-grow ${
+          quizEvaluation
+            ? isCorrect
+              ? "text-green-500 font-bold"
+              : isSubmitted
+              ? "text-red-500"
+              : ""
+            : ""
+        }`}
+      >
+        <div
+          dangerouslySetInnerHTML={{
+            __html: option.text,
+          }}
+        />
+      </label>
+    </div>
+  );
+})}
 
-                          return (
-                            <div
-                              key={option.id}
-                              className="flex items-start mb-1 "
-                            >
-                              {showCheckbox && ( // Conditional rendering of the checkbox
-                                <div className="flex-shrink-0 mt-1 mr-3">
-                                  <input
-                                    type="checkbox"
-                                    name={`question-${question.id}`}
-                                    id={`option-${option.id}`}
-                                    value={option.id}
-                                    checked={
-                                      userAnswers[question.id]?.includes(
-                                        option.id
-                                      ) || false
-                                    }
-                                    onChange={() =>
-                                      handleAnswerChange(question.id, option.id)
-                                    }
-                                    disabled={quizEvaluation !== null}
-                                  />
-                                </div>
-                              )}
-                              <label
-                                htmlFor={`option-${option.id}`}
-                                className={`text-sm flex-grow ${
-                                  quizEvaluation
-                                    ? isCorrect
-                                      ? "text-green-500 font-bold"
-                                      : isSubmitted
-                                      ? "text-red-500"
-                                      : ""
-                                    : ""
-                                }`}
-                              >
-                                <div
-                                  dangerouslySetInnerHTML={{
-                                    __html: option.text,
-                                  }}
-                                />
-                              </label>
-                            </div>
-                          );
-                        })}
 
                         {quizEvaluation?.evaluation && (
                           <div
