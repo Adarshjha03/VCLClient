@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import Modal from 'react-modal';
-import EditChallenge from './editChallenge';
+import EditQuiz from './editQuiz';
 import editImage from "./assets/edit.png";
 import { FaTimes } from 'react-icons/fa'; // Import the FaTimes cross icon from react-icons/fa
 
-const EditButton = ({ admin }) => {
-  const [isEditChallengeModalOpen, setEditChallengeModalOpen] = useState(false);
+const EditQButton = ({ admin }) => {
+  const [isEditQuizModalOpen, setEditQuizModalOpen] = useState(false);
 
-  const handleOpenEditChallengeModal = () => {
-    setEditChallengeModalOpen(true);
+  const handleOpenEditQuizModal = () => {
+    setEditQuizModalOpen(true);
   };
 
-  const handleCloseEditChallengeModal = () => {
-    setEditChallengeModalOpen(false);
+  const handleCloseEditQuizModal = () => {
+    setEditQuizModalOpen(false);
   };
 
   return (
@@ -20,8 +20,8 @@ const EditButton = ({ admin }) => {
       {admin && (
         <div>
           <Modal
-            isOpen={isEditChallengeModalOpen}
-            onRequestClose={handleCloseEditChallengeModal}
+            isOpen={isEditQuizModalOpen}
+            onRequestClose={handleCloseEditQuizModal}
             style={{
               overlay: {
                 backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -43,7 +43,7 @@ const EditButton = ({ admin }) => {
             shouldCloseOnOverlayClick={true}
           >
             <button
-              onClick={handleCloseEditChallengeModal}
+              onClick={handleCloseEditQuizModal}
               style={{
                 position: 'absolute',
                 top: '10px',
@@ -56,11 +56,11 @@ const EditButton = ({ admin }) => {
             >
               <FaTimes /> {/* Replace 'Close' text with FaTimes cross icon */}
             </button>
-            <EditChallenge />
+            <EditQuiz />
           </Modal>
-          <div onClick={handleOpenEditChallengeModal} className="flex items-center">
+          <div onClick={handleOpenEditQuizModal} className="flex items-center">
             <img src={editImage} alt="Edit" className="w-4 h-4 mr-2" />
-            Edit
+            Edit Quiz
           </div>
         </div>
       )}
@@ -68,4 +68,4 @@ const EditButton = ({ admin }) => {
   );
 };
 
-export default EditButton;
+export default EditQButton;

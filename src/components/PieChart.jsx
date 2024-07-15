@@ -24,7 +24,10 @@ const PieChart = ({ data }) => {
                 display: true,
                 position: 'right',
                 labels: {
-                    boxWidth: 20,
+                    boxWidth: 30, // width of the legend box
+                    font: {
+                        size: 14 // font size of the legend text
+                    }
                 },
             },
         },
@@ -33,8 +36,8 @@ const PieChart = ({ data }) => {
 
     return (
         <div className="flex items-center justify-center h-full space-x-2">
-            <div className=" h-fit">
-                <Pie data={chartData} options={options} />
+            <div className="w-[350px] h-[350px]"> {/* Set width and height of the container */}
+                <Pie data={chartData} options={options} width={400} height={400} /> {/* Set width and height of the pie chart */}
             </div>
         </div>
     );
