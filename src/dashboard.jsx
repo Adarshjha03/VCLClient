@@ -30,9 +30,9 @@ const Dashboard = () => {
         if (!token) {
           throw new Error("No token found");
         }
-        const response = await fetch(${backendUrl}/dashboard, {
+        const response = await fetch(`${backendUrl}/dashboard`, {
           headers: {
-            Authorization: Token ${token},
+            Authorization: `Token ${token}`,
           },
         });
         if (!response.ok) {
@@ -116,14 +116,14 @@ const Dashboard = () => {
                         key={index}
                         className="flex flex-col items-center space-y-2 "
                       >
-                        <a href={/profile/${user.username}}>
+                        <a href={`/profile/${user.username}`}>
                           <img
-                            src={https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/${user.avatar}.png}
-                            alt={Avatar of ${user.username}}
+                            src={`https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/${user.avatar}.png`}
+                            alt={`Avatar of ${user.username}`}
                             className="w-16 h-16 bg-gray-300 rounded-full"
                           />
                         </a>
-                        <a href={/profile/${user.username}}>
+                        <a href={`/profile/${user.username}`}>
                           <span>{user.username}</span>
                         </a>
                       </div>
