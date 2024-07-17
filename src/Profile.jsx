@@ -176,7 +176,7 @@ const ProfilePage = () => {
               <div className="w-1/2 flex items-center justify-center">
                 <div className="relative inline-block mr-4">
                   <img src={avatarImagePath} alt="User" className="w-20 h-20 rounded-full" />
-                  {CurrUser === id && (
+                  {CurrUser === id && !admin&&(
                     <div className="absolute top-14 right-0">
                       <button className="bg-blue-500 text-white rounded-full p-1" onClick={toggleAvatarModal}>
                         <FaEdit />

@@ -260,7 +260,7 @@ const Settings = () => {
                         <h3 className="text-xl font-bold mb-2">Profile</h3>
                         <div className="relative inline-block   mr-4 mb-2">
                 <img src={avatarImagePath} alt="User" className="w-24 h-24 rounded-full" />
-                {username=== id && (
+                {username=== id &&!admin&& (
                   <div className="absolute top-16 right-0">
                     <button className="bg-blue-500 text-white rounded-full p-1" onClick={toggleAvatarModal}>
                       <FaEdit />
