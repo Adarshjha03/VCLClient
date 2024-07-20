@@ -1,57 +1,53 @@
-@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 @import "slick-carousel/slick/slick.css";
 @import "slick-carousel/slick/slick-theme.css";
 
 #root {
-  font-family: 'Open Sans', 'sans-serif';
-
+  font-family: 'Poppins', 'sans-serif';
 }
 
-.input-box-shadow{
+.input-box-shadow {
   filter: drop-shadow(-4px -4px 44px rgba(0, 0, 0, 0.08));
 }
 
 .slick-prev:before, 
 .slick-next:before {
-     color: black;
-     font-size: 40px;
+  color: black;
+  font-size: 40px;
 }
 
-.slick-next:before{
+.slick-next:before {
   position: absolute;
-  right:0;
-   margin-top: -10px;
-   margin-right: 5px;
+  right: 0;
+  margin-top: -10px;
+  margin-right: 5px;
 }
 
 .slick-next,
-.slick-prev
-{
+.slick-prev {
   position: absolute;
-  right:0;
- }
+  right: 0;
+}
 
-.slick-prev{
+.slick-prev {
   z-index: 99999;
   margin-left: 25px;
 }
 
-.category-card:hover .arrow-icon{
+.category-card:hover .arrow-icon {
   fill: white;
 }
 
-.slick-arrow{
+.slick-arrow {
   position: absolute;
-  right:50;
+  right: 50;
   margin-right: 25px;
- }
+}
 
 .slick-dots {
-  @apply ml-[-10px] hidden
- }
-
-
+  @apply ml-[-10px] hidden;
+}
 
 
 /* #root {

@@ -7,10 +7,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Roboto', 'Poppins'],
+        sans: ['Poppins', 'Roboto', 'sans-serif'],
       },
     },
   },
   plugins: [],
 };
-

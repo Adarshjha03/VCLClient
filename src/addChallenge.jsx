@@ -513,7 +513,7 @@ const AddChallenge = () => {
               value={quizData.supportingMaterial}
               onChange={handleQuizChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-              required
+              
             />
           </div>
           <div className="mb-4">

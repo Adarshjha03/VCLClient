@@ -232,7 +232,7 @@ const EditQuiz = () => {
   ];
 
   return (
-    <div className="container mx-auto p-8">
+    <div className="container mx-auto p-8 z-100">
       <h1 className="text-2xl font-bold mb-4">Edit Quiz Challenge</h1>
       <form onSubmit={handleQuizSubmit}>
         <div className="mb-4">
@@ -300,7 +300,7 @@ const EditQuiz = () => {
             value={quizData.supportingMaterial}
             onChange={handleQuizChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-            required
+            
           />
         </div>
         <div className="mb-4">
