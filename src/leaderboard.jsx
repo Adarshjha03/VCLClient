@@ -11,7 +11,8 @@ const LeaderboardPage = () => {
     const [leaderboardData, setLeaderboardData] = useState([]);
     const [currentUser, setCurrentUser] = useState(null);
     const backendUrl = "https://api.virtualcyberlabs.com";
-
+    const [admin, setAdmin] = useState(false);
+    const [subAdmin, setSubAdmin] = useState(false);
     const handleTopicChange = (topicId) => {
         setSelectedTopic(topicId);
         localStorage.setItem("selectedTopic", topicId);
@@ -35,7 +36,8 @@ const LeaderboardPage = () => {
                 });
                 const userData = await userResponse.json();
                 setCurrentUser(userData);
-
+                setAdmin(userData.admin);
+        setSubAdmin(userData.subadmin); 
                 // Fetch leaderboard data
                 const leaderboardResponse = await fetch(`${backendUrl}/leaderboard`, {
                     headers: {
@@ -214,7 +216,7 @@ const LeaderboardPage = () => {
                                         {leaderboardData.slice(0, 10).map((user, index) => (
                                             renderLeaderboardEntry(user, index, currentUser && user.username === currentUser.username)
                                         ))}
-                                        {currentUser && !leaderboardData.slice(0, 10).some((user) => user.username === currentUser.username) && renderLeaderboardEntry(currentUser, null, true)}
+                                        {!admin &&currentUser && !leaderboardData.slice(0, 10).some((user) => user.username === currentUser.username) && renderLeaderboardEntry(currentUser, null, true)}
                                     </tbody>
                                 </table>
                             </div>

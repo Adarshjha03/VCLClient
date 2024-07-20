@@ -23,7 +23,9 @@
             "string": "cpp",
             "ostream": "cpp",
             "random": "cpp",
-            "vector": "cpp"
-        }
+            "vector": "cpp",
+            "__bit_reference": "cpp"
+        },
+        "cph.general.saveLocation": ""
     }
 }

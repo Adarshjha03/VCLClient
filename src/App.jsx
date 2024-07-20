@@ -18,6 +18,7 @@ import Intergraion from './Integration';
 import NotificationsPage from './notifications';
 import { Provider } from 'react-redux';
 //import store from './components/idesrc/store';
+import Placements from './Placements.jsx'
 import CodeEditor from './components/codeEditor/CodeEditor';
 import Dashboard from './dashboard';
 import QuizPage from './quiz';
@@ -41,6 +42,7 @@ const App = () => {
         <Route path= '/integration' element={<Intergraion/>}></Route>
         <Route path= '/ide-simulator' element={<CodeEditor/>}></Route>
         <Route path= '/notifications' element={<NotificationsPage/>}></Route>
+        <Route path= '/Placements' element={<Placements/>}></Route>
         <Route path= '/dashboard' element={<Dashboard/>}></Route>
       </Routes>
     </Router>

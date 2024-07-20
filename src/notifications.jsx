@@ -71,14 +71,17 @@ const NotificationsPage = () => {
     const now = new Date();
     const diffInMs = now - new Date(date);
     
+    const minutes = Math.floor(diffInMs / (1000 * 60));
     const hours = Math.floor(diffInMs / (1000 * 60 * 60));
     const days = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
     const months = Math.floor(diffInMs / (1000 * 60 * 60 * 24 * 30.44)); // Average days in a month
     const years = Math.floor(diffInMs / (1000 * 60 * 60 * 24 * 365.25)); // Accounting for leap years
   
-    if (hours < 24) {
+    if (minutes < 60) {
+      return `${minutes} ${minutes === 1 ? 'minute' : 'minutes'} ago`;
+    } else if (hours < 24) {
       return `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`;
-    } else if (days < 20) {
+    } else if (days < 30) {
       return `${days} ${days === 1 ? 'day' : 'days'} ago`;
     } else if (months < 12) {
       return `${months} ${months === 1 ? 'month' : 'months'} ago`;
