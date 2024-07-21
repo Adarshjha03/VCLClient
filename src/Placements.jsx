@@ -13,10 +13,12 @@ function Placements() {
 
   const [topics, setTopics] = useState([]);
   const [studyMaterials, setStudyMaterials] = useState([]);
+  const [filteredMaterials, setFilteredMaterials] = useState([]);
   const backendUrl = "https://api.virtualcyberlabs.com";
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchTopics = async () => {
@@ -54,6 +56,7 @@ function Placements() {
         }
         const data = await response.json();
         setStudyMaterials(data);
+        setFilteredMaterials(data); // Initialize filteredMaterials with all materials
       } catch (error) {
         setError(error.message);
       } finally {
@@ -76,6 +79,23 @@ function Placements() {
     setIsModalOpen(false);
   };
 
+  const handleSearch = (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    setSearchTerm(searchTerm);
+
+    const filtered = studyMaterials.filter((material) => {
+      const topicMatches = material.topic_name.toLowerCase().includes(searchTerm);
+      const materialMatches = material.study_materials.some(
+        (item) =>
+          item.name.toLowerCase().includes(searchTerm) ||
+          item.keywords.join(" ").toLowerCase().includes(searchTerm)
+      );
+      return topicMatches || materialMatches;
+    });
+
+    setFilteredMaterials(filtered);
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -85,29 +105,27 @@ function Placements() {
   }
 
   return (
-    <div className="flex h-screen font-sans relative">
+    <div className="flex h-screen font-sans">
       <Sidebar
         onTopicSelect={handleTopicChange}
         activeTopic={selectedTopic}
         topics={topics}
       />
-      <div
-        className="flex-1"
-        style={{ background: "#e0efee", overflowY: "hidden" }}
-      >
+      <div className="flex-1" style={{ background: "#e0efee", overflowY: "hidden" }}>
         <Navbar style={{ position: "fixed", width: "100%", zIndex: 1000 }} />
 
-        <div
-          className="p-4"
-          style={{
-            marginTop: "5px",
-            overflowY: "auto",
-            height: "calc(100vh - 60px)",
-          }}
-        >
+        <div className="p-4">
           <h1 className="text-2xl font-bold mb-4">Study Materials</h1>
-          <table className="min-w-full bg-white">
-            <thead>
+          <input
+            type="text"
+            placeholder="Search by keyword or topic name"
+            value={searchTerm}
+            onChange={handleSearch}
+            className="p-2 border rounded-md mb-4"
+          />
+
+          <table className="min-w-full bg-white shadow-md rounded-md overflow-hidden">
+            <thead className="bg-gray-200">
               <tr>
                 <th className="py-2 px-4 border-b">Topic Name</th>
                 <th className="py-2 px-4 border-b">Material Name</th>
@@ -117,40 +135,32 @@ function Placements() {
               </tr>
             </thead>
             <tbody>
-              {studyMaterials
-                .filter((material) => material.topic === selectedTopic)
-                .map((material) => (
-                  <tr key={material.id}>
-                    <td className="py-2 px-4 border-b">{material.topic_name}</td>
-                    <td className="py-2 px-4 border-b">{material.name || "N/A"}</td>
+              {filteredMaterials.map((material) =>
+                material.study_materials.map((item, index) => (
+                  <tr key={`${material.id}-${index}`}>
+                    {index === 0 && (
+                      <td className="py-2 px-4 border-b" rowSpan={material.study_materials.length}>
+                        {material.topic_name}
+                      </td>
+                    )}
+                    <td className="py-2 px-4 border-b">{item.name || "N/A"}</td>
                     <td className="py-2 px-4 border-b">
                       <a
-                        href={material.link}
+                        href={item.link}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-500"
                       >
-                        {material.link || "N/A"}
+                        {item.link || "N/A"}
                       </a>
                     </td>
                     <td className="py-2 px-4 border-b">
-                      {material.keywords ? material.keywords.join(", ") : "N/A"}
+                      {item.keywords ? item.keywords.join(", ") : "N/A"}
                     </td>
-                    <td className="py-2 px-4 border-b">{material.updated_date || "N/A"}</td>
+                    <td className="py-2 px-4 border-b">{item.updated_at || "N/A"}</td>
                   </tr>
-                ))}
-              {studyMaterials
-                .filter((material) => material.topic === selectedTopic)
-                .filter((material) => !material.name)
-                .map((material) => (
-                  <tr key={material.id}>
-                    <td className="py-2 px-4 border-b">{material.topic_name}</td>
-                    <td className="py-2 px-4 border-b">N/A</td>
-                    <td className="py-2 px-4 border-b">N/A</td>
-                    <td className="py-2 px-4 border-b">N/A</td>
-                    <td className="py-2 px-4 border-b">N/A</td>
-                  </tr>
-                ))}
+                ))
+              )}
             </tbody>
           </table>
         </div>
