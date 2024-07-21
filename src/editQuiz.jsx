@@ -68,6 +68,12 @@ const EditQuiz = () => {
       [field]: content,
     }));
   };
+  const handleShowResponseToggle = () => {
+    setQuizData((prevData) => ({
+      ...prevData,
+      showResponse: !prevData.showResponse,
+    }));
+  };
 
   const updateQuestionText = (questionid, content) => {
     setQuizData((prevData) => ({
@@ -322,7 +328,15 @@ const EditQuiz = () => {
             ))}
           </select>
         </div>
-        
+         <div className="mb-4 flex items-center">
+          <label className="block text-gray-700 text-sm font-bold mr-2">
+            Show Response
+          </label>
+          <Switch
+            checked={quizData.showResponse}
+            onChange={handleShowResponseToggle}
+          />
+        </div>
         <h2 className="text-xl font-bold mb-2">Questions</h2>
         {quizData.questions.map((question, questionIndex) => (
   <div

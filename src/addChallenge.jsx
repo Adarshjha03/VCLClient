@@ -32,6 +32,7 @@ const AddChallenge = () => {
     quizInformation: "",
     supportingMaterial: "" ,
     marksPerQuestion: 2,
+    showResponse: true,
     topic: "",
     questions: [
       {
@@ -535,7 +536,19 @@ const AddChallenge = () => {
               ))}
             </select>
           </div>
-          
+          <div className="flex items-center mt-2 mb-2">
+            <label className="block text-gray-700 text-sm font-bold mr-2">
+              Show Response
+            </label>
+            <label className="flex items-center mt-1">
+              <Switch
+                checked={quizData.showResponse}
+                onChange={handleQuizChange}
+                color="primary" // You can customize the color if needed
+              />
+            </label>
+
+          </div>
           {quizData.questions.map((question) => (
   <div key={question.id} className="mb-8 p-4 border rounded relative">
     <div className="mb-4">
