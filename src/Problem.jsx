@@ -203,8 +203,6 @@ const ProblemPage = () => {
                 admin={subAdmin}
               />)}
             </div>
-
-            {/* Challenge Details */}
             <div className="grid grid-cols-2 gap-8">
               {/* Open the Virtual Lab */}
 
