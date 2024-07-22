@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { FaTachometerAlt, FaCheck, FaStar, FaRedoAlt } from "react-icons/fa";
+import {
+  FaTachometerAlt,
+  FaFileDownload,
+  FaCheck,
+  FaStar,
+  FaRedoAlt,
+} from "react-icons/fa";
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/navbar1";
@@ -72,6 +78,43 @@ const QuizPage = () => {
     };
     fetchData();
   }, [id]);
+
+  const handleDownload = async () => {
+    try {
+      const token = localStorage.getItem("Token");
+      const response = await fetch(`${backendUrl}/export_quiz/${id}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to download file.");
+      }
+
+      // Convert the response to a blob
+      const blob = await response.blob();
+
+      // Create a temporary URL for the blob
+      const url = window.URL.createObjectURL(blob);
+
+      // Create a temporary anchor element and trigger the download
+      const a = document.createElement("a");
+      a.style.display = "none";
+      a.href = url;
+      a.download = ""; // This will use the filename provided by the server
+      document.body.appendChild(a);
+      a.click();
+
+      // Clean up
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error("Error downloading file:", error);
+      // You might want to show an error message to the user here
+    }
+  };
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -174,7 +217,16 @@ const QuizPage = () => {
         <div className="flex flex-1 overflow-hidden">
           <div className="w-1/4 bg-white overflow-y-auto p-4 border-r flex flex-col h-full">
             <div className="flex-grow">
-              <h1 className="text-2xl font-bold mb-4">{quiz.name}</h1>
+              <h1 className="flex items-center justify-between text-2xl font-bold mb-4">
+                <span>{quiz.name}</span>
+                {admin && (
+                  <FaFileDownload
+                    className="text-lg text-blue-900 cursor-pointer ml-2"
+                    onClick={handleDownload}
+                    title="Download Responses"
+                  />
+                )}
+              </h1>
               <div className="flex justify-between mb-4">
                 <div className="flex items-center">
                   <FaTachometerAlt className="text-orange-400 mr-2" />
