@@ -196,12 +196,14 @@ const ProblemPage = () => {
               {admin && (
                 <EditButton admin={subAdmin} /> // Use the subAdmin value instead of admin
               )}
-             {admin &&( <FaFileDownload
-                className="text-lg text-blue-900 cursor-pointer"
-                onClick={handleDownload}
-                title="Download Responses"
-                admin={subAdmin}
-              />)}
+              {admin && (
+                <FaFileDownload
+                  className="text-lg text-blue-900 cursor-pointer"
+                  onClick={handleDownload}
+                  title="Download Responses"
+                  admin={subAdmin}
+                />
+              )}
             </div>
             <div className="grid grid-cols-2 gap-8">
               {/* Open the Virtual Lab */}
@@ -250,32 +252,29 @@ const ProblemPage = () => {
                     </div>
                   </div>
                   <div className="flex flex-col items-center">
-                    <button
-                      className="bg-white font-semibold text-003366 px-4 py-2 rounded hover:bg-blue-200"
-                      onClick={requestVirtualMachine}
-                      disabled={isLoading}
-                    >
-                      {isLoading ? "Loading..." : "Start Virtual Lab"}
-                    </button>
-                    {vmData && (
-                      <div className="mt-2 text-center text-blue-900">
-                        <p className="text-blue-900">
-                          URL:{" "}
-                          <a
-                            href={vmData.vm_url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-500 text-sm font-semibold"
-                          >
-                            {vmData.vm_url}
-                          </a>
-                        </p>
-                        <p className="font-semibold">
-                          Password: {vmData.password}
-                        </p>
-                      </div>
-                    )}
-                  </div>
+  <button
+    className="bg-white font-semibold text-003366 px-4 py-2 rounded hover:bg-blue-200"
+    onClick={() => {
+      if (challenge.lab_link) {
+        window.open(challenge.lab_link, "_blank");
+      } else if (vmData && vmData.vm_url) {
+        window.open(vmData.vm_url, "_blank");
+      } else {
+        requestVirtualMachine();
+      }
+    }}
+    disabled={isLoading}
+  >
+    {isLoading ? "Loading..." : vmData && vmData.vm_url ? "Open Virtual Lab" : "Start Virtual Lab"}
+  </button>
+  {vmData && vmData.password && (
+    <div className="mt-2 text-center text-blue-900">
+      <p className="font-semibold">
+        Password: {vmData.password}
+      </p>
+    </div>
+  )}
+</div>
                 </div>
               </div>
 

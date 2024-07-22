@@ -11,7 +11,6 @@ import { TailSpin } from "react-loader-spinner";
 import { FaPlus, FaTrash } from "react-icons/fa";
 import AddVideos from "./addVideos";
 import Switch from "@mui/material/Switch";
-
 const HomePage = () => {
   const [selectedTopic, setSelectedTopic] = useState(() => {
     const storedTopic = localStorage.getItem("selectedTopic");
@@ -318,7 +317,8 @@ return (
                 <div className="flex-grow">
                   <div className="flex justify-between items-center">
                     <h3 className="text-white text-lg font-semibold ">
-                      {quiz.name}
+                      {quiz.name} 
+
                     </h3>
                     <span
                       className="text-sm font-bold text-black bg-white px-2 py-1 rounded-md"
