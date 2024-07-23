@@ -28,7 +28,7 @@ const HomePage = () => {
   const [subAdmin, setSubAdmin] = useState(false);
   const [isAddChallengeModalOpen, setAddChallengeModalOpen] = useState(false);
   const [isAddVideosModalOpen, setAddVideosModalOpen] = useState(false);
-  const [showChallenges, setShowChallenges] = useState(false);
+  const [showChallenges, setShowChallenges] = useState(true);
   const [quizzes, setQuizzes] = useState([]);
 
   const handleSearch = (filteredProblems) => {
