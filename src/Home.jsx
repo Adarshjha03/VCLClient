@@ -196,16 +196,43 @@ return (
           height: "calc(100vh - 60px)",
         }}
       >
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold uppercase">{activeTopicName}</h2>
-          {problems.length > 0 && quizzes.length > 0 && (
-            <div className="flex items-center">
-              <span className="mr-2 font-semibold">Quizzes</span>
-              <Switch checked={showChallenges} onChange={handleToggleChange} />
-              <span className="ml-2 font-semibold">Labs</span>
-            </div>
-          )}
+       <div className="flex justify-between items-center mb-4">
+  <div className="flex items-center">
+    <h2 className="text-2xl font-bold mb-2 mr-4">
+      {selectedTopic === 0 || activeTopicName === "All Problems" ? (
+        <>
+          All Problems
+          {showChallenges ? " - Labs" : " - Quizzes"}
+        </>
+      ) : (
+        <>
+          {activeTopicName}
+          {showChallenges ? " - Labs" : " - Quizzes"}
+        </>
+      )}
+    </h2>
+    {subAdmin &&
+      (selectedTopic === 0 || activeTopicName === "All Problems") && (
+        <div
+          onClick={handleOpenAddChallengeModal}
+          className="cursor-pointer "
+        >
+          <img
+            src={addImage}
+            alt="Add"
+            style={{ width: "20px", height: "20px" }}
+          />
         </div>
+      )}
+  </div>
+  {problems.length > 0 && quizzes.length > 0 && (
+    <div className="flex items-center">
+      <span className="mr-2 font-semibold">Quizzes</span>
+      <Switch checked={showChallenges} onChange={handleToggleChange} />
+      <span className="ml-2 font-semibold">Labs</span>
+    </div>
+  )}
+</div>
         <div className="m-4">
           <SearchBar problems={constproblems} onSearch={handleSearch} />
         </div>
@@ -286,7 +313,7 @@ return (
                       {problem.name}
                     </h3>
                     <span
-                      className="text-sm font-bold text-black bg-white px-2 py-1 rounded-md"
+                      className="text-sm font-bold text-white px-2 py-1 rounded-md"
                       style={{ marginLeft: "8px", alignSelf: "flex-start" }}
                     >
                       {problem.difficulty}
@@ -387,19 +414,7 @@ return (
           </div>
         )}
 
-        {subAdmin &&
-          (selectedTopic === 0 || activeTopicName === "All Problems") && (
-            <div
-              onClick={handleOpenAddChallengeModal}
-              className="absolute bottom-4 right-4 cursor-pointer"
-            >
-              <img
-                src={addImage}
-                alt="Add"
-                style={{ width: "50px", height: "50px" }}
-              />
-            </div>
-          )}
+        
 
 {admin &&
           !(selectedTopic === 0 || activeTopicName === "All Problems") && (

@@ -6,8 +6,8 @@ const TopLabsTable = ({ data }) => {
             <thead>
                 <tr>
                     <th className=" border-y px-4 py-2">Category</th>
-                    <th className="border-y px-4 py-2 text-center">Lab Most Solved</th>
-                    <th className="border-y px-4 py-2 text-right">Num Solves</th>
+                    <th className="border-y px-4 py-2 text-center">Problems Most Solved</th>
+                    <th className="border-y px-4 py-2 text-right">Total Solves</th>
                 </tr>
             </thead>
             <tbody>
