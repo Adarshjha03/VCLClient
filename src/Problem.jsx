@@ -253,7 +253,7 @@ const ProblemPage = () => {
                   </div>
                   <div className="flex flex-col items-center">
   <button
-    className="bg-white font-semibold text-003366 px-4 py-2 rounded hover:bg-blue-200"
+    className="bg-white font-semibold text-black px-4 py-2 rounded hover:bg-blue-200"
     onClick={() => {
       if (challenge.lab_link) {
         window.open(challenge.lab_link, "_blank");
