@@ -8,6 +8,7 @@ const SearchBar = ({ problems, onSearch }) => {
     const [difficultyDropdownOpen, setDifficultyDropdownOpen] = useState(false);
     const [solvedDropdownOpen, setSolvedDropdownOpen] = useState(false);
     const [filterOpen, setFilterOpen] = useState(false);
+    const [hoveredButton, setHoveredButton] = useState(null);
     const difficultyRef = useRef(null);
     const solvedRef = useRef(null);
     const filterRef = useRef(null);
@@ -56,6 +57,19 @@ const SearchBar = ({ problems, onSearch }) => {
         };
     }, []);
 
+    const buttonStyles = (color) => ({
+        background: hoveredButton === color ? color : 'white',
+        transition: 'all 0.3s ease',
+        width: '100px',
+        whiteSpace: 'nowrap',
+    });
+
+    const hoverStyles = {
+        hard: 'linear-gradient(to right, #f43150, #f2512e)',
+        medium: 'linear-gradient(to right, #f95b37, #fca339)',
+        easy: 'linear-gradient(to right, #26c585, #24c6c0)',
+    };
+
     return (
         <div className="flex justify-center mt-6">
             <div className="flex items-center bg-white rounded-md shadow-md p-2 w-full max-w-2xl">
@@ -77,56 +91,63 @@ const SearchBar = ({ problems, onSearch }) => {
                     {filterOpen && (
                         <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-10" ref={filterRef}>
                             <div className="px-4 py-2">
-                             
                                 <button
+                                    onMouseEnter={() => setHoveredButton(hoverStyles.hard)}
+                                    onMouseLeave={() => setHoveredButton(null)}
                                     onClick={() => handleDifficultyChange("HARD")}
-                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 hover:bg-gray-200 text-sm"
+                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 text-sm"
+                                    style={buttonStyles(hoverStyles.hard)}
                                 >
                                     HARD
                                 </button>
                                 <button
+                                    onMouseEnter={() => setHoveredButton(hoverStyles.medium)}
+                                    onMouseLeave={() => setHoveredButton(null)}
                                     onClick={() => handleDifficultyChange("MEDIUM")}
-                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 hover:bg-gray-200 text-sm"
+                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 text-sm"
+                                    style={buttonStyles(hoverStyles.medium)}
                                 >
                                     MEDIUM
                                 </button>
                                 <button
+                                    onMouseEnter={() => setHoveredButton(hoverStyles.easy)}
+                                    onMouseLeave={() => setHoveredButton(null)}
                                     onClick={() => handleDifficultyChange("EASY")}
-                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 hover:bg-gray-200 text-sm"
+                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 text-sm"
+                                    style={buttonStyles(hoverStyles.easy)}
                                 >
                                     EASY
                                 </button>
                                 <button
                                     onClick={() => handleDifficultyChange("")}
-                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 hover:bg-gray-200 text-sm"
+                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 text-sm"
+                                    style={buttonStyles('white')}
                                 >
                                     ALL Difficulty
                                 </button>
                                 <button
                                     onClick={() => handleSolvedChange("SOLVED")}
-                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 hover:bg-gray-200 text-sm"
+                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 text-sm"
                                 >
                                     SOLVED
                                 </button>
                                 <button
                                     onClick={() => handleSolvedChange("UNSOLVED")}
-                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 hover:bg-gray-200 text-sm"
+                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 text-sm"
                                 >
                                     UNSOLVED
                                 </button>
                                 <button
                                     onClick={() => handleSolvedChange("")}
-                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 hover:bg-gray-200 text-sm"
+                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 text-sm"
                                 >
-                                    SOlVED & UNSOLVED
+                                    SOLVED & UNSOLVED
                                 </button>
                             </div>
-                            
                         </div>
                     )}
                 </div>
-                {/* <div className={` hidden md-flex   items-center md:block`}> */}
-                <div className={`md:block  md:flex hidden`}>
+                <div className="md:block md:flex hidden">
                     <div className="relative mx-2">
                         <button
                             onClick={() => setDifficultyDropdownOpen(!difficultyDropdownOpen)}
@@ -138,26 +159,36 @@ const SearchBar = ({ problems, onSearch }) => {
                         {difficultyDropdownOpen && (
                             <div className="absolute mt-2 w-100 items-center bg-white rounded-lg shadow-lg" ref={difficultyRef}>
                                 <button
+                                    onMouseEnter={() => setHoveredButton(hoverStyles.hard)}
+                                    onMouseLeave={() => setHoveredButton(null)}
                                     onClick={() => handleDifficultyChange("HARD")}
-                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 hover:bg-gray-200 text-sm"
+                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 text-sm"
+                                    style={buttonStyles(hoverStyles.hard)}
                                 >
                                     HARD
                                 </button>
                                 <button
+                                    onMouseEnter={() => setHoveredButton(hoverStyles.medium)}
+                                    onMouseLeave={() => setHoveredButton(null)}
                                     onClick={() => handleDifficultyChange("MEDIUM")}
-                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 hover:bg-gray-200 text-sm"
+                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 text-sm"
+                                    style={buttonStyles(hoverStyles.medium)}
                                 >
                                     MEDIUM
                                 </button>
                                 <button
+                                    onMouseEnter={() => setHoveredButton(hoverStyles.easy)}
+                                    onMouseLeave={() => setHoveredButton(null)}
                                     onClick={() => handleDifficultyChange("EASY")}
-                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 hover:bg-gray-200 text-sm"
+                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 text-sm"
+                                    style={buttonStyles(hoverStyles.easy)}
                                 >
                                     EASY
                                 </button>
                                 <button
                                     onClick={() => handleDifficultyChange("")}
-                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 hover:bg-gray-200 text-sm"
+                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 text-sm"
+                                    style={buttonStyles('white')}
                                 >
                                     ALL
                                 </button>
@@ -176,19 +207,19 @@ const SearchBar = ({ problems, onSearch }) => {
                             <div className="absolute mt-2 w-100 bg-white rounded-lg shadow-lg" ref={solvedRef}>
                                 <button
                                     onClick={() => handleSolvedChange("SOLVED")}
-                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 hover:bg-gray-200 text-sm"
+                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 text-sm"
                                 >
                                     SOLVED
                                 </button>
                                 <button
                                     onClick={() => handleSolvedChange("UNSOLVED")}
-                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 hover:bg-gray-200 text-sm"
+                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 text-sm"
                                 >
                                     UNSOLVED
                                 </button>
                                 <button
                                     onClick={() => handleSolvedChange("")}
-                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 hover:bg-gray-200 text-sm"
+                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 text-sm"
                                 >
                                     ALL
                                 </button>
