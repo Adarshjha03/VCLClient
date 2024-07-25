@@ -10,11 +10,16 @@ const PieChart = ({ data }) => {
         datasets: [{
             data: data.map(item => item.num_labs),
             backgroundColor: [
-                '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'
+                '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', 
+                '#9966FF', '#FF9F40', '#8A2BE2', '#00FA9A',
+                '#FFD700', '#DC143C'
             ],
             hoverBackgroundColor: [
-                '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'
+                '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', 
+                '#9966FF', '#FF9F40', '#8A2BE2', '#00FA9A',
+                '#FFD700', '#DC143C'
             ]
+            
         }]
     };
 

@@ -252,21 +252,25 @@ const ProblemPage = () => {
                     </div>
                   </div>
                   <div className="flex flex-col items-center">
-  <button
-    className="bg-white font-semibold text-black px-4 py-2 rounded hover:bg-blue-200"
-    onClick={() => {
-      if (challenge.lab_link) {
-        window.open(challenge.lab_link, "_blank");
-      } else if (vmData && vmData.vm_url) {
-        window.open(vmData.vm_url, "_blank");
-      } else {
-        requestVirtualMachine();
-      }
-    }}
-    disabled={isLoading}
-  >
-    {isLoading ? "Loading..." : vmData && vmData.vm_url ? "Open Virtual Lab" : "Start Virtual Lab"}
-  </button>
+                  <button
+  className={`font-semibold px-4 py-2 rounded ${
+    vmData && vmData.vm_url
+      ? 'bg-blue-900 text-white'
+      : 'bg-white text-003366 hover:bg-blue-200'
+  }`}
+  onClick={() => {
+    if (challenge.lab_link) {
+      window.open(challenge.lab_link, "_blank");
+    } else if (vmData && vmData.vm_url) {
+      window.open(vmData.vm_url, "_blank");
+    } else {
+      requestVirtualMachine();
+    }
+  }}
+  disabled={isLoading}
+>
+  {isLoading ? "Loading..." : vmData && vmData.vm_url ? "Open Virtual Lab" : "Start Virtual Lab"}
+</button>
   {vmData && vmData.password && (
     <div className="mt-2 text-center text-blue-900">
       <p className="font-semibold">

@@ -84,7 +84,7 @@ const Dashboard = () => {
           <div className="flex flex-col md:flex-row mb-6 gap-6">
             <div className="w-full md:w-5/12 h-[40vh] bg-gray-100 rounded-lg p-3">
               <h3 className="text-xl font-bold  text-center">
-                Lab Distribution
+                Problems Distribution
               </h3>
               <PieChart data={labsPerCategory} />
             </div>
