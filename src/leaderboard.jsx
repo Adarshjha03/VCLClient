@@ -4,7 +4,11 @@ import { FaBars, FaGithub, FaBookOpen, FaLinkedin } from "react-icons/fa";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/navbar1";
 import medal from "./assets/medal.png";
+import rank2coin from './components/rank2coin.png';
+import rank1coin from './components/rank1coin.png';
+import rank3coin from './components/rank3coin.png';
 import "./leaderboard.css";
+
 const LeaderboardPage = () => {
     const [showMenu, setShowMenu] = useState(false);
     const [selectedTopic, setSelectedTopic] = useState(0);
@@ -13,6 +17,7 @@ const LeaderboardPage = () => {
     const backendUrl = "https://api.virtualcyberlabs.com";
     const [admin, setAdmin] = useState(false);
     const [subAdmin, setSubAdmin] = useState(false);
+
     const handleTopicChange = (topicId) => {
         setSelectedTopic(topicId);
         localStorage.setItem("selectedTopic", topicId);
@@ -37,7 +42,8 @@ const LeaderboardPage = () => {
                 const userData = await userResponse.json();
                 setCurrentUser(userData);
                 setAdmin(userData.admin);
-        setSubAdmin(userData.subadmin); 
+                setSubAdmin(userData.subadmin);
+
                 // Fetch leaderboard data
                 const leaderboardResponse = await fetch(`${backendUrl}/leaderboard`, {
                     headers: {
@@ -53,9 +59,16 @@ const LeaderboardPage = () => {
 
         fetchData();
     }, []);
-
+    const getValidUrl = (url) => {
+        if (url.startsWith('http://') || url.startsWith('https://')) {
+            return url;
+        }
+        return `https://${url}`;
+    };
     const renderLeaderboardEntry = (user, index, isCurrentUser) => {
-        const userRank = isCurrentUser ? leaderboardData.findIndex((u) => u.username === currentUser.username) + 1 : index + 1;
+        const userRank = isCurrentUser
+            ? leaderboardData.findIndex((u) => u.username === currentUser.username) + 1
+            : index + 1;
         const hasSocialLinks = user.github_url || user.portfolio_url || user.linkedin_url;
 
         const getValidUrl = (url) => {
@@ -68,10 +81,9 @@ const LeaderboardPage = () => {
         return (
             <tr
                 key={user.user_id}
-                className={`border-b border-gray-400 ${isCurrentUser ? "bg-blue-300 text-black" : "text-white"} hover:bg-blue-400`}
+                className={`border-b border-gray-700 ${isCurrentUser ? "bg-blue-100 text-blue-700" : "text-blue-700"} hover:bg-blue-200`}
             >
                 <td className="text-left px-4 py-2 flex items-center">
-                    <span className="mr-2">#{userRank}</span>
                     <div className="flex items-center">
                         <div className="w-10 h-10 rounded-full shadow-sm overflow-hidden mr-2">
                             <img
@@ -82,12 +94,13 @@ const LeaderboardPage = () => {
                         </div>
                         <Link
                             to={`/profile/${user.username}`}
-                            className={`font-semibold link-hover ${isCurrentUser ? "text-black" : "text-blue-100"}`}
+                            className={`font-semibold link-hover ${isCurrentUser ? "text-blue-700" : "text-blue-700"}`}
                         >
                             {user.first_name} {user.last_name}
                         </Link>
                     </div>
                 </td>
+                <td className="text-center px-4 bg-blue-200 py-2">{userRank}</td> {/* Removed background color */}
                 <td className="text-center px-4 py-2">
                     <div className="flex justify-center">
                         {hasSocialLinks ? (
@@ -113,7 +126,7 @@ const LeaderboardPage = () => {
                         )}
                     </div>
                 </td>
-                <td className={`font-semibold hover-text ${isCurrentUser ? "text-black" : "text-white"} text-center`}>
+                <td className={`font-semibold hover-text ${isCurrentUser ? "text-blue-700" : "text-blue-700"} text-center`}>
                     {user.total_score}
                     <span className="text-xs font-normal"></span>
                 </td>
@@ -128,7 +141,6 @@ const LeaderboardPage = () => {
                                         className="w-12 h-12 object-cover rounded-full  transition-transform duration-200 ease-in-out group-hover:scale-150"
                                         style={{ position: 'relative', zIndex: 1 }}
                                     />
-                                   
                                 </div>
                             ))}
                         </div>
@@ -139,6 +151,7 @@ const LeaderboardPage = () => {
             </tr>
         );
     };
+
 
     return (
         <div className="flex h-screen font-sans-relative">
@@ -152,78 +165,165 @@ const LeaderboardPage = () => {
                 <div className="page-content" style={{ paddingTop: "2px" }}>
                     <h2 className="text-2xl font-bold mt-6 ml-10 text-[#000930]">LEADERBOARD<img src={medal} alt="Medal" className="inline-block w-8 h-8 ml-2" /></h2>
                     <div className="container mx-auto px-10 py-4">
-                        <div className="top-player-container flex justify-center items-center mb-8">
+                        <div className="top-player-container flex justify-between items-center mb-8">
                             {/* Second Place */}
-                            <div className="w-1/6 h-56 rounded-lg shadow-md bg-[#f6f1ff] p-4 flex flex-col justify-between items-center top-player-card-2">
-                                <p className="text-xl font-semibold"><span className="text-lg">#2 </span>{leaderboardData[1]?.first_name}</p>
-                                <div className="w-20 h-20 rounded-full shadow-sm overflow-hidden mb-2">
-                                    <Link to={`/profile/${leaderboardData[1]?.username}`} className="text-sm">
-                                        <img
-                                            src={`https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/${leaderboardData[1]?.avatar}.png`}
-                                            alt="Avatar"
-                                            className="w-full h-full object-cover"
-                                        />
-                                    </Link>
+                            <div className="w-1/4 h-40 rounded-lg shadow-md bg-[#795CFF] p-4 flex flex-col justify-between items-start top-player-card-2 ml-24 relative">
+                                <div className="flex items-center mb-2">
+                                    <div className="w-18 h-18 rounded-full shadow-sm overflow-hidden mr-4">
+                                        <Link to={`/profile/${leaderboardData[1]?.username}`} className="text-sm">
+                                            <img
+                                                src={`https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/${leaderboardData[1]?.avatar}.png`}
+                                                alt="Avatar"
+                                                className="w-full h-full object-cover border border-2"
+                                                style={{ borderRadius: "50%", borderColor: "#FFD700" }}
+                                            />
+                                        </Link>
+                                    </div>
+                                    <div>
+                                        <p className="text-xl font-semibold text-white">{leaderboardData[1]?.first_name}</p>
+                                        <p className="text-sm text-white">@{leaderboardData[1]?.username}</p>
+                                        <div className="mt-2 flex space-x-2">
+                                            {leaderboardData[1]?.github_url && (
+                                                <a href={getValidUrl(leaderboardData[1]?.github_url)} target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300">
+                                                    <FaGithub />
+                                                </a>
+                                            )}
+                                            {leaderboardData[1]?.portfolio_url && (
+                                                <a href={getValidUrl(leaderboardData[1]?.portfolio_url)} target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300">
+                                                    <FaBookOpen />
+                                                </a>
+                                            )}
+                                            {leaderboardData[1]?.linkedin_url && (
+                                                <a href={getValidUrl(leaderboardData[1]?.linkedin_url)} target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300">
+                                                    <FaLinkedin />
+                                                </a>
+                                            )}
+                                        </div>
+                                    </div>
                                 </div>
-                                <p className="text-sm">@{leaderboardData[1]?.username}</p>
-                                <p>{leaderboardData[1]?.total_score} pts</p>
+                                <div className="absolute w-28 h-10 bg-white bg-opacity-50 rounded-r-full flex items-center justify-center top-28 left-0">
+                {/* <img src={rank2coin} alt="Rank 2 Coin" className="w-16 h-16 mr-2" /> */}
+                <span className="text-lg font-semibold text-white">{leaderboardData[1]?.total_score} pts</span>
+            </div>
+
+            <div className="absolute w-10 h-10 bg-white bg-opacity-50 rounded-full flex items-center justify-center top-2 right-2">
+                {/* <img src={rank2coin} alt="Rank 2 Coin" className="w-16 h-16 mr-2" /> */}
+                <span className="text-lg font-semibold text-white">2</span>
+            </div>
                             </div>
-                            <div className="w-1/5 h-64 rounded-lg shadow-lg bg-[#fff9e0] p-4 flex flex-col justify-between items-center top-player-card-1">
-                                <p className="text-xl font-semibold"><span className="text-lg">#1 </span>{leaderboardData[0]?.first_name}</p>
-                                <div className="w-24 h-24 rounded-full shadow-sm overflow-hidden">
-                                    <Link to={`/profile/${leaderboardData[0]?.username}`} className="text-sm">
-                                        <img
-                                            src={`https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/${leaderboardData[0]?.avatar}.png`}
-                                            alt="Avatar"
-                                            className="w-full h-full object-cover border border-2"
-                                            style={{ borderRadius: "50%", borderColor: "#FFD700" }}
-                                        />
-                                    </Link>
+                            {/* First Place */}
+                            <div className="w-1/4 h-44 rounded-lg shadow-lg bg-[#ff824c] p-4 flex flex-col justify-between items-start top-player-card-1 mx-1 relative">
+                                <div className="flex items-center mb-2">
+                                    <div className="w-18 h-18 rounded-full shadow-sm overflow-hidden mr-4">
+                                        <Link to={`/profile/${leaderboardData[0]?.username}`} className="text-sm">
+                                            <img
+                                                src={`https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/${leaderboardData[0]?.avatar}.png`}
+                                                alt="Avatar"
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </Link>
+                                    </div>
+                                    <div>
+                                        <p className="text-xl font-semibold text-white">{leaderboardData[0]?.first_name}</p>
+                                        <p className="text-sm text-white">@{leaderboardData[0]?.username}</p>
+                                        <div className="mt-2 flex space-x-2">
+                                            {leaderboardData[0]?.github_url && (
+                                                <a href={getValidUrl(leaderboardData[0]?.github_url)} target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300">
+                                                    <FaGithub />
+                                                </a>
+                                            )}
+                                            {leaderboardData[0]?.portfolio_url && (
+                                                <a href={getValidUrl(leaderboardData[0]?.portfolio_url)} target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300">
+                                                    <FaBookOpen />
+                                                </a>
+                                            )}
+                                            {leaderboardData[0]?.linkedin_url && (
+                                                <a href={getValidUrl(leaderboardData[0]?.linkedin_url)} target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300">
+                                                    <FaLinkedin />
+                                                </a>
+                                            )}
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <p className="text-sm">@{leaderboardData[0]?.username}</p>
-                                <p className="font-semibold">{leaderboardData[0]?.total_score} pts</p>
+                                <div className="absolute w-28 h-10 bg-white bg-opacity-50 rounded-r-full flex items-center justify-center top-32 left-0">
+                                {/* <img src={rank1coin} alt="Rank 2 Coin" className="w-4 h-4 mr-2" />  */}
+                                <span className="text-lg font-semibold text-white">{leaderboardData[0]?.total_score} pts</span>
+                                </div>
+                                <div className="absolute w-10 h-10 bg-white bg-opacity-50 rounded-full flex items-center justify-center top-2 right-2">
+                {/* <img src={rank2coin} alt="Rank 2 Coin" className="w-16 h-16 mr-2" /> */}
+                <span className="text-lg font-semibold text-white">1</span>
+            </div>
+                    
                             </div>
-
                             {/* Third Place */}
-                            <div className="w-1/6 h-56 rounded-lg shadow-md bg-[#fee7f1] p-4 flex flex-col justify-between items-center top-player-card-3">
-                                <p className="text-xl font-semibold"><span className="text-lg">#3 </span>{leaderboardData[2]?.first_name}</p>
-                                <div className="w-20 h-20 rounded-full shadow-sm overflow-hidden mb-2">
-                                    <Link to={`/profile/${leaderboardData[2]?.username}`} className="text-sm">
-                                        <img
-                                            src={`https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/${leaderboardData[2]?.avatar}.png`}
-                                            alt="Avatar"
-                                            className="w-full h-full object-cover "
-                                        />
-                                    </Link>
+                            <div className="w-1/4 h-40 rounded-lg shadow-md bg-[#979A30] p-4 flex flex-col justify-between items-start top-player-card-3 mr-24 relative">
+                                <div className="flex items-center mb-2">
+                                    <div className="w-18 h-18 rounded-full shadow-sm overflow-hidden mr-4">
+                                        <Link to={`/profile/${leaderboardData[2]?.username}`} className="text-sm">
+                                            <img
+                                                src={`https://cyber-range-assets.s3.ap-south-1.amazonaws.com/avatars/${leaderboardData[2]?.avatar}.png`}
+                                                alt="Avatar"
+                                                className="w-full h-full object-cover border border-2"
+                                                style={{ borderRadius: "50%", borderColor: "#FFD700" }}
+                                            />
+                                        </Link>
+                                    </div>
+                                    <div>
+                                        <p className="text-xl font-semibold text-white">{leaderboardData[2]?.first_name}</p>
+                                        <p className="text-sm text-white">@{leaderboardData[2]?.username}</p>
+                                        <div className="mt-2 flex space-x-2">
+                                            {leaderboardData[2]?.github_url && (
+                                                <a href={getValidUrl(leaderboardData[2]?.github_url)} target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300">
+                                                    <FaGithub />
+                                                </a>
+                                            )}
+                                            {leaderboardData[2]?.portfolio_url && (
+                                                <a href={getValidUrl(leaderboardData[2]?.portfolio_url)} target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300">
+                                                    <FaBookOpen />
+                                                </a>
+                                            )}
+                                            {leaderboardData[2]?.linkedin_url && (
+                                                <a href={getValidUrl(leaderboardData[2]?.linkedin_url)} target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300">
+                                                    <FaLinkedin />
+                                                </a>
+                                            )}
+                                        </div>
+                                    </div>
                                 </div>
-                                <p className="text-sm">@{leaderboardData[2]?.username}</p>
-                                <p>{leaderboardData[2]?.total_score} pts</p>
+                                <div className="absolute w-28 h-10 bg-white bg-opacity-50 rounded-r-full flex items-center justify-center top-28 left-0">
+                                {/* <img src={rank3coin} alt="Rank 2 Coin" className="" />  */}
+                                <span className="text-lg font-semibold text-white">{leaderboardData[2]?.total_score} pts</span>
+                                </div>
+                                <div className="absolute w-10 h-10 bg-white bg-opacity-50 rounded-full flex items-center justify-center top-2 right-2">
+                {/* <img src={rank2coin} alt="Rank 2 Coin" className="w-16 h-16 mr-2" /> */}
+                <span className="text-lg font-semibold text-white">3</span>
+            </div>
+                    
                             </div>
                         </div>
-                        <div className="leaderboard-table-container flex justify-center">
-                            <div className="bg-[#000930] rounded-lg shadow-lg py-3 px-1  mb-4 w-5/6">
-                                <table className="w-full border-collapse leaderboard-table">
-                                    <thead>
-                                        <tr>
-                                            <th className="text-left px-4 py-2 border-b text-white border-gray-400 ">Learner</th>
-                                            <th className="text-center px-4 py-2 border-b text-white border-gray-400 ">Social Links</th>
-                                            <th className="text-center px-4 py-2 border-b text-white border-gray-400 ">Score</th>
-                                            <th className="text-center px-4 py-2 border-b text-white border-gray-400 ">Badges</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {leaderboardData.slice(0, 10).map((user, index) => (
-                                            renderLeaderboardEntry(user, index, currentUser && user.username === currentUser.username)
-                                        ))}
-                                        {!admin &&currentUser && !leaderboardData.slice(0, 10).some((user) => user.username === currentUser.username) && renderLeaderboardEntry(currentUser, null, true)}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                        <div className="overflow-x-auto">
+    <table className="min-w-full bg-white mx-8 rounded-lg shadow-md border-collapse overflow-hidden">
+        <thead className="sticky top-0 bg-gray-100"> {/* Ensure header sticks and has a background */}
+            <tr>
+                <th className="text-left py-3 px-4 text-blue-700">User</th>
+                <th className="text-center py-3 px-4 text-blue-700">Rank</th> {/* Removed background color */}
+                <th className="text-center py-3 px-4 text-blue-700">Socials</th>
+                <th className="text-center py-3 px-4 text-blue-700">Score</th>
+                <th className="text-center py-3 px-4 text-blue-700">Badges</th>
+            </tr>
+        </thead>
+        <tbody>
+            {leaderboardData.slice(3, 14).map((user, index) => {
+                const isCurrentUser = currentUser && user.username === currentUser.username;
+                return renderLeaderboardEntry(user, index + 4, isCurrentUser); // Adjust index for rank calculation
+            })}
+        </tbody>
+    </table>
+</div>
+
+
                     </div>
                 </div>
-                
             </div>
         </div>
     );

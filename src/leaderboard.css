@@ -1,65 +1,85 @@
-/* Mobile view adjustments */
-@media (max-width: 640px) {
-   /* Mobile view adjustments */
 .top-player-container {
-    flex-direction: column; /* Stack entries vertically */
-    align-items: center; /* Center horizontally */
-  }
-  
-  .top-player-card-1,
-  .top-player-card-2,
-  .top-player-card-3 {
-    width: 100%; /* Adjust width as needed */
-    margin-bottom: 16px; /* Add spacing between entries */
-  }
-  
-  /* Customize individual cards (you can adjust colors and styles) */
-  .top-player-card-1 {
-    background-color: #fff9e0; /* Light yellow */
-    border: 2px solid #FFD700; /* Gold border */
-  }
-  
-  .top-player-card-2 {
-    background-color: #f6f1ff; /* Light purple */
-  }
-  
-  .top-player-card-3 {
-    background-color: #fee7f1; /* Light pink */
-  }
-  
-    .leaderboard-table-container {
-        overflow-x: auto;
-    }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
 
-    .leaderboard-table th,
-    .leaderboard-table td {
-        white-space: nowrap;
-    }
+.top-player-card-1,
+.top-player-card-2,
+.top-player-card-3 {
+  width: 30%;
+  height: 150px;
+  border-radius: 1rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
 
-    .leaderboard-table th {
-        position: -webkit-sticky; /* For Safari */
-        position: sticky;
-        top: 0;
-        background-color: #000930;
-        color: white;
-        z-index: 1;
-    }
+.top-player-card-1 {
+  background-color: #ff824c;
+}
 
-    .leaderboard-table td {
-        background-color: #000930;
-        color: white;
-    }
+.top-player-card-2 {
+  background-color: #795cff;
+}
 
-    .leaderboard-table tbody tr:hover {
-        background-color: #63b3ed;
-    }
+.top-player-card-3 {
+  background-color: #979a30;
+}
 
-    .leaderboard-table tbody tr.active {
-        background-color: #90cdf4;
-        color: black;
-    }
+.top-player-card-1 img,
+.top-player-card-2 img,
+.top-player-card-3 img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #FFD700;
+}
 
-    .leaderboard-table tbody tr.active td a {
-        color: black;
-    }
+.link-hover:hover {
+  color: #0056b3;
+}
+
+.hover-text:hover {
+  text-decoration: underline;
+}
+
+table {
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-collapse: collapse;
+  overflow: hidden;
+}
+
+thead {
+  background-color: #e3f2fd;
+}
+
+th,
+td {
+  padding: 1rem;
+  text-align: center;
+}
+
+th {
+  color: #1976d2;
+  font-weight: bold;
+}
+
+td {
+  color: #4a4a4a;
+}
+
+tr {
+  border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
 }
