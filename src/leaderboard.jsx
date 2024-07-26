@@ -315,7 +315,7 @@ const LeaderboardPage = () => {
         <tbody>
             {leaderboardData.slice(3, 14).map((user, index) => {
                 const isCurrentUser = currentUser && user.username === currentUser.username;
-                return renderLeaderboardEntry(user, index + 4, isCurrentUser); // Adjust index for rank calculation
+                return renderLeaderboardEntry(user, index + 3, isCurrentUser); // Adjust index for rank calculation
             })}
         </tbody>
     </table>
