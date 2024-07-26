@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FaBars, FaGithub, FaBookOpen, FaLinkedin } from "react-icons/fa";
+import { FaBars, FaStarHalfAlt, FaGithub, FaBookOpen, FaLinkedin } from "react-icons/fa";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/navbar1";
 import medal from "./assets/medal.png";
-import rank2coin from './components/rank2coin.png';
-import rank1coin from './components/rank1coin.png';
-import rank3coin from './components/rank3coin.png';
 import "./leaderboard.css";
 
 const LeaderboardPage = () => {
@@ -203,12 +200,12 @@ const LeaderboardPage = () => {
                                 </div>
                                 <div className="absolute w-28 h-10 bg-white bg-opacity-50 rounded-r-full flex items-center justify-center top-28 left-0">
                 {/* <img src={rank2coin} alt="Rank 2 Coin" className="w-16 h-16 mr-2" /> */}
-                <span className="text-lg font-semibold text-white">{leaderboardData[1]?.total_score} pts</span>
+                <FaStarHalfAlt className="text-yellow-300 text-lg mr-2"/> <span className="text-lg font-semibold text-white">{leaderboardData[1]?.total_score} pts</span>
             </div>
 
-            <div className="absolute w-10 h-10 bg-white bg-opacity-50 rounded-full flex items-center justify-center top-2 right-2">
+            <div className="absolute w-10 h-10 bg-[#c7d1da] rounded-full flex items-center justify-center top-2 right-2">
                 {/* <img src={rank2coin} alt="Rank 2 Coin" className="w-16 h-16 mr-2" /> */}
-                <span className="text-lg font-semibold text-white">2</span>
+                <span className="text-lg font-semibold text-white ">2</span>
             </div>
                             </div>
                             {/* First Place */}
@@ -247,9 +244,9 @@ const LeaderboardPage = () => {
                                 </div>
                                 <div className="absolute w-28 h-10 bg-white bg-opacity-50 rounded-r-full flex items-center justify-center top-32 left-0">
                                 {/* <img src={rank1coin} alt="Rank 2 Coin" className="w-4 h-4 mr-2" />  */}
-                                <span className="text-lg font-semibold text-white">{leaderboardData[0]?.total_score} pts</span>
+                                <FaStarHalfAlt className="text-yellow-300 text-lg mr-2"/><span className="text-lg font-semibold text-white">{leaderboardData[0]?.total_score} pts</span>
                                 </div>
-                                <div className="absolute w-10 h-10 bg-white bg-opacity-50 rounded-full flex items-center justify-center top-2 right-2">
+                                <div className="absolute w-10 h-10 bg-[#e8b923]  rounded-full flex items-center justify-center top-2 right-2">
                 {/* <img src={rank2coin} alt="Rank 2 Coin" className="w-16 h-16 mr-2" /> */}
                 <span className="text-lg font-semibold text-white">1</span>
             </div>
@@ -292,9 +289,9 @@ const LeaderboardPage = () => {
                                 </div>
                                 <div className="absolute w-28 h-10 bg-white bg-opacity-50 rounded-r-full flex items-center justify-center top-28 left-0">
                                 {/* <img src={rank3coin} alt="Rank 2 Coin" className="" />  */}
-                                <span className="text-lg font-semibold text-white">{leaderboardData[2]?.total_score} pts</span>
+                                <FaStarHalfAlt className="text-yellow-300 text-lg mr-2"/><span className="text-lg font-semibold text-white">{leaderboardData[2]?.total_score} pts</span>
                                 </div>
-                                <div className="absolute w-10 h-10 bg-white bg-opacity-50 rounded-full flex items-center justify-center top-2 right-2">
+                                <div className="absolute w-10 h-10 bg-[#88540b] bg-opacity-80 rounded-full flex items-center justify-center top-2 right-2">
                 {/* <img src={rank2coin} alt="Rank 2 Coin" className="w-16 h-16 mr-2" /> */}
                 <span className="text-lg font-semibold text-white">3</span>
             </div>
