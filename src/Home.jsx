@@ -215,7 +215,7 @@ return (
       (selectedTopic === 0 || activeTopicName === "All Problems") && (
         <div
           onClick={handleOpenAddChallengeModal}
-          className="cursor-pointer "
+          className="cursor-pointer pb-2 "
         >
           <img
             src={addImage}

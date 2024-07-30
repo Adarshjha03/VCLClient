@@ -174,16 +174,20 @@ const EditQuiz = () => {
 
   const handleQuizSubmit = async (event) => {
     event.preventDefault();
-  
+
     // Check if at least one option is marked as correct for each question
     for (const question of quizData.questions) {
-      const hasCorrectOption = question.options.some((option) => option.isCorrect);
+      const hasCorrectOption = question.options.some(
+        (option) => option.isCorrect
+      );
       if (!hasCorrectOption) {
-        setResponseMessage("Each question must have at least one correct option.");
+        setResponseMessage(
+          "Each question must have at least one correct option."
+        );
         return;
       }
     }
-  
+
     try {
       const token = localStorage.getItem("Token");
       const response = await fetch(`${backendUrl}/quiz/${id}`, {
@@ -203,7 +207,7 @@ const EditQuiz = () => {
       console.error("Error updating quiz:", error);
     }
   };
-  
+
   if (!quizData) {
     return <div>Loading...</div>;
   }
@@ -306,7 +310,6 @@ const EditQuiz = () => {
             value={quizData.supportingMaterial}
             onChange={handleQuizChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-            
           />
         </div>
         <div className="mb-4">
@@ -328,7 +331,7 @@ const EditQuiz = () => {
             ))}
           </select>
         </div>
-         <div className="mb-4 flex items-center">
+        <div className="mb-4 flex items-center">
           <label className="block text-gray-700 text-sm font-bold mr-2">
             Show Response
           </label>
@@ -337,69 +340,84 @@ const EditQuiz = () => {
             onChange={handleShowResponseToggle}
           />
         </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Quiz Time (in minutes)
+          </label>
+          <input
+            type="number" // Changed from 'text' to 'number'
+            name="quizTime" // Use consistent naming
+            value={quizData.quizTime || ""} // Provide default value if undefined
+            onChange={handleQuizChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+            required
+          />
+        </div>
         <h2 className="text-xl font-bold mb-2">Questions</h2>
         {quizData.questions.map((question, questionIndex) => (
-  <div
-    key={questionIndex}
-    className="mb-4 border border-gray-300 p-4 rounded-lg relative"
-  >
-    <label className="block text-md font-bold mb-2">
-      Question {questionIndex + 1}
-    </label>
-    <button
-      type="button"
-      onClick={() => deleteQuestion(question.id)}
-      className="absolute top-2 right-2 text-red-500"
-    >
-      <FontAwesomeIcon icon={faTrash} />
-    </button>
-    <ReactQuill
-      theme="snow"
-      value={question.text}
-      onChange={(content) => updateQuestionText(question.id, content)}
-      modules={modules}
-      formats={formats}
-    />
-    <h3 className="text-md text-gray-700 font-semibold mt-2 mb-1">Options</h3>
-    {question.options.map((option, optionIndex) => (
-      <div key={optionIndex} className="flex items-center mb-2 ml-2">
-        <ReactQuill
-          theme="snow"
-          value={option.text}
-          onChange={(content) =>
-            updateOptionText(question.id, option.id, content)
-          }
-          modules={modules}
-          formats={formats}
-          className="w-full"
-        />
-        <Switch
-          checked={option.isCorrect}
-          onChange={() => toggleOptionCorrect(question.id, option.id)}
-          className="ml-2"
-        />
-        {question.options.length > 2 && (
-          <button
-            type="button"
-            onClick={() => deleteOption(question.id, option.id)}
-            className="ml-2 text-red-500"
+          <div
+            key={questionIndex}
+            className="mb-4 border border-gray-300 p-4 rounded-lg relative"
           >
-            <FontAwesomeIcon icon={faTrash} />
-          </button>
-        )}
-      </div>
-    ))}
-    {question.options.length < 4 && (
-      <button
-        type="button"
-        onClick={() => addOption(question.id)}
-        className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 mt-2"
-      >
-        Add Option
-      </button>
-    )}
-  </div>
-))}
+            <label className="block text-md font-bold mb-2">
+              Question {questionIndex + 1}
+            </label>
+            <button
+              type="button"
+              onClick={() => deleteQuestion(question.id)}
+              className="absolute top-2 right-2 text-red-500"
+            >
+              <FontAwesomeIcon icon={faTrash} />
+            </button>
+            <ReactQuill
+              theme="snow"
+              value={question.text}
+              onChange={(content) => updateQuestionText(question.id, content)}
+              modules={modules}
+              formats={formats}
+            />
+            <h3 className="text-md text-gray-700 font-semibold mt-2 mb-1">
+              Options
+            </h3>
+            {question.options.map((option, optionIndex) => (
+              <div key={optionIndex} className="flex items-center mb-2 ml-2">
+                <ReactQuill
+                  theme="snow"
+                  value={option.text}
+                  onChange={(content) =>
+                    updateOptionText(question.id, option.id, content)
+                  }
+                  modules={modules}
+                  formats={formats}
+                  className="w-full"
+                />
+                <Switch
+                  checked={option.isCorrect}
+                  onChange={() => toggleOptionCorrect(question.id, option.id)}
+                  className="ml-2"
+                />
+                {question.options.length > 2 && (
+                  <button
+                    type="button"
+                    onClick={() => deleteOption(question.id, option.id)}
+                    className="ml-2 text-red-500"
+                  >
+                    <FontAwesomeIcon icon={faTrash} />
+                  </button>
+                )}
+              </div>
+            ))}
+            {question.options.length < 4 && (
+              <button
+                type="button"
+                onClick={() => addOption(question.id)}
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 mt-2"
+              >
+                Add Option
+              </button>
+            )}
+          </div>
+        ))}
 
         <button
           type="button"
@@ -418,17 +436,20 @@ const EditQuiz = () => {
         </div>
       </form>
       {responseMessage && (
-  <div
-    className={`${
-      typeof responseMessage === "string" && responseMessage.includes("success")
-        ? "bg-green-100 border border-green-400 text-green-700"
-        : "bg-red-100 border border-red-400 text-red-700"
-    } px-4 py-3 rounded mt-4`}
-    role="alert"
-  >
-    {typeof responseMessage === "string" ? responseMessage : responseMessage.message}
-  </div>
-)}
+        <div
+          className={`${
+            typeof responseMessage === "string" &&
+            responseMessage.includes("success")
+              ? "bg-green-100 border border-green-400 text-green-700"
+              : "bg-red-100 border border-red-400 text-red-700"
+          } px-4 py-3 rounded mt-4`}
+          role="alert"
+        >
+          {typeof responseMessage === "string"
+            ? responseMessage
+            : responseMessage.message}
+        </div>
+      )}
     </div>
   );
 };

@@ -34,6 +34,7 @@ const AddChallenge = () => {
     marksPerQuestion: 2,
     showResponse: true,
     topic: "",
+    quizTime: 5,
     questions: [
       {
         id: 1,
@@ -549,6 +550,19 @@ const AddChallenge = () => {
             </label>
 
           </div>
+          <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Quiz Time (in minutes)
+          </label>
+          <input
+            type="number"
+            name="quiz_time"
+            value={quizData.quizTime}
+            onChange={handleQuizChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+            required
+          />
+        </div>
           {quizData.questions.map((question) => (
   <div key={question.id} className="mb-8 p-4 border rounded relative">
     <div className="mb-4">
