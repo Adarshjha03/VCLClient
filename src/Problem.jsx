@@ -12,6 +12,7 @@ import {
   FaFileDownload,
   FaCheck,
   FaStar,
+  FaBolt
 } from "react-icons/fa";
 
 const ProblemPage = () => {
@@ -253,7 +254,7 @@ const ProblemPage = () => {
                   </div>
                   <div className="flex flex-col items-center">
                   <button
-  className={`font-semibold px-4 py-2 rounded ${
+  className={`font-semibold px-4 py-2 rounded flex items-center justify-center ${
     vmData && vmData.vm_url
       ? 'bg-blue-900 text-white'
       : 'bg-white text-003366 hover:bg-blue-200'
@@ -269,7 +270,10 @@ const ProblemPage = () => {
   }}
   disabled={isLoading}
 >
-  {isLoading ? "Loading..." : vmData && vmData.vm_url ? "Open Virtual Lab" : "Start Virtual Lab"}
+  <span className="mr-2">
+    {isLoading ? "Loading..." : vmData && vmData.vm_url ? "Open Simulator" : "Start Simulator"}
+  </span>
+  <FaBolt />
 </button>
   {vmData && vmData.password && (
     <div className="mt-2 text-center text-blue-900">
