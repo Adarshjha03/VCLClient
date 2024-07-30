@@ -345,7 +345,7 @@ const Sidebar = ({ onTopicSelect }) => {
               className="p-2 text-xs flex items-center justify-between hover:bg-blue-400 rounded-sm hover:rounded-sm hover:text-white transition duration-300 cursor-pointer"
             >
               <div className="flex items-center">
-                <span className="mr-2"> <img src={checkCircleOutline} alt="Check Circle Outline" width="17" height="17" /></span>
+                <span className="mr-2"> <img src={checkCircleOutline} alt="Check Circle Outline" width="15" height="15s" /></span>
                 {category.name.toUpperCase()}
               </div>
               <div className="flex items-center">
