@@ -199,7 +199,7 @@ const Sidebar = ({ onTopicSelect }) => {
       >
         {showMenu ? <FaTimes style={{ zIndex: '60' }} /> : <FaBars />}
       </div>
-    <div className={`sm:w-1/6 w-full h-full overflow-y-auto border-r bg-[#000930] ${showMenu ? 'block sm:static' : 'hidden sm:block'}`} style={{ zIndex: showMenu ? '50' : 'auto' }}>
+    <div className={`sm:w-1/6 w-full h-full overflow-y-auto  bg-[#000930] ${showMenu ? 'block sm:static' : 'hidden sm:block'}`} style={{ zIndex: showMenu ? '50' : 'auto' }}>
   <div className="p-3 font-sans text-white">
     <div className="flex justify-center">
       <img src={"https://cyber-range-assets.s3.ap-south-1.amazonaws.com/assets/" + (window.location.origin.includes("https://") ? window.location.origin.slice(8) : window.location.origin) + "/logo.png"} alt="HeadLogo" className="w-50 content-evenly mb-3" />
