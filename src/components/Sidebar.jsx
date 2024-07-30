@@ -4,6 +4,7 @@ import plusLogo from '../assets/add.png';
 import Modal from 'react-modal';
 import AddTopic from '../addTopic.jsx';
 import AddCategory from '../addCategory.jsx';
+import checkCircleOutline from '../assets/check-circle-outline.svg'
 import AddBadges from './addBadge';
 import DeleteTopic from './DeleteTopic';
 import DeleteCategory from './DeleteCategory';
@@ -344,7 +345,7 @@ const Sidebar = ({ onTopicSelect }) => {
               className="p-2 text-xs flex items-center justify-between hover:bg-blue-400 rounded-sm hover:rounded-sm hover:text-white transition duration-300 cursor-pointer"
             >
               <div className="flex items-center">
-                <span className="mr-2"><FaHashtag className="w-4 h-4" /></span>
+                <span className="mr-2"> <img src={checkCircleOutline} alt="Check Circle Outline" width="17" height="17" /></span>
                 {category.name.toUpperCase()}
               </div>
               <div className="flex items-center">
