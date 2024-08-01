@@ -6,6 +6,7 @@ import {
   FaCheck,
   FaStar,
   FaRedoAlt,
+  FaExclamationCircle,
 } from "react-icons/fa";
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
 import Sidebar from "./components/Sidebar";
@@ -14,7 +15,68 @@ import unsolved from "./assets/unsolved.png";
 import linkImage from "./assets/link.png";
 import EditQButton from "./EditQbutton";
 import { PiNotepad } from "react-icons/pi";
+function processCodeSnippets(htmlContent) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlContent, 'text/html');
+  
+  const codeIndicators = [
+    '#include', 'int main', 'def ', 'class ', 'function', 'var ', 'let ', 'const ',
+    'import ', 'from ', 'public class', 'package ', '<?php', '<script>', '<style>',
+    '#!/usr/bin', 'using namespace', '#define', 'module', 'print(', 'console.log(',
+    'System.out.println(', 'fmt.Println(', 'echo '
+  ];
 
+  let codeBlock = [];
+  let inCodeBlock = false;
+  const allParagraphs = Array.from(doc.body.childNodes);
+  
+  const newContent = [];
+
+  allParagraphs.forEach((node, index) => {
+    if (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'P') {
+      const trimmedText = node.textContent.trim();
+      const isCode = codeIndicators.some(indicator => trimmedText.startsWith(indicator)) || 
+                     node.classList.contains('ql-indent-1');
+
+      if (isCode) {
+        if (!inCodeBlock) {
+          inCodeBlock = true;
+          codeBlock = [];
+        }
+        codeBlock.push(node.outerHTML);
+      } else {
+        if (inCodeBlock) {
+          const pre = doc.createElement('pre');
+          pre.className = 'bg-gray-800 text-white p-2 rounded my-2';
+          pre.innerHTML = codeBlock.join('');
+          newContent.push(pre.outerHTML);
+          inCodeBlock = false;
+          codeBlock = [];
+        }
+        newContent.push(node.outerHTML);
+      }
+    } else {
+      if (inCodeBlock) {
+        const pre = doc.createElement('pre');
+        pre.className = 'bg-gray-800 text-white p-2 rounded my-2';
+        pre.innerHTML = codeBlock.join('');
+        newContent.push(pre.outerHTML);
+        inCodeBlock = false;
+        codeBlock = [];
+      }
+      newContent.push(node.outerHTML || node.textContent);
+    }
+  });
+
+  if (inCodeBlock) {
+    const pre = doc.createElement('pre');
+    pre.className = 'bg-gray-800 text-white p-2 rounded my-2';
+    pre.innerHTML = codeBlock.join('');
+    newContent.push(pre.outerHTML);
+  }
+
+  return newContent.join('');
+}
 const QuizPage = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -102,7 +164,22 @@ const QuizPage = () => {
     };
     fetchData();
   }, [id]);
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      if (quizStatus === "in_progress") {
+        const message = "Reloading the page will submit the quiz. Are you sure you want to continue?";
+        event.preventDefault();
+        event.returnValue = message; // For older browsers
+        return message; // For modern browsers
+      }
+    };
 
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [quizStatus]);
   // Remaining implementation
 
   const formatTime = (seconds) => {
@@ -280,6 +357,7 @@ const QuizPage = () => {
                   </span>
                 </div>
               </div>
+
               <h2 className="text-lg font-bold mb-2">Quiz Information</h2>
               <div
                 className="mb-4 text-justify"
@@ -299,6 +377,27 @@ const QuizPage = () => {
                     <img src={linkImage} alt="Link" className="w-4 h-4 ml-1" />
                   </div>
                 )}
+            </div>
+            <div className="mb-4">
+              <div className="text-red-600 text-xs font-semibold mb-2">
+                <h3 className="inline-block mr-2 mb-1 ">
+                  <u>Warning:</u>
+                </h3>
+                <span className="flex items-center">
+                  <FaExclamationCircle className="mr-1" />
+                  Reloading this quiz window will automatically submit your
+                  answers.
+                </span>
+              </div>
+              {!quiz.solved && (
+                <div className="text-red-600 text-xs font-semibold">
+                  <span className="flex items-center">
+                    <FaExclamationCircle className="mr-1" />
+                    This is an unsolved quiz. Remember, only your first attempt
+                    will be scored.
+                  </span>
+                </div>
+              )}
             </div>
             {subAdmin && (
               <div className="mt-auto pt-4 border-t">
@@ -393,7 +492,9 @@ const QuizPage = () => {
                           </span>
                           <div
                             className="font-semibold"
-                            dangerouslySetInnerHTML={{ __html: question.text }}
+                            dangerouslySetInnerHTML={{
+                              __html: processCodeSnippets(question.text),
+                            }}
                           />
                         </div>
                         <div className="flex">
@@ -441,7 +542,9 @@ const QuizPage = () => {
                                   >
                                     <div
                                       dangerouslySetInnerHTML={{
-                                        __html: option.text,
+                                        __html: processCodeSnippets(
+                                          option.text
+                                        ),
                                       }}
                                     />
                                   </label>
@@ -456,36 +559,43 @@ const QuizPage = () => {
                             })}
                           </div>
                           <div className="w-1/5 flex flex-col items-center justify-center p-2 rounded border ml-1">
-                            {quizEvaluation ? (
-                              evaluation?.is_correct ? (
-                                <>
-                                  <AiOutlineCheckCircle className="text-green-500 text-2xl mb-1" />
-                                  <span className="text-green-500 font-semibold text-center">
-                                    Correct Answer
-                                  </span>
-                                </>
-                              ) : (
-                                <>
-                                  <AiOutlineCloseCircle className="text-red-500 text-2xl mb-1" />
-                                  <span className="text-red-500 font-semibold text-center">
-                                    Wrong Answer
-                                  </span>
-                                </>
-                              )
-                            ) : (
-                              <button
-                                type="button"
-                                onClick={() =>
-                                  handleResetSelection(question.id)
-                                }
-                                className="text-blue-500 font-bold text-md flex flex-col items-center"
-                              >
-                                <FaRedoAlt className="mb-1" />
-                                <span className="text-center">
-                                  Reset Selection
-                                </span>
-                              </button>
-                            )}
+                          {quizEvaluation ? (
+  evaluation?.is_correct !== undefined ? (
+    evaluation.is_correct ? (
+      <>
+        <AiOutlineCheckCircle className="text-green-500 text-2xl mb-1" />
+        <span className="text-green-500 font-semibold text-center">
+          Correct Answer
+        </span>
+      </>
+    ) : (
+      <>
+        <AiOutlineCloseCircle className="text-red-500 text-2xl mb-1" />
+        <span className="text-red-500 font-semibold text-center">
+          Wrong Answer
+        </span>
+      </>
+    )
+  ) : (
+    <>
+      <FaExclamationCircle className="text-yellow-500 text-2xl mb-1" />
+      <span className="text-yellow-500 font-semibold text-center">
+        Your response has been recorded
+      </span>
+    </>
+  )
+) : (
+  <button
+    type="button"
+    onClick={() => handleResetSelection(question.id)}
+    className="text-blue-500 font-bold text-md flex flex-col items-center"
+  >
+    <FaRedoAlt className="mb-1" />
+    <span className="text-center">
+      Reset Selection
+    </span>
+  </button>
+)}
                           </div>
                         </div>
                         {noOptionSelected && (
