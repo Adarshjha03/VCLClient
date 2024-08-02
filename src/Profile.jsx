@@ -361,30 +361,43 @@ const ProfilePage = () => {
                     {user.solvedChallenges
                       .sort((a, b) => new Date(b.solved_at) - new Date(a.solved_at))
                       .slice(0, 5)
-                      .map((challenge, index) => (
+                      .map((item, index) => (
                         <tr key={index} className="border-b border-gray-700">
                           <td className="text-left border border-gray-700 px-4 py-2">
-                            <Link to={`/problem/${challenge.challenge_id}`} className="text-blue-600 font-semibold">
-                              {challenge.challenge_name}
-                            </Link>
+                            {item.challenge_id || item.quiz_id ? (
+                              <Link 
+                                to={item.challenge_id 
+                                  ? `/problem/${item.challenge_id}` 
+                                  : `/quiz/${item.quiz_id}`
+                                } 
+                                className="text-blue-600 font-semibold"
+                              >
+                                {item.challenge_name || item.quiz_name}
+                              </Link>
+                            ) : (
+                              <span className="text-blue-600 font-semibold">
+                                {item.challenge_name || item.quiz_name}
+                              </span>
+                            )}
                           </td>
                           <td className="text-center border border-gray-700 px-4 py-2">
                             <span
-                              className={`inline-block rounded-xl px-2 py-1 ${challenge.difficulty === "Easy"
-                                ? "bg-green-100 border-green-600 text-green-600"
-                                : challenge.difficulty === "Medium"
+                              className={`inline-block rounded-xl px-2 py-1 ${
+                                item.difficulty === "Easy"
+                                  ? "bg-green-100 border-green-600 text-green-600"
+                                  : item.difficulty === "Medium"
                                   ? "bg-yellow-100 border-yellow-600 text-yellow-600"
-                                  : challenge.difficulty === "Hard"
-                                    ? "bg-red-100 border-red-600 text-red-600"
-                                    : "" // Default styling if difficulty is not specified
-                                }`}
+                                  : item.difficulty === "Hard"
+                                  ? "bg-red-100 border-red-600 text-red-600"
+                                  : "" // Default styling if difficulty is not specified
+                              }`}
                             >
-                              {challenge.difficulty}
+                              {item.difficulty}
                             </span>
                           </td>
-                          <td className="text-center border border-gray-700 px-4 py-2">{challenge.score}</td>
+                          <td className="text-center border border-gray-700 px-4 py-2">{item.score}</td>
                           <td className="text-right border border-gray-700 px-4 py-2">
-                            {new Date(challenge.solved_at).toLocaleString()}
+                            {new Date(item.solved_at).toLocaleString()}
                           </td>
                         </tr>
                       ))}

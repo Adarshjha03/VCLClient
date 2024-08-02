@@ -318,7 +318,7 @@ const Sidebar = ({ onTopicSelect }) => {
           Leaderboard
         </Link>
       </div>
-      <div className="p-1 font-semibold text-md flex items-center justify-start  rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white transition duration-300 border-b border-gray-100/55">
+      <div className="p-2 font-semibold text-md flex items-center justify-start  rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white transition duration-300 border-b border-gray-100/55">
         <span>PROBLEM LABS</span>
         {subAdmin && (
           <div className="p-2 font-medium text-xs flex items-center justify-start rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white transition duration-300">
@@ -337,7 +337,7 @@ const Sidebar = ({ onTopicSelect }) => {
           </button>
         )}
       </div>
-      <div className="space-y-1">
+      <div className="space-y-1 pt-2">
         {categories.map((category) => (
           <div key={category.id}>
             <div

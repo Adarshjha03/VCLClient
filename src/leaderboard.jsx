@@ -177,8 +177,8 @@ const LeaderboardPage = () => {
                                         </Link>
                                     </div>
                                     <div>
-                                        <p className="text-xl font-semibold text-white">{leaderboardData[1]?.first_name}</p>
-                                        <p className="text-sm text-white">@{leaderboardData[1]?.username}</p>
+                                    <Link to={`/profile/${leaderboardData[1]?.username}`} className="text-sm"> <p className="text-xl font-semibold text-white">{leaderboardData[1]?.first_name}</p>
+                                        <p className="text-sm text-white">@{leaderboardData[1]?.username}</p></Link>
                                         <div className="mt-2 flex space-x-2">
                                             {leaderboardData[1]?.github_url && (
                                                 <a href={getValidUrl(leaderboardData[1]?.github_url)} target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300">
@@ -221,8 +221,8 @@ const LeaderboardPage = () => {
                                         </Link>
                                     </div>
                                     <div>
-                                        <p className="text-xl font-semibold text-white">{leaderboardData[0]?.first_name}</p>
-                                        <p className="text-sm text-white">@{leaderboardData[0]?.username}</p>
+                                    <Link to={`/profile/${leaderboardData[0]?.username}`} className="text-sm">   <p className="text-xl font-semibold text-white">{leaderboardData[0]?.first_name}</p>
+                                        <p className="text-sm text-white">@{leaderboardData[0]?.username}</p></Link>
                                         <div className="mt-2 flex space-x-2">
                                             {leaderboardData[0]?.github_url && (
                                                 <a href={getValidUrl(leaderboardData[0]?.github_url)} target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300">
@@ -266,8 +266,8 @@ const LeaderboardPage = () => {
                                         </Link>
                                     </div>
                                     <div>
-                                        <p className="text-xl font-semibold text-white">{leaderboardData[2]?.first_name}</p>
-                                        <p className="text-sm text-white">@{leaderboardData[2]?.username}</p>
+                                    <Link to={`/profile/${leaderboardData[2]?.username}`} className="text-sm">  <p className="text-xl font-semibold text-white">{leaderboardData[2]?.first_name}</p>
+                                        <p className="text-sm text-white">@{leaderboardData[2]?.username}</p></Link>
                                         <div className="mt-2 flex space-x-2">
                                             {leaderboardData[2]?.github_url && (
                                                 <a href={getValidUrl(leaderboardData[2]?.github_url)} target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300">

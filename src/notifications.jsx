@@ -3,8 +3,9 @@ import Navbar from './components/navbar1'; // Assuming this is the correct path
 import Sidebar from './components/Sidebar'; // Assuming this is the correct path
 import { MdOutlineMailOutline } from 'react-icons/md';
 import { TailSpin } from 'react-loader-spinner';
-
+import { useNavigate } from 'react-router-dom';
 const NotificationsPage = () => {
+  const [showMenu, setShowMenu] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -62,9 +63,11 @@ const NotificationsPage = () => {
     fetchNotifications();
   }, []);
 
+  const navigate = useNavigate();
   const handleTopicChange = (topicId) => {
     setSelectedTopic(topicId);
-    localStorage.setItem("selectedTopic", topicId.toString());
+    localStorage.setItem("selectedTopic", topicId);
+    navigate("/home");
   };
 
   const timeAgo = (date) => {
@@ -102,14 +105,20 @@ const NotificationsPage = () => {
       </div>
     );
   }
-
+  const toggleMenu = () => {
+    setShowMenu(!showMenu);
+  };
   if (error) {
     return <div>Error: {error}</div>;
   }
 
   return (
     <div className="flex h-screen font-sans relative">
-      <Sidebar onTopicSelect={handleTopicChange} activeTopic={selectedTopic} topics={topics} />
+       <Sidebar
+        showMenu={showMenu}
+        onTopicSelect={handleTopicChange}
+        activeTopic={selectedTopic}
+      />
       <div className="flex-1" style={{ background: "#e0efee", overflowY: "hidden" }}>
         <Navbar style={{ position: "fixed", width: "100%", zIndex: 1000 }} />
 
