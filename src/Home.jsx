@@ -298,7 +298,13 @@ const HomePage = () => {
             )}
 
           {quizzes.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div 
+            className="grid gap-4"
+              style={{
+                gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+                maxWidth: "100%",
+                padding: "1rem",
+              }} >
               {showChallenges && problems.length > 0
                 ? problems.map((problem) => (
                     <div
@@ -316,11 +322,11 @@ const HomePage = () => {
                           <h3 className="text-white text-lg font-semibold ">
                             {problem.name}
                           </h3>
-                          <span
+                           <span
                             className="text-sm font-bold text-white px-2 py-1 rounded-md"
                             style={{
                               marginLeft: "8px",
-                              alignSelf: "flex-start",
+                             lignSelf: "flex-start",
                             }}
                           >
                             {problem.difficulty}
@@ -355,7 +361,7 @@ const HomePage = () => {
                             {quiz.name}
                           </h3>
                           <span
-                            className="text-sm font-bold text-black bg-white px-2 py-1 rounded-md"
+                            className="text-sm font-bold text-white  px-2 py-1 rounded-md"
                             style={{
                               marginLeft: "8px",
                               alignSelf: "flex-start",
@@ -404,7 +410,7 @@ const HomePage = () => {
                       <h3 className="text-white text-lg font-semibold flex-grow">
                         {problem.name}
                       </h3>
-                      <span className="text-sm font-bold text-black bg-white px-2 py-1 rounded-md ml-2 whitespace-nowrap">
+                      <span className="text-sm font-bold text-white  px-2 py-1 rounded-md ml-2 whitespace-nowrap">
                         {problem.difficulty}
                       </span>
                     </div>
