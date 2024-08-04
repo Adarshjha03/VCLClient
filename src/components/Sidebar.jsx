@@ -420,7 +420,7 @@ const Sidebar = ({ onTopicSelect }) => {
       <FaLaptopCode className="w-4 h-4 mr-2" />
       IDE Simulator
     </Link>
-    <Link
+    {/* <Link
       to="/temp"
       className={`p-1 text-xs flex items-center justify-start transition duration-300 rounded-sm hover:rounded-sm hover:bg-blue-400 hover:text-white ${activeButton === -6 && 'bg-blue-600 text-white'}`}
       style={{ textTransform: 'uppercase' }}
@@ -435,7 +435,7 @@ const Sidebar = ({ onTopicSelect }) => {
     >
       <BsBookshelf className="w-4 h-4 mr-2" />
       Research Forum
-    </Link>
+    </Link> */}
   </div>
 </div>
     </div>
