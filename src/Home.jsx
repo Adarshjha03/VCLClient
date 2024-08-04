@@ -326,9 +326,17 @@ const HomePage = () => {
                       ></div>
                       <Link to={`/problem/${problem.id}`}>
                         <div className="p-4">
-                          <h3 className="text-xl font-semibold mb-2">
-                            {problem.name}
-                          </h3>
+                        <div className="flex justify-between items-center">
+                      <h3 className="text-xl font-semibold mb-2">
+                        {problem.name}
+                      </h3>
+                      <span
+                      className="text-sm font-bold text-black bg-white px-2 py-1 rounded-md"
+                      style={{ marginLeft: "8px", alignSelf: "flex-start" }}
+                    >
+                      {problem.difficulty}
+                  </span>
+                      </div>
                           <p className="text-gray-600">
                             {problem.description.length > 100
                               ? problem.description.slice(0, 100) + "..."
@@ -352,9 +360,18 @@ const HomePage = () => {
                       ></div>
                       <Link to={`/quiz/${quiz.id}`}>
                         <div className="p-4">
-                          <h3 className="text-xl font-semibold mb-2">
+                        <div className="flex justify-between items-center">
+                        <h3 className="text-xl font-semibold mb-2">
                             {quiz.name}
                           </h3>
+                          <span
+                      className="text-sm font-bold text-black bg-white px-2 py-1 rounded-md"
+                      style={{ marginLeft: "8px", alignSelf: "flex-start" }}
+                    >
+                      {quiz.difficulty}
+                  </span>
+                        </div>
+                         
                           <p className="text-gray-600">
                             {quiz.description.length > 100
                               ? quiz.description.slice(0, 100) + "..."
@@ -388,9 +405,18 @@ const HomePage = () => {
                   ></div>
                   <Link to={`/problem/${problem.id}`}>
                     <div className="p-4">
+                      <div className="flex justify-between items-center">
                       <h3 className="text-xl font-semibold mb-2">
                         {problem.name}
                       </h3>
+                      <span
+                      className="text-sm font-bold text-black bg-white px-2 py-1 rounded-md"
+                      style={{ marginLeft: "8px", alignSelf: "flex-start" }}
+                    >
+                      {problem.difficulty}
+                  </span>
+                      </div>
+                      
                       <p className="text-gray-600">
                         {problem.description.length > 100
                           ? problem.description.slice(0, 100) + "..."

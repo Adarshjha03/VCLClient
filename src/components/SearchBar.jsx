@@ -68,7 +68,7 @@ const SearchBar = ({ problems, onSearch }) => {
         hard: 'linear-gradient(to right, #f43150, #f2512e)',
         medium: 'linear-gradient(to right, #f95b37, #fca339)',
         easy: 'linear-gradient(to right, #26c585, #24c6c0)',
-        all: 'linear-gradient(315deg,#191714 0%, #2234ae 80%)',
+       
     };
 
     return (
@@ -120,11 +120,11 @@ const SearchBar = ({ problems, onSearch }) => {
                                     EASY
                                 </button>
                                 <button
-                                   onMouseEnter={() => setHoveredButton(hoverStyles.all)}
+                                //    onMouseEnter={() => setHoveredButton(hoverStyles.all)}
                                    onMouseLeave={() => setHoveredButton(null)}
                                    onClick={() => handleDifficultyChange("")}
                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 text-sm"
-                                   style={buttonStyles(hoverStyles.all)}
+                                //    style={buttonStyles(hoverStyles.all)}
                                 >
                                     ALL Difficulty
                                 </button>
@@ -189,11 +189,11 @@ const SearchBar = ({ problems, onSearch }) => {
                                     EASY
                                 </button>
                                 <button
-                                     onMouseEnter={() => setHoveredButton(hoverStyles.all)}
+                                    //  onMouseEnter={() => setHoveredButton(hoverStyles.all)}
                                      onMouseLeave={() => setHoveredButton(null)}
                                      onClick={() => handleDifficultyChange("")}
                                      className="block w-full py-2 px-2 text-left transition duration-300 delay-100 text-sm"
-                                     style={buttonStyles(hoverStyles.all)}
+                                    //  style={buttonStyles(hoverStyles.all)}
                                 >
                                     ALL
                                 </button>
