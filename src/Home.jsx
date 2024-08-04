@@ -199,17 +199,20 @@ const HomePage = () => {
           <div className="flex justify-between items-center mb-4">
             <div className="flex items-center">
               <h2 className="text-2xl font-bold mb-2 mr-4">
-                {selectedTopic === 0 || activeTopicName === "All Problems" ? (
-                  <>
-                    All Problems
-                    {showChallenges ? " - Labs" : " - Quizzes"}
-                  </>
-                ) : (
-                  <>
-                    {activeTopicName}
-                    {showChallenges ? " - Labs" : " - Quizzes"}
-                  </>
-                )}
+              {selectedTopic === 0 || activeTopicName === "All Problems" ? (
+  <>
+    All Problems
+    {showChallenges ? " - Labs" : " - Quizzes"}
+  </>
+) : (
+  <>
+    {activeTopicName}
+    {problems.length > 0 ? " - Labs" : " - Quizzes"}
+  </>
+)}
+
+
+                
               </h2>
               {subAdmin &&
                 (selectedTopic === 0 || activeTopicName === "All Problems") && (
@@ -297,111 +300,114 @@ const HomePage = () => {
               </div>
             )}
 
-{quizzes.length > 0 ? (
-  <div
-    className="grid gap-4"
-    style={{
-      gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-      maxWidth: "100%",
-      padding: "1rem",
-    }}
-  >
-    {showChallenges && problems.length > 0
-      ? problems.map((problem) => (
-          <div
-            key={problem.id}
-            className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out"
-          >
+          {quizzes.length > 0 ? (
             <div
-              className="h-2"
+              className="grid gap-4"
               style={{
-                background: colors[problem.difficulty || problem.difficulty_level],
+                gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+                maxWidth: "100%",
+                padding: "1rem",
               }}
-            ></div>
-            <Link to={`/problem/${problem.id}`}>
-              <div className="p-4">
-                <h3 className="text-xl font-semibold mb-2">
-                  {problem.name}
-                </h3>
-                <p className="text-gray-600">
-                  {problem.description.length > 100
-                    ? problem.description.slice(0, 100) + "..."
-                    : problem.description}
-                </p>
-              </div>
-            </Link>
-          </div>
-        ))
-      : quizzes.map((quiz) => (
-          <div
-            key={quiz.id}
-            className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out"
-          >
+            >
+              {showChallenges && problems.length > 0
+                ? problems.map((problem) => (
+                    <div
+                      key={problem.id}
+                      className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out"
+                    >
+                      <div
+                        className="h-2"
+                        style={{
+                          background:
+                            colors[
+                              problem.difficulty || problem.difficulty_level
+                            ],
+                        }}
+                      ></div>
+                      <Link to={`/problem/${problem.id}`}>
+                        <div className="p-4">
+                          <h3 className="text-xl font-semibold mb-2">
+                            {problem.name}
+                          </h3>
+                          <p className="text-gray-600">
+                            {problem.description.length > 100
+                              ? problem.description.slice(0, 100) + "..."
+                              : problem.description}
+                          </p>
+                        </div>
+                      </Link>
+                    </div>
+                  ))
+                : quizzes.map((quiz) => (
+                    <div
+                      key={quiz.id}
+                      className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out"
+                    >
+                      <div
+                        className="h-2"
+                        style={{
+                          background:
+                            colors[quiz.difficulty || quiz.difficulty_level],
+                        }}
+                      ></div>
+                      <Link to={`/quiz/${quiz.id}`}>
+                        <div className="p-4">
+                          <h3 className="text-xl font-semibold mb-2">
+                            {quiz.name}
+                          </h3>
+                          <p className="text-gray-600">
+                            {quiz.description.length > 100
+                              ? quiz.description.slice(0, 100) + "..."
+                              : quiz.description}
+                          </p>
+                        </div>
+                      </Link>
+                    </div>
+                  ))}
+            </div>
+          ) : problems.length > 0 ? (
             <div
-              className="h-2"
+              className="grid gap-4"
               style={{
-                background: colors[quiz.difficulty || quiz.difficulty_level],
+                gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+                maxWidth: "100%",
+                padding: "1rem",
               }}
-            ></div>
-            <Link to={`/quiz/${quiz.id}`}>
-              <div className="p-4">
-                <h3 className="text-xl font-semibold mb-2">
-                  {quiz.name}
-                </h3>
-                <p className="text-gray-600">
-                  {quiz.description.length > 100
-                    ? quiz.description.slice(0, 100) + "..."
-                    : quiz.description}
-                </p>
-              </div>
-            </Link>
-          </div>
-        ))}
-  </div>
-) : problems.length > 0 ? (
-  <div
-    className="grid gap-4"
-    style={{
-      gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-      maxWidth: "100%",
-      padding: "1rem",
-    }}
-  >
-    {problems.map((problem) => (
-      <div
-        key={problem.id}
-        className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out"
-      >
-        <div
-          className="h-2"
-          style={{
-            background: colors[problem.difficulty || problem.difficulty_level],
-          }}
-        ></div>
-        <Link to={`/problem/${problem.id}`}>
-          <div className="p-4">
-            <h3 className="text-xl font-semibold mb-2">
-              {problem.name}
-            </h3>
-            <p className="text-gray-600">
-              {problem.description.length > 100
-                ? problem.description.slice(0, 100) + "..."
-                : problem.description}
-            </p>
-          </div>
-        </Link>
-      </div>
-    ))}
-  </div>
-) : (
-  <div className="w-full text-center py-8">
-    <p className="text-lg font-semibold text-gray-600">
-      No quizzes or labs are currently available.
-    </p>
-  </div>
-)}
-
-
+            >
+              {problems.map((problem) => (
+                <div
+                  key={problem.id}
+                  className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out"
+                >
+                  <div
+                    className="h-2"
+                    style={{
+                      background:
+                        colors[problem.difficulty || problem.difficulty_level],
+                    }}
+                  ></div>
+                  <Link to={`/problem/${problem.id}`}>
+                    <div className="p-4">
+                      <h3 className="text-xl font-semibold mb-2">
+                        {problem.name}
+                      </h3>
+                      <p className="text-gray-600">
+                        {problem.description.length > 100
+                          ? problem.description.slice(0, 100) + "..."
+                          : problem.description}
+                      </p>
+                    </div>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="w-full text-center py-8">
+              <p className="text-lg font-semibold text-gray-600">
+                No quizzes or labs are currently available.
+              </p>
+            </div>
+          )}
 
           {admin &&
             !(selectedTopic === 0 || activeTopicName === "All Problems") && (
