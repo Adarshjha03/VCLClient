@@ -174,7 +174,14 @@ const HomePage = () => {
     medium: "linear-gradient(to right, #f95b37, #fca339)",
     hard: "linear-gradient(to right, #f43150, #f2512e)",
   };
-
+  const text_colors = {
+    Easy: "#26c585",
+    Medium: "#f95b37",
+    Hard: "#f43150",
+    easy: "#26c585",
+    medium: "#f95b37",
+    hard: "#f43150",
+  };
   return (
     <div className="flex h-screen font-sans relative">
       <Sidebar
@@ -199,20 +206,17 @@ const HomePage = () => {
           <div className="flex justify-between items-center mb-4">
             <div className="flex items-center">
               <h2 className="text-2xl font-bold mb-2 mr-4">
-              {selectedTopic === 0 || activeTopicName === "All Problems" ? (
-  <>
-    All Problems
-    {showChallenges ? " - Labs" : " - Quizzes"}
-  </>
-) : (
-  <>
-    {activeTopicName}
-    {problems.length > 0 ? " - Labs" : " - Quizzes"}
-  </>
-)}
-
-
-                
+                {selectedTopic === 0 || activeTopicName === "All Problems" ? (
+                  <>
+                    All Problems
+                    {showChallenges ? " - Labs" : " - Quizzes"}
+                  </>
+                ) : (
+                  <>
+                    {activeTopicName}
+                    {problems.length > 0 ? " - Labs" : " - Quizzes"}
+                  </>
+                )}
               </h2>
               {subAdmin &&
                 (selectedTopic === 0 || activeTopicName === "All Problems") && (
@@ -300,140 +304,191 @@ const HomePage = () => {
               </div>
             )}
 
-          {quizzes.length > 0 ? (
+{quizzes.length > 0 ? (
+  <div
+    className="grid gap-4"
+    style={{
+      gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+      maxWidth: "100%",
+      padding: "1rem",
+    }}
+  >
+    {showChallenges && problems.length > 0
+      ? problems.map((problem) => (
+          <div
+            key={problem.id}
+            className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-transform transform hover:scale-105 duration-300 ease-in-out h-48"
+          >
             <div
-              className="grid gap-4"
+              className="h-2"
               style={{
-                gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-                maxWidth: "100%",
-                padding: "1rem",
+                background:
+                  colors[
+                    problem.difficulty || problem.difficulty_level
+                  ],
               }}
-            >
-              {showChallenges && problems.length > 0
-                ? problems.map((problem) => (
-                    <div
-                      key={problem.id}
-                      className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out"
-                    >
-                      <div
-                        className="h-2"
-                        style={{
-                          background:
-                            colors[
-                              problem.difficulty || problem.difficulty_level
-                            ],
-                        }}
-                      ></div>
-                      <Link to={`/problem/${problem.id}`}>
-                        <div className="p-4">
-                        <div className="flex justify-between items-center">
-                      <h3 className="text-xl font-semibold mb-2">
-                        {problem.name}
-                      </h3>
-                      <span
-                      className="text-sm font-bold text-black bg-white px-2 py-1 rounded-md"
-                      style={{ marginLeft: "8px", alignSelf: "flex-start" }}
-                    >
-                      {problem.difficulty}
-                  </span>
-                      </div>
-                          <p className="text-gray-600">
-                            {problem.description.length > 100
-                              ? problem.description.slice(0, 100) + "..."
-                              : problem.description}
-                          </p>
-                        </div>
-                      </Link>
-                    </div>
-                  ))
-                : quizzes.map((quiz) => (
-                    <div
-                      key={quiz.id}
-                      className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out"
-                    >
-                      <div
-                        className="h-2"
-                        style={{
-                          background:
-                            colors[quiz.difficulty || quiz.difficulty_level],
-                        }}
-                      ></div>
-                      <Link to={`/quiz/${quiz.id}`}>
-                        <div className="p-4">
-                        <div className="flex justify-between items-center">
-                        <h3 className="text-xl font-semibold mb-2">
-                            {quiz.name}
-                          </h3>
-                          <span
-                      className="text-sm font-bold text-black bg-white px-2 py-1 rounded-md"
-                      style={{ marginLeft: "8px", alignSelf: "flex-start" }}
-                    >
-                      {quiz.difficulty}
-                  </span>
-                        </div>
-                         
-                          <p className="text-gray-600">
-                            {quiz.description.length > 100
-                              ? quiz.description.slice(0, 100) + "..."
-                              : quiz.description}
-                          </p>
-                        </div>
-                      </Link>
-                    </div>
-                  ))}
-            </div>
-          ) : problems.length > 0 ? (
-            <div
-              className="grid gap-4"
-              style={{
-                gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-                maxWidth: "100%",
-                padding: "1rem",
-              }}
-            >
-              {problems.map((problem) => (
-                <div
-                  key={problem.id}
-                  className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out"
-                >
-                  <div
-                    className="h-2"
+            ></div>
+            <Link to={`/problem/${problem.id}`}>
+              <div className="p-4">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-xl font-semibold mb-2">
+                    {problem.name}
+                  </h3>
+                  <span
+                    className="text-sm font-bold px-2 py-1 rounded-md"
                     style={{
+                      marginLeft: "8px",
+                      alignSelf: "flex-start",
                       background:
-                        colors[problem.difficulty || problem.difficulty_level],
+                        colors[
+                          problem.difficulty ||
+                          problem.difficulty_level
+                        ],
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      display: "inline-block",
                     }}
-                  ></div>
-                  <Link to={`/problem/${problem.id}`}>
-                    <div className="p-4">
-                      <div className="flex justify-between items-center">
-                      <h3 className="text-xl font-semibold mb-2">
-                        {problem.name}
-                      </h3>
-                      <span
-                      className="text-sm font-bold text-black bg-white px-2 py-1 rounded-md"
-                      style={{ marginLeft: "8px", alignSelf: "flex-start" }}
-                    >
-                      {problem.difficulty}
+                  >
+                    {problem.difficulty || problem.difficulty_level}
                   </span>
-                      </div>
-                      
-                      <p className="text-gray-600">
-                        {problem.description.length > 100
-                          ? problem.description.slice(0, 100) + "..."
-                          : problem.description}
-                      </p>
-                    </div>
-                  </Link>
                 </div>
-              ))}
+                <p className="text-gray-600">
+                  {problem.description.length > 150
+                    ? problem.description.slice(0, 150) + "..."
+                    : problem.description}
+                </p>
+              </div>
+            </Link>
+          </div>
+        ))
+      : quizzes.map((quiz) => {
+          const difficulty = (
+            quiz.difficulty ||
+            quiz.difficulty_level ||
+            ""
+          ).toLowerCase();
+          const colorKey =
+            difficulty.charAt(0).toUpperCase() + difficulty.slice(1);
+
+          return (
+            <div
+              key={quiz.id}
+              className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-transform transform hover:scale-105 duration-300 ease-in-out h-48"
+            >
+              <div
+                className="h-2"
+                style={{
+                  background: colors[colorKey] || colors.Medium, // Fallback to Medium if no match
+                }}
+              ></div>
+              <Link to={`/quiz/${quiz.id}`}>
+                <div className="p-4">
+                  <div className="flex justify-between items-center">
+                    <h3 className="text-xl font-semibold mb-2">
+                      {quiz.name}
+                    </h3>
+                    <span
+                      className="text-sm font-bold px-2 py-1 rounded-md"
+                      style={{
+                        marginLeft: "8px",
+                        alignSelf: "flex-start",
+                        color:
+                          text_colors[
+                            quiz.difficulty || quiz.difficulty_level
+                          ],
+                      }}
+                    >
+                      {(
+                        quiz.difficulty ||
+                        quiz.difficulty_level ||
+                        ""
+                      )
+                        .charAt(0)
+                        .toUpperCase() +
+                        (
+                          quiz.difficulty ||
+                          quiz.difficulty_level ||
+                          ""
+                        )
+                          .slice(1)
+                          .toLowerCase()}
+                    </span>
+                  </div>
+
+                  <p className="text-gray-600">
+                    {quiz.description.length > 150
+                      ? quiz.description.slice(0, 150) + "..."
+                      : quiz.description}
+                  </p>
+                </div>
+              </Link>
             </div>
-          ) : (
-            <div className="w-full text-center py-8">
-              <p className="text-lg font-semibold text-gray-600">
-                No quizzes or labs are currently available.
-              </p>
+          );
+        })}
+  </div>
+) : problems.length > 0 ? (
+  <div
+    className="grid gap-4"
+    style={{
+      gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+      maxWidth: "100%",
+      padding: "1rem",
+    }}
+  >
+    {problems.map((problem) => (
+      <div
+        key={problem.id}
+        className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-transform transform hover:scale-105 duration-300 ease-in-out h-48"
+      >
+        <div
+          className="h-2"
+          style={{
+            background:
+              colors[problem.difficulty || problem.difficulty_level],
+          }}
+        ></div>
+        <Link to={`/problem/${problem.id}`}>
+          <div className="p-4">
+            <div className="flex justify-between items-center">
+              <h3 className="text-xl font-semibold mb-2">
+                {problem.name}
+              </h3>
+              <span
+                className="text-sm font-bold px-2 py-1 rounded-md"
+                style={{
+                  marginLeft: "8px",
+                  alignSelf: "flex-start",
+                  background:
+                    colors[
+                      problem.difficulty || problem.difficulty_level
+                    ],
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  display: "inline-block",
+                }}
+              >
+                {problem.difficulty || problem.difficulty_level}
+              </span>
             </div>
-          )}
+
+            <p className="text-gray-600">
+              {problem.description.length > 150
+                ? problem.description.slice(0, 150) + "..."
+                : problem.description}
+            </p>
+          </div>
+        </Link>
+      </div>
+    ))}
+  </div>
+) : (
+  <div className="w-full text-center py-8">
+    <p className="text-lg font-semibold text-gray-600">
+      No quizzes or labs are currently available.
+    </p>
+  </div>
+)}
+
 
           {admin &&
             !(selectedTopic === 0 || activeTopicName === "All Problems") && (
