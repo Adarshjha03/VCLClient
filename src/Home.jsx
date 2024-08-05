@@ -11,6 +11,7 @@ import { TailSpin } from "react-loader-spinner";
 import { FaPlus, FaTrash } from "react-icons/fa";
 import AddVideos from "./addVideos";
 import Switch from "@mui/material/Switch";
+import zIndex from "@mui/material/styles/zIndex";
 const HomePage = () => {
   const [selectedTopic, setSelectedTopic] = useState(() => {
     const storedTopic = localStorage.getItem("selectedTopic");
@@ -243,7 +244,8 @@ const HomePage = () => {
               </div>
             )}
           </div>
-          <div className="m-4">
+          <div className="m-4"
+          style={{zIndex: 2001}}>
             <SearchBar problems={constproblems} onSearch={handleSearch} />
           </div>
 
@@ -306,7 +308,7 @@ const HomePage = () => {
 
 {quizzes.length > 0 ? (
   <div
-    className="grid gap-4"
+    className="grid gap-4 z-1"
     style={{
       gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
       maxWidth: "100%",
@@ -317,7 +319,7 @@ const HomePage = () => {
       ? problems.map((problem) => (
           <div
             key={problem.id}
-            className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-transform transform hover:scale-105 duration-300 ease-in-out h-48"
+            className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer hover:shadow-xl  transition-transform transform hover:scale-105 duration-300 ease-in-out h-48"
           >
             <div
               className="h-2"
@@ -428,7 +430,7 @@ const HomePage = () => {
   </div>
 ) : problems.length > 0 ? (
   <div
-    className="grid gap-4"
+    className="grid gap-4 z-1"
     style={{
       gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
       maxWidth: "100%",
@@ -523,6 +525,7 @@ const HomePage = () => {
             overflowY: "auto",
             borderRadius: "10px",
             padding: "20px",
+            zIndex:3001 ,
           },
         }}
         shouldCloseOnOverlayClick={true}
@@ -537,6 +540,7 @@ const HomePage = () => {
             backgroundColor: "transparent",
             border: "none",
             color: "black",
+            zIndex:3001 ,
           }}
         >
           <FaTimes />
@@ -563,6 +567,7 @@ const HomePage = () => {
             overflowY: "auto",
             borderRadius: "10px",
             padding: "20px",
+            zIndex:3001 ,
           },
         }}
         shouldCloseOnOverlayClick={true}
@@ -577,6 +582,7 @@ const HomePage = () => {
             backgroundColor: "transparent",
             border: "none",
             color: "black",
+            zIndex:3001 ,
           }}
         >
           <FaTimes />

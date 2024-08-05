@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FaSearch, FaFilter } from 'react-icons/fa';
 
+const HIGH_Z_INDEX = 2001;
+
 const SearchBar = ({ problems, onSearch }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedDifficulty, setSelectedDifficulty] = useState('');
@@ -68,12 +70,11 @@ const SearchBar = ({ problems, onSearch }) => {
         hard: 'linear-gradient(to right, #f43150, #f2512e)',
         medium: 'linear-gradient(to right, #f95b37, #fca339)',
         easy: 'linear-gradient(to right, #26c585, #24c6c0)',
-       
     };
 
     return (
-        <div className="flex justify-center mt-6">
-            <div className="flex items-center bg-white rounded-md shadow-md p-2 w-full max-w-2xl">
+        <div className="flex justify-center mt-6" style={{ zIndex: HIGH_Z_INDEX, position: 'relative' }}>
+            <div className="flex items-center bg-white rounded-md shadow-md p-2 w-full max-w-2xl" style={{ zIndex: HIGH_Z_INDEX }}>
                 <FaSearch className="ml-3 text-gray-500" />
                 <input
                     type="text"
@@ -82,7 +83,7 @@ const SearchBar = ({ problems, onSearch }) => {
                     onChange={handleInputChange}
                     className="flex-grow px-4 py-2 border-transparent rounded-full focus:outline-none"
                 />
-                <div className="flex md:hidden ml-2 relative">
+                <div className="flex md:hidden ml-2 relative" style={{ zIndex: HIGH_Z_INDEX }}>
                     <button
                         onClick={() => setFilterOpen(!filterOpen)}
                         className="py-2 px-2 text-white bg-blue-600 rounded-md focus:outline-none"
@@ -90,7 +91,7 @@ const SearchBar = ({ problems, onSearch }) => {
                         <FaFilter />
                     </button>
                     {filterOpen && (
-                        <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-10" ref={filterRef}>
+                        <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg" style={{ zIndex: HIGH_Z_INDEX }} ref={filterRef}>
                             <div className="px-4 py-2">
                                 <button
                                     onMouseEnter={() => setHoveredButton(hoverStyles.hard)}
@@ -120,11 +121,9 @@ const SearchBar = ({ problems, onSearch }) => {
                                     EASY
                                 </button>
                                 <button
-                                //    onMouseEnter={() => setHoveredButton(hoverStyles.all)}
                                    onMouseLeave={() => setHoveredButton(null)}
                                    onClick={() => handleDifficultyChange("")}
                                    className="block w-full py-2 px-2 text-left transition duration-300 delay-100 text-sm"
-                                //    style={buttonStyles(hoverStyles.all)}
                                 >
                                     ALL Difficulty
                                 </button>
@@ -150,8 +149,8 @@ const SearchBar = ({ problems, onSearch }) => {
                         </div>
                     )}
                 </div>
-                <div className="md:block md:flex hidden">
-                    <div className="relative mx-2">
+                <div className="md:block md:flex hidden" style={{ zIndex: HIGH_Z_INDEX }}>
+                    <div className="relative mx-2" style={{ zIndex: HIGH_Z_INDEX }}>
                         <button
                             onClick={() => setDifficultyDropdownOpen(!difficultyDropdownOpen)}
                             className="py-2 px-2 text-white text-xs font-medium rounded-md bg-blue-600 focus:outline-none"
@@ -160,7 +159,7 @@ const SearchBar = ({ problems, onSearch }) => {
                             {selectedDifficulty || "ALL"} ▼
                         </button>
                         {difficultyDropdownOpen && (
-                            <div className="absolute mt-2 w-100 items-center bg-white rounded-lg shadow-lg" ref={difficultyRef}>
+                            <div className="absolute mt-2 w-100 items-center bg-white rounded-lg shadow-lg" style={{ zIndex: HIGH_Z_INDEX }} ref={difficultyRef}>
                                 <button
                                     onMouseEnter={() => setHoveredButton(hoverStyles.hard)}
                                     onMouseLeave={() => setHoveredButton(null)}
@@ -189,18 +188,16 @@ const SearchBar = ({ problems, onSearch }) => {
                                     EASY
                                 </button>
                                 <button
-                                    //  onMouseEnter={() => setHoveredButton(hoverStyles.all)}
                                      onMouseLeave={() => setHoveredButton(null)}
                                      onClick={() => handleDifficultyChange("")}
                                      className="block w-full py-2 px-2 text-left transition duration-300 delay-100 text-sm"
-                                    //  style={buttonStyles(hoverStyles.all)}
                                 >
                                     ALL
                                 </button>
                             </div>
                         )}
                     </div>
-                    <div className="relative mx-2">
+                    <div className="relative mx-2" style={{ zIndex: HIGH_Z_INDEX }}>
                         <button
                             onClick={() => setSolvedDropdownOpen(!solvedDropdownOpen)}
                             className="py-2 px-1 text-white text-xs font-medium rounded-md bg-blue-600 focus:outline-none"
@@ -209,7 +206,7 @@ const SearchBar = ({ problems, onSearch }) => {
                             {selectedSolved || "ALL"} ▼
                         </button>
                         {solvedDropdownOpen && (
-                            <div className="absolute mt-2 w-100 bg-white rounded-lg shadow-lg" ref={solvedRef}>
+                            <div className="absolute mt-2 w-100 bg-white rounded-lg shadow-lg" style={{ zIndex: HIGH_Z_INDEX }} ref={solvedRef}>
                                 <button
                                     onClick={() => handleSolvedChange("SOLVED")}
                                     className="block w-full py-2 px-2 text-left transition duration-300 delay-100 text-sm"
