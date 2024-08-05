@@ -352,7 +352,7 @@ const HomePage = () => {
                     {problem.difficulty || problem.difficulty_level}
                   </span>
                 </div>
-                <p className="text-gray-600">
+                <p className="text-gray-600 text-justify">
                   {problem.description.length > 150
                     ? problem.description.slice(0, 150) + "..."
                     : problem.description}
@@ -415,7 +415,7 @@ const HomePage = () => {
                     </span>
                   </div>
 
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 text-justify">
                     {quiz.description.length > 150
                       ? quiz.description.slice(0, 150) + "..."
                       : quiz.description}
@@ -471,7 +471,7 @@ const HomePage = () => {
               </span>
             </div>
 
-            <p className="text-gray-600">
+            <p className="text-gray-600 text-justify">
               {problem.description.length > 150
                 ? problem.description.slice(0, 150) + "..."
                 : problem.description}
